@@ -73,7 +73,7 @@
 
   <div [ngSwitch]="choice">
     <ion-list *ngSwitchCase="'inbox'">
-      <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0">
+      <ion-item style="width: 100%; margin: 0; padding-left: 10px;border-bottom: 2px solid #ccc" *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0">
         <ion-label>Sort By</ion-label>
         <ion-select style="padding: 1px 1px 6px 1px;position: fixed;
     left: 25%;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
@@ -90,7 +90,7 @@
 
       <ion-item style="width: 123px;
     float: right;
-    bottom: 48px;"  *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0">
+    bottom: 48px;" *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0">
         <ion-label>Action</ion-label>
         <ion-select [(ngModel)]="inboxact" (ionChange)="onActionInbox(inboxact,inboxLists)">
           <!--ion-option value="">Select Action</ion-option-->
@@ -113,7 +113,8 @@
       </ion-list>
       <ion-list *ngIf="totalCount!=0  && MESSAGEINBOXVIEWACCESS=='1'">
         <ion-item-sliding *ngFor="let item of inboxLists;">
-          <ion-item class="msg-item">
+          <ion-item class="msg-item" style="position: relative;
+    margin-top: -6px;">
 
 
             <div class="item-checkbox">
@@ -129,19 +130,19 @@
               <p><a href="#"><img src="img/attach.png" style="
        width: 15px;
     height: 15px;
-    position: absolute;    margin-top: -4px;
-    margin-left: 75%;" *ngIf="item.attachments!=''" ></a>
+    position: absolute;    margin-top: 10px;
+    margin-left: 65%;" *ngIf="item.attachments!=''" ></a>
               </p>
               <button (click)="favorite(item.message_id)" *ngIf="item.is_favorite==1" class="favorite" style="float: right ;width:30px;height:30px;background-color:#ffffff"></button>
               <button (click)="favorite(item.message_id)" *ngIf="item.is_favorite==0" class="unfavorite" style="float: right ;width:30px;height:30px;background-color:#ffffff"></button>
-<div style="overflow: hidden; padding-left: .5em;">
-  <h5 style="margin-top:20px" *ngIf="item.message_readstatus==0" (click)="doDetails(item,'inbox')">
-    <strong>{{item.sendername}}</strong></h5>
-  <h5 style="margin-top:20px" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">
-    {{item.sendername}}</h5>
-  <h5 style="white-space: normal;" *ngIf="item.message_readstatus==0" (click)="doDetails(item,'inbox')"><b>{{item.messages_subject}}</b></h5>
-  <h5 style="white-space: normal;" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">{{item.messages_subject}}</h5>
-</div>
+              <div style="overflow: hidden; padding-left: .5em;">
+                <h5 style="margin-top:20px" *ngIf="item.message_readstatus==0" (click)="doDetails(item,'inbox')">
+                  <strong>{{item.sendername}}</strong></h5>
+                <h5 style="margin-top:20px" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">
+                  {{item.sendername}}</h5>
+                <h5 style="white-space: normal;" *ngIf="item.message_readstatus==0" (click)="doDetails(item,'inbox')"><b>{{item.messages_subject}}</b></h5>
+                <h5 style="white-space: normal;" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">{{item.messages_subject}}</h5>
+              </div>
 
               <p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==1">{{item.message_date}}</p>
               <p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==0"><b>{{item.message_date}}</b></p>
@@ -160,7 +161,7 @@
       </ion-infinite-scroll>
     </ion-list>
     <ion-list *ngSwitchCase="'send'">
-      <ion-item *ngIf="MESSAGESENTVIEWACCESS=='1' && totalCountSend>0">
+      <ion-item style="border-bottom: 2px solid #ccc" *ngIf="MESSAGESENTVIEWACCESS=='1' && totalCountSend>0">
         <ion-label>Sort By</ion-label>
         <ion-select style="padding: 1px 1px 6px 1px;position: fixed;
     left: 25%;" [(ngModel)]="pet" (ionChange)="onSendSegmentChanged(pet)">
@@ -222,7 +223,8 @@
         <ion-item-sliding *ngFor="let item of sendLists;">
 
 
-          <ion-item class="msg-item">
+          <ion-item class="msg-item" style="position: relative;
+    margin-top: -6px;">
             <ion-item style="float:left">
 
               <div class="item-checkbox">
@@ -248,7 +250,7 @@
               </div>
 
               <p style="text-align:right;font-size:10px;position: absolute;
-    top: 74px;
+    top: 90px;
     left: 211px;">{{item.message_date}}</p>
 
             </ion-item>

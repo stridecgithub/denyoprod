@@ -85,6 +85,7 @@ export class CalendarComponent {
   dateHeaderTitle: any;
   petselection: any;
   pet: string = "ALL";
+  onLoad: boolean;
   public currentCalendarDate: any;
   public currentDate: any;
   public currentMonth: any;
@@ -92,6 +93,7 @@ export class CalendarComponent {
   public monthstr: any;
   calendarResultAll: any;
   daySession: any;
+  currentDateFormatToday: any;
   calendarResultService: any;
   calendarResultEvent: any;
   calendarResultAlarm: any;
@@ -315,6 +317,7 @@ export class CalendarComponent {
   }
 
   ngOnInit() {
+    this.onLoad = false;
 
     // this.defaultDevent('2017-08-22');
     this.addMissingIds();
@@ -356,6 +359,8 @@ export class CalendarComponent {
     console.log(" ngOnit H Month" + calendarmonthstr);
     console.log(" ngOnit I Date" + calendardatestr);
     console.log(" ngOnit J Year" + calendaryearstr);
+
+    this.currentDateFormatToday = calendardaystr + " " + calendardatestr + " " + calendarmonthstr + " " + calendaryearstr;
     this.calendarDate = calendardatestr;
     this.calendarYear = calendaryearstr;
     this.calendarMonth = calendarmonthstr;
@@ -384,7 +389,7 @@ export class CalendarComponent {
     this.defaultDevent(currentDate, this.monthstr);
     this.makeDaysInMonthViewList();
 
-
+    //this.onTimeSelected(this.ctrl.selectedYear, this.month, this.date, '');
   }
 
   ngAfterViewInit() {
@@ -429,6 +434,7 @@ export class CalendarComponent {
   }
 
   plusMonth = function (amount: number) {
+    this.onLoad = false;
     this.ctrl.dateSelection.add(amount, 'month');
     this.ctrl.selectedMonth = this.monthNum2monthStr(this.ctrl.dateSelection.month());
     console.log(" plusMonth A" + JSON.stringify(this.ctrl));
@@ -445,6 +451,7 @@ export class CalendarComponent {
     console.log(" plusMonth H Month" + calendarmonthstr);
     console.log(" plusMonth I Date" + calendardatestr);
     console.log(" plusMonth J Year" + calendaryearstr);
+    this.currentDateFormatToday = calendardaystr + " " + calendardatestr + " " + calendarmonthstr + " " + calendaryearstr;
     this.calendarDate = calendardatestr;
     this.calendarYear = calendaryearstr;
     this.calendarMonth = calendarmonthstr;
@@ -724,8 +731,8 @@ export class CalendarComponent {
     this.http.get(url, options)
       .subscribe((data) => {
         let res = data.json();
-       // this.eventIdentify = res.allevents;
-         this.eventIdentify = res.events;
+        // this.eventIdentify = res.allevents;
+        this.eventIdentify = res.events;
         //let highlightdots = res.highlightdots;
 
         if (res.highlightdots.length > 0) {
@@ -888,7 +895,7 @@ export class CalendarComponent {
         if (this.totalCountEventDateWise == 0) {
           this.noeventtitle = 'There is no events';
         }
-        this.makeDaysInMonthViewList();
+        //this.makeDaysInMonthViewList();
       }, error => {
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
@@ -983,6 +990,7 @@ export class CalendarComponent {
 
 
   onTimeSelected(year, month, date, ev) {
+    this.onLoad = true;
     console.log(year + "-" + month + "-" + date);
     this.currentDate = date;
     this.currentYear = year;
@@ -1051,10 +1059,10 @@ export class CalendarComponent {
       } else if (this.pet == 'ALARM') {
         typeStr = '&type=alarm';
         this.typeStr = typeStr;
-      } 
+      }
 
     } else {
-     // dateStr = "";
+      // dateStr = "";
       dateStr = "&date=" + year + "-" + month + "-" + date;
       if (this.pet == 'ALL') {
         typeStr = '&type=all';
@@ -1118,16 +1126,17 @@ export class CalendarComponent {
           console.log("curDate:" + curDate);
           console.log("selDate:" + selDate);
           localStorage.setItem("sdate", selectdate);
-          if (curDate == selDate) {
-            this.daySession = 'Todays  Event';
+          /*if (curDate == selDate) {
+            this.daySession = 'upcoming Event today';
             console.log(this.daySession);
           } else {
-            this.daySession = selDate;
-          }
+            this.daySession = this.currentDateFormatToday;
+            //this.daySession = 'upcoming Event today';
+          }*/
         } else {
-          this.daySession = "";
+         // this.daySession = this.currentDateFormatToday;
+          //this.daySession = 'upcoming Event today';
         }
-        console.log("Pet:======>" + this.petselection);
         this.calendarResultEvent = [];
         if (this.petselection == 'ALL') {
           console.log('ALL');
@@ -1149,11 +1158,28 @@ export class CalendarComponent {
 
         }
 
+        let cdateform = this.currentDateFormatToday.split(" ");
+        let weekdayname = this.getDayOfWeek(selectdate);
+        if (curDate == selDate) {
+          // this.daySession
+          if (this.totalCountEventDateWise > 0) {
+            this.daySession = this.totalCountEventDateWise + ' upcoming Event today';
+          }
+          this.currentDateFormatToday = weekdayname.substr(0, 3) + " " + date + " " + cdateform[2] + " " + cdateform[3];
+        } else {
+          this.daySession = '';
+          this.currentDateFormatToday = "" + weekdayname.substr(0, 3) + " " + date + " " + cdateform[2] + " " + cdateform[3];
+        }
       }, error => {
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
-  }
 
+
+  }
+  getDayOfWeek(date) {
+    var dayOfWeek = new Date(date).getDay();
+    return isNaN(dayOfWeek) ? null : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayOfWeek];
+  }
   doCalendarResult(data, event, service, alarm, type) {//JsonData,Event,Service,Alarm
     this.serviceIdentify = [];
     this.eventIdentify = [];
@@ -1213,7 +1239,7 @@ export class CalendarComponent {
       }
     }*/
     //this.serviceIdentify = data.json().allservices;
-     this.serviceIdentify = data.json().services;
+    this.serviceIdentify = data.json().services;
     for (var j = 0; j < this.serviceIdentify.length; j += 1) {
       let eventdate;
 
@@ -1254,24 +1280,24 @@ export class CalendarComponent {
       });
 
     }
-/*
-    if (alarm > 0 && type == '') {
-      console.log("I");
-      this.alarmIdentity = data.json().alarms;
-    } else {
-      console.log("J");
-      if (type == 'alarm') {
-        console.log("K");
-        this.alarmIdentity = data.json().allalarms;
-      }
-      if (type == 'all') {
-        console.log("L");
-        this.alarmIdentity = data.json().allalarms;
-      }
-    }
-*/
- //this.alarmIdentity = data.json().allalarms;
- this.alarmIdentity = data.json().alarms;
+    /*
+        if (alarm > 0 && type == '') {
+          console.log("I");
+          this.alarmIdentity = data.json().alarms;
+        } else {
+          console.log("J");
+          if (type == 'alarm') {
+            console.log("K");
+            this.alarmIdentity = data.json().allalarms;
+          }
+          if (type == 'all') {
+            console.log("L");
+            this.alarmIdentity = data.json().allalarms;
+          }
+        }
+    */
+    //this.alarmIdentity = data.json().allalarms;
+    this.alarmIdentity = data.json().alarms;
     for (var k = 0; k < this.alarmIdentity.length; k += 1) {
 
       this.calendarResultEvent.push({
@@ -1389,7 +1415,7 @@ export class CalendarComponent {
 
     //let selDate = currentDate;
 
-    this.onTimeSelected(this.ctrl.selectedYear, this.month,  this.date, '');
+    this.onTimeSelected(this.ctrl.selectedYear, this.month, this.date, '');
 
     console.log("Filter for Date" + currentDate);
     localStorage.setItem("eventDate", currentDate);

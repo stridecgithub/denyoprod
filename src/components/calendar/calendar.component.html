@@ -1,5 +1,4 @@
-<div class="network-error" *ngIf="networkType!=''" 
-style ="position: relative;margin-top: 108%;">{{networkType}}</div>
+<div class="network-error" *ngIf="networkType!=''" style="position: relative;margin-top: 108%;">{{networkType}}</div>
 <div *ngIf="networkType==''">
   <ion-select style="padding: 1px 1px 6px 1px;position: relative;
     margin-top: 16px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
@@ -126,14 +125,20 @@ style ="position: relative;margin-top: 108%;">{{networkType}}</div>
   Service
  </button>
       </div>
-      <h3>{{daySession}}</h3>
-      <br>
+      <!--h3>{{daySession}}</h3>
+      <br-->
       <!--button ion-button small (click)="doAdd()" style="color:white">
     <span class="add-calendar-button-inner">
   +</span>
  </button-->
+      <br>
+      <div *ngIf="onLoad==true">
+        <b>{{currentDateFormatToday}}</b>
+        <div *ngIf="daySession!=''">{{daySession}}</div>
+      </div>
 
 
+      <br>
       <button class="add-new-btn" (click)="doAdd()">
   	<div class="algn-cent">
     	<ion-icon name="ios-add-circle-outline"></ion-icon>       
@@ -141,10 +146,11 @@ style ="position: relative;margin-top: 108%;">{{networkType}}</div>
   </button>
 
 
+
+
+
       <ion-list *ngIf="totalCountEventDateWise!=0">
-
-
-        <ion-item-sliding *ngFor="let item of calendarResultEvent;"   (ionSwipe)="swipeopensliding()">
+        <ion-item-sliding *ngFor="let item of calendarResultEvent;">
 
           <ion-item *ngIf="EVENTVIEWACCESS=='0'">
             <p style="color: red;
@@ -160,7 +166,8 @@ style ="position: relative;margin-top: 108%;">{{networkType}}</div>
 
               <h2 clear item-right><b>Event:  </b>{{item.event_title}}</h2>
             </div>
-            <div>Date & Time:{{item.formatted_datetime}}</div>
+            <div *ngIf="item.event_time==''">Time:N/A</div>
+            <div *ngIf="item.event_time!=''">Time:{{item.event_time}}</div>
             <div style="white-space: normal">Location:{{item.event_location}}</div>
             <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
             <div>Created By:{{item.event_addedby_name}}</div>
@@ -185,8 +192,9 @@ style ="position: relative;margin-top: 108%;">{{networkType}}</div>
             <div>
               <h2 clear item-right><b>Service: </b >{{item.event_title}}</h2>
             </div>   
-            <div>Unit:{{item.unitname}}</div>         
-            <div>Date & Time:{{item.formatted_datetime}}</div>
+            <div>Unit:{{item.unitname}}</div>
+            <div *ngIf="item.event_time==''">Time:N/A</div>
+            <div *ngIf="item.event_time!=''">Time:{{item.event_time}}</div>
             <div style="white-space: normal">Location:{{item.event_location}}</div>
             <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
             <div>Created By:{{item.event_addedby_name}}</div>
@@ -264,4 +272,3 @@ style ="position: relative;margin-top: 108%;">{{networkType}}</div>
       </ion-list>
     </div>
   </div>
-  

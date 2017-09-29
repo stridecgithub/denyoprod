@@ -12,7 +12,8 @@ export class Config {
         return "Permission Denied.";
     }
     serverErrMsg() {
-        return "Server Error:Service not available";
+       // return "Server Error:Service not available";
+        return "";
     }
     networkErrMsg() {
         return "Connection Error:Internet connection not available";

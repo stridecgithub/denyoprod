@@ -363,6 +363,8 @@ export class EmailPage {
   /*@doCompanyGroup calling on report */
   /****************************/
   doInbox() {
+      this.inboxact=false;
+    this.sendact=false;
     //this.conf.presentLoading(1);
     if (this.inboxData.status == '') {
       this.inboxData.status = "messages_id";
@@ -402,6 +404,8 @@ export class EmailPage {
 
 
   doSend() {
+      this.inboxact=false;
+    this.sendact=false;
     //this.conf.presentLoading(1);
     if (this.sendData.status == '') {
       this.sendData.status = "messages_id";
@@ -1085,6 +1089,8 @@ export class EmailPage {
       });
   }
   doDetails(item, act) {
+    this.inboxact=false;
+    this.sendact=false;
     this.attachedFileLists = []
     this.isSubmitted = false;
     this.act = act;
@@ -1200,150 +1206,159 @@ export class EmailPage {
   }
 
   onActionInbox(actpet, inboxData) {
-    if (actpet == '') {
-      //this.strinbox = '';
-      this.conf.sendNotification("Please select Atleast One Action");
-      return false;
-    }
-    if (this.strinbox == 'undefined') {
-      this.strinbox = '';
-    }
-    if (this.strinbox == undefined) {
-      this.strinbox = '';
-    }
-    if (this.strinbox == '') {
-      this.conf.sendNotification("Please select Atleast One Message")
-    }
-    else {
-      console.log("Send Checkbox Selection:" + JSON.stringify(this.strinbox));
-      console.log("Act:" + actpet);
-      console.log("Inbox Data Array :" + JSON.stringify(inboxData));
-      let urlstr;
-      let actionItems = this.strinbox.split(",");
-      for (let ac = 0; ac < actionItems.length; ac++) {
-        if (actionItems[ac] != 'undefined') {
-          this.actionId.push({
-            "id": actionItems[ac]
-          })
+    if (this.inboxact != false) {
+      if (actpet == '') {
+        this.strinbox = '';
+        this.conf.sendNotification("Please select Atleast One Action");
+        return false;
+      }
+      if (this.strinbox == 'undefined') {
+        this.strinbox = '';
+      }
+      if (this.strinbox == undefined) {
+        this.strinbox = '';
+      }
+      if (this.strinbox == '') {
+        this.conf.sendNotification("Please select Atleast One Message");
+        return false;
+      }
+      else {
+        console.log("Send Checkbox Selection:" + JSON.stringify(this.strinbox));
+        console.log("Act:" + actpet);
+        console.log("Inbox Data Array :" + JSON.stringify(inboxData));
+        let urlstr;
+        let actionItems = this.strinbox.split(",");
+        for (let ac = 0; ac < actionItems.length; ac++) {
+          if (actionItems[ac] != 'undefined') {
+            this.actionId.push({
+              "id": actionItems[ac]
+            })
+          }
         }
-      }
-      console.log(JSON.stringify(this.actionId));
-      if (actpet == 'inboxunread') {
-        urlstr = this.apiServiceURL + "/messages/actions?frompage=inbox&is_mobile=1&ses_login_id=" + this.userId + "&actions=Unread&messageids=" + JSON.stringify(this.actionId);
-      }
-      if (actpet == 'inboxdelete') {
-        urlstr = this.apiServiceURL + "/messages/actions?frompage=inbox&is_mobile=1&ses_login_id=" + this.userId + "&actions=Delete&messageids=" + JSON.stringify(this.actionId);
-      }
+        console.log(JSON.stringify(this.actionId));
+        if (actpet == 'inboxunread') {
+          urlstr = this.apiServiceURL + "/messages/actions?frompage=inbox&is_mobile=1&ses_login_id=" + this.userId + "&actions=Unread&messageids=" + JSON.stringify(this.actionId);
+        }
+        if (actpet == 'inboxdelete') {
+          urlstr = this.apiServiceURL + "/messages/actions?frompage=inbox&is_mobile=1&ses_login_id=" + this.userId + "&actions=Delete&messageids=" + JSON.stringify(this.actionId);
+        }
 
-      let bodymessage: string = "",
-        type1: string = "application/x-www-form-urlencoded; charset=UTF-8",
-        headers1: any = new Headers({ 'Content-Type': type1 }),
-        options1: any = new RequestOptions({ headers: headers1 });
-      // url1: any = this.apiServiceURL + "/getmessagedetails";
-      console.log(urlstr + '?' + bodymessage);
-      let res;
-      this.http.post(urlstr, bodymessage, options1)
-        .subscribe((data) => {
-          res = data.json();
-          console.log("Unread action:" + JSON.stringify(data.json()));
-          console.log("Res Result" + res.msg[0]['result']);
-          console.log("data.status" + data.status);
-          console.log("Error" + res.msg[0]['Error'])
-          if (data.status === 200) {
-            console.log('Enter');
-            if (res.msg[0]['Error'] == 0) {
-              this.conf.sendNotification(res.msg[0]['result']);
+        let bodymessage: string = "",
+          type1: string = "application/x-www-form-urlencoded; charset=UTF-8",
+          headers1: any = new Headers({ 'Content-Type': type1 }),
+          options1: any = new RequestOptions({ headers: headers1 });
+        // url1: any = this.apiServiceURL + "/getmessagedetails";
+        console.log(urlstr + '?' + bodymessage);
+        let res;
+        this.http.post(urlstr, bodymessage, options1)
+          .subscribe((data) => {
+            res = data.json();
+            console.log("Unread action:" + JSON.stringify(data.json()));
+            console.log("Res Result" + res.msg[0]['result']);
+            console.log("data.status" + data.status);
+            console.log("Error" + res.msg[0]['Error'])
+            if (data.status === 200) {
+              console.log('Enter');
+              if (res.msg[0]['Error'] == 0) {
+                this.conf.sendNotification(res.msg[0]['result']);
+              }
+              // this.conf.sendNotification(data.json().msg.result);
+              console.log('Exit 1');
+               this.strinbox = '';
+              this.inboxact='';
+              this.inboxData.startindex = 0;
+              this.doInbox();
+              console.log('Exit 2');
             }
-            // this.conf.sendNotification(data.json().msg.result);
-            console.log('Exit 1');
-            // this.strinbox = '';
-            //this.inboxact='';
-            this.inboxData.startindex = 0;
-            this.doInbox();
-            console.log('Exit 2');
-          }
-          // Otherwise let 'em know anyway
-          else {
-            // this.conf.sendNotification('Something went wrong!');
-          }
-        }, error => {
-          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-        });
+            // Otherwise let 'em know anyway
+            else {
+              // this.conf.sendNotification('Something went wrong!');
+            }
+          }, error => {
+            this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+          });
 
+      }
     }
   }
 
   onActionSend(actpet, sendData) {
-    if (actpet == '') {
-     // this.strsend = '';
-      this.conf.sendNotification("Please select Atleast One Action");
-      return false;
-    }
-    if (this.strsend == 'undefined') {
-      this.strsend = '';
-    }
-    if (this.strsend == undefined) {
-      this.strsend = '';
-    }
-    if (this.strsend == '') {
-      this.conf.sendNotification("Please select Atleast One Message")
-    }
-    else {
-      console.log("Send Checkbox Selection:" + JSON.stringify(this.strsend));
-      console.log("Act:" + actpet);
-      console.log("Inbox Data Array :" + JSON.stringify(sendData));
-      let urlstr;
-      let actionItems = this.strsend.split(",");
-      for (let ac = 0; ac < actionItems.length; ac++) {
-        if (actionItems[ac] != 'undefined') {
-          this.actionId.push({
-            "id": actionItems[ac]
-          })
+
+
+    if (this.sendact != false) {
+      if (actpet == '') {
+        this.strsend = '';
+        this.conf.sendNotification("Please select Atleast One Action");
+        return false;
+      }
+      if (this.strsend == 'undefined') {
+        this.strsend = '';
+      }
+      if (this.strsend == undefined) {
+        this.strsend = '';
+      }
+      if (this.strsend == '') {
+        this.conf.sendNotification("Please select Atleast One Message");
+        return false;
+      }
+      else {
+        console.log("Send Checkbox Selection:" + JSON.stringify(this.strsend));
+        console.log("Act:" + actpet);
+        console.log("Inbox Data Array :" + JSON.stringify(sendData));
+        let urlstr;
+        let actionItems = this.strsend.split(",");
+        for (let ac = 0; ac < actionItems.length; ac++) {
+          if (actionItems[ac] != 'undefined') {
+            this.actionId.push({
+              "id": actionItems[ac]
+            })
+          }
         }
-      }
-      console.log(JSON.stringify(this.actionId));
+        console.log(JSON.stringify(this.actionId));
 
-      if (actpet == 'senddelete') {
-        urlstr = this.apiServiceURL + "/messages/actions?frompage=send&is_mobile=1&ses_login_id=" + this.userId + "&actions=Delete&messageids=" + JSON.stringify(this.actionId);
-      }
-      let bodymessage: string = "",
-        type1: string = "application/x-www-form-urlencoded; charset=UTF-8",
-        headers1: any = new Headers({ 'Content-Type': type1 }),
-        options1: any = new RequestOptions({ headers: headers1 });
-      // url1: any = this.apiServiceURL + "/getmessagedetails";
-      console.log(urlstr + '?' + bodymessage);
-      let res;
-      this.http.post(urlstr, bodymessage, options1)
-        .subscribe((data) => {
-          res = data.json();
-          console.log("Unread action:" + JSON.stringify(data.json()));
-          console.log("Res Result" + res.msg[0]['result']);
-          console.log("data.status" + data.status);
-          console.log("Error" + res.msg[0]['Error'])
-          if (data.status === 200) {
-            // this.strsend = '';
-            // this.sendact='';
-            console.log('Enter');
-            if (res.msg[0]['Error'] == 0) {
-              this.conf.sendNotification(res.msg[0]['result']);
+        if (actpet == 'senddelete') {
+          urlstr = this.apiServiceURL + "/messages/actions?frompage=send&is_mobile=1&ses_login_id=" + this.userId + "&actions=Delete&messageids=" + JSON.stringify(this.actionId);
+        }
+        let bodymessage: string = "",
+          type1: string = "application/x-www-form-urlencoded; charset=UTF-8",
+          headers1: any = new Headers({ 'Content-Type': type1 }),
+          options1: any = new RequestOptions({ headers: headers1 });
+        // url1: any = this.apiServiceURL + "/getmessagedetails";
+        console.log(urlstr + '?' + bodymessage);
+        let res;
+        this.http.post(urlstr, bodymessage, options1)
+          .subscribe((data) => {
+            res = data.json();
+            console.log("Unread action:" + JSON.stringify(data.json()));
+            console.log("Res Result" + res.msg[0]['result']);
+            console.log("data.status" + data.status);
+            console.log("Error" + res.msg[0]['Error'])
+            if (data.status === 200) {
+              this.strsend = '';
+              this.sendact='';
+              console.log('Enter');
+              if (res.msg[0]['Error'] == 0) {
+                this.conf.sendNotification(res.msg[0]['result']);
+              }
+              // this.conf.sendNotification(data.json().msg.result);
+              console.log('Exit 1');
+              this.sendData.startindex = 0;
+              this.doSend();
+              console.log('Exit 2');
             }
-            // this.conf.sendNotification(data.json().msg.result);
-            console.log('Exit 1');
-            this.sendData.startindex = 0;
-            this.doSend();
-            console.log('Exit 2');
-          }
-          // Otherwise let 'em know anyway
-          else {
-            // this.conf.sendNotification('Something went wrong!');
-          }
-        }, error => {
-          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-        });
+            // Otherwise let 'em know anyway
+            else {
+              // this.conf.sendNotification('Something went wrong!');
+            }
+          }, error => {
+            this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+          });
 
+      }
     }
   }
   getCheckBoxValueSend(item, val) {
+    this.sendact = false;
     if (val == undefined) {
       val = '';
     }
@@ -1362,6 +1377,7 @@ export class EmailPage {
   }
 
   getCheckBoxValueInbox(item, val) {
+    this.inboxact = false;
     if (val == undefined) {
       val = '';
     }
