@@ -1,0 +1,43 @@
+custom-footer {   
+.home-content{
+background-color:red;
+}
+
+.header-md::after,
+.tabs-md[tabsPlacement="top"] > .tabbar::after,
+.footer-md::before,
+.tabs-md[tabsPlacement="bottom"] > .tabbar::before{background-image:none;}
+.toolbar-background-md{background:none;}
+.content-md{background-color:transparent;}
+.dash{text-align:center;color:#fff;font-size:13px;}
+.title{margin:25px auto;font-size:22px;}
+.title strong{display:block;margin-top:10px;}
+.four-icons{text-align:center;color:#fff;display:table;margin:0 auto;text-transform:uppercase;font-weight:bold;min-width:32%;}
+.four-icons img{display:table;margin:0 auto 15px;}
+.icon-top{border-bottom:1px solid #fff;display:block;overflow:hidden;}
+.icon-bottom{display:block;overflow:hidden;}
+.icon-left{border-right:1px solid #fff;width:50%;float:left;padding:50px 60px 80px 60px;font-size: 20px;}
+.icon-right{width:50%;float:left;padding:50px 60px 80px 60px;font-size: 20px;}
+
+}
+.toolbar-md{text-align:center;}
+.toolbar-md-bluedark{min-height:80px;}
+.toolbar-md-bluedark .toolbar-background-md{background:#f2f2f2;}
+
+.ion-md-home:before, .ion-md-contacts:before, .ion-md-chatboxes:before, .ion-md-bicycle:before, .ion-md-settings:before{display:none;}
+.ion-md-home{background:url(../img/map_icon.png) no-repeat center top;}
+.ion-md-contacts{background:url(../img/units_icon.png) no-repeat center top;}
+.ion-md-chatboxes{background:url(../img/msg_icon.png) no-repeat center top;}
+.ion-md-bicycle{background:url(../img/calendar_icon.png) no-repeat center top;}
+.ion-md-settings{background:url(../img/setting_icon.png) no-repeat center top;}
+.footer-icon{color:#888888;font-size:18px!important;text-align:center;padding:42px 0 0 0!important;}
+.toolbar-md-bluedark .button[icon-only]{height:inherit;margin:0;}
+.toolbar-md-bluedark .button-inner{height:80px;}
+.button-inner{height:50px;}
+.quick-list{margin:0 auto;display:table;padding:0;width:100%;}
+.quick-list li{display: inline;margin:0 10px;list-style:none;font-family: "Roboto", "Helvetica Neue", sans-serif;font-style:normal;}
+.quick-list li button ion-icon{font-family: "Roboto", "Helvetica Neue", sans-serif;font-style:normal;font-size:0px!important;width:32px;height:32px;margin-top:10px;}
+.maps, .units, .reports, .bicycle{display: table;background-position:center top!important;}
+.icon-left span, .icon-right span{margin-top: 80px!important;}
+ion-footer .toolbar-md-bluedark{min-height:auto;}
+.footer-md-bluedark .toolbar-md-bluedark .button[icon-only]{height:auto;}

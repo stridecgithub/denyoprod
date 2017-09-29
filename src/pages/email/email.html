@@ -1,0 +1,416 @@
+<!--
+  Generated template for the EmailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header style="
+    background-color: #00569F;" color="bluedark">
+
+
+  <button ion-button clear menuToggle class="menu-toggle">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <button ion-button class="bell-icon" clear (click)="notification()">
+    <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+    <ion-badge style="margin-top: 5px; margin-right: 7px;" item-end class="notificationcount" *ngIf="notcount>0">
+      {{this.notcount}}
+    </ion-badge>
+  </button>
+
+  <ion-title class="page-title">{{pageTitle}}</ion-title>
+
+  <!--ion-navbar color="bluedark" hideBackButton>
+    <ion-title class="page-title">{{pageTitle}}</ion-title>
+    <ion-buttons start>
+      <button ion-button menuToggle class="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    </ion-buttons>
+
+
+
+    <ion-buttons end>
+      <button ion-button (click)="notification()">
+  <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+   <ion-badge item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
+</button>
+    </ion-buttons>
+  </ion-navbar-->
+  <ion-navbar class="backtoprevious-navbar" hideBackButton>
+    <ion-buttons start class="backtoprevious-start">
+      <button ion-button icon-left class="backtoprevious-button" (click)="previous()">
+ <ion-icon name="arrow-back" class="backtoprevious-icon"></ion-icon>
+ Back to previous
+</button>
+    </ion-buttons>
+    <ion-buttons end>
+      Login As:{{loginas}}
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar *ngIf="networkType==''">
+    <ion-segment [(ngModel)]="choice">
+      <ion-segment-button value="inbox" (click)="inb()">
+        Inbox
+      </ion-segment-button>
+      <ion-segment-button value="send" (click)="snd()">
+        Sent
+      </ion-segment-button>
+      <ion-segment-button value="compose" (click)="com()">
+        Compose
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="ion-content" *ngIf="networkType!=''">
+
+</ion-content>
+
+<ion-content padding class="ion-content" *ngIf="networkType==''">
+
+  <div [ngSwitch]="choice">
+    <ion-list *ngSwitchCase="'inbox'">
+      <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0">
+        <ion-label>Sort By</ion-label>
+        <ion-select style="padding: 1px 1px 6px 1px;position: fixed;
+    left: 25%;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
+          <ion-option value="messagesinbox_isfavaurite,desc">Favorite</ion-option>
+          <ion-option value="sendername,asc">Sender Ascending</ion-option>
+          <ion-option value="sendername,desc">Sender Descending</ion-option>
+          <ion-option value="messages_subject,asc">Subject Ascending</ion-option>
+          <ion-option value="messages_subject,desc">Subject Descending</ion-option>
+        </ion-select>
+      </ion-item>
+      <!--div class="separator-line" *ngIf="totalCount!=0">&nbsp;</div-->
+      <div class="error" *ngIf="totalCount==0 && MESSAGEINBOXVIEWACCESS=='1' && networkType==''">No message entries found</div>
+
+
+      <ion-item style="width: 123px;
+    float: right;
+    bottom: 48px;"  *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0">
+        <ion-label>Action</ion-label>
+        <ion-select [(ngModel)]="inboxact" (ionChange)="onActionInbox(inboxact,inboxLists)">
+          <!--ion-option value="">Select Action</ion-option-->
+          <ion-option value="inboxdelete">Delete</ion-option>
+          <ion-option value="inboxunread">Mark as Unread</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="totalCount!=0">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+      <ion-list *ngIf="MESSAGEINBOXVIEWACCESS=='0'">
+        <ion-item>
+          <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="totalCount!=0  && MESSAGEINBOXVIEWACCESS=='1'">
+        <ion-item-sliding *ngFor="let item of inboxLists;">
+          <ion-item class="msg-item">
+
+
+            <div class="item-checkbox">
+              <label class="checkbox">
+                    <input type="checkbox" style="width: 20px;height: 20px;position: absolute;top: 55px;left:0px" (tap)="getCheckBoxValueInbox(item,item.message_id);" value="1">
+                </label>
+            </div>
+
+            <ion-avatar item-start style="padding-left: 22px;">
+              <img src="{{item.senderphoto}}">
+            </ion-avatar>
+            <ion-item style="float:left">
+              <p><a href="#"><img src="img/attach.png" style="
+       width: 15px;
+    height: 15px;
+    position: absolute;    margin-top: -4px;
+    margin-left: 75%;" *ngIf="item.attachments!=''" ></a>
+              </p>
+              <button (click)="favorite(item.message_id)" *ngIf="item.is_favorite==1" class="favorite" style="float: right ;width:30px;height:30px;background-color:#ffffff"></button>
+              <button (click)="favorite(item.message_id)" *ngIf="item.is_favorite==0" class="unfavorite" style="float: right ;width:30px;height:30px;background-color:#ffffff"></button>
+<div style="overflow: hidden; padding-left: .5em;">
+  <h5 style="margin-top:20px" *ngIf="item.message_readstatus==0" (click)="doDetails(item,'inbox')">
+    <strong>{{item.sendername}}</strong></h5>
+  <h5 style="margin-top:20px" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">
+    {{item.sendername}}</h5>
+  <h5 style="white-space: normal;" *ngIf="item.message_readstatus==0" (click)="doDetails(item,'inbox')"><b>{{item.messages_subject}}</b></h5>
+  <h5 style="white-space: normal;" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">{{item.messages_subject}}</h5>
+</div>
+
+              <p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==1">{{item.message_date}}</p>
+              <p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==0"><b>{{item.message_date}}</b></p>
+
+            </ion-item>
+          </ion-item>
+          <ion-item-options>
+            <button class="trashcolor" (click)="doConfirm(item.message_id,item,'inbox')" *ngIf="MESSAGEINBOXDELETEACCESS=='1'">
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalCount!=0">
+        <ion-infinite-scroll-content loadingText="{{loadingMoreDataContent}}"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-list>
+    <ion-list *ngSwitchCase="'send'">
+      <ion-item *ngIf="MESSAGESENTVIEWACCESS=='1' && totalCountSend>0">
+        <ion-label>Sort By</ion-label>
+        <ion-select style="padding: 1px 1px 6px 1px;position: fixed;
+    left: 25%;" [(ngModel)]="pet" (ionChange)="onSendSegmentChanged(pet)">
+          <!--ion-option value="sendername,asc">Sender Ascending</ion-option>
+          <ion-option value="sendername,desc">Sender Descending</ion-option-->
+
+          <ion-option value="messages_subject,asc">Subject Ascending</ion-option>
+          <ion-option value="messages_subject,desc">Subject Descending</ion-option>
+        </ion-select>
+      </ion-item>
+      <div class="error" *ngIf="totalCountSend==0 && MESSAGESENTVIEWACCESS=='1'">No sent item entries found</div>
+
+      <ion-item style="width: 123px;
+    float: right;
+    bottom: 50px;" *ngIf="MESSAGESENTVIEWACCESS=='1' && totalCountSend>0">
+        <ion-label>Action</ion-label>
+        <ion-select [(ngModel)]="sendact" (ionChange)="onActionSend(sendact,sendLists)">
+          <!--ion-option value="">Select Action</ion-option-->
+          <ion-option value="senddelete">Delete</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-refresher (ionRefresh)="doSendRefresh($event)" *ngIf="totalCountSend!=0">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+
+      <ion-list *ngIf="MESSAGESENTVIEWACCESS=='0'">
+        <ion-item>
+          <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+        </ion-item>
+      </ion-list>
+
+      <ion-list *ngIf="totalCountSend!=0 && MESSAGESENTVIEWACCESS=='1'">
+        <!--ion-item-sliding *ngFor="let item of sendLists;">
+
+          <ion-item (click)="doDetails(item,'send')">
+            <p><a href="#"><img src="img/attach.png" style="
+       width: 29px;
+    height: 29px;
+    position: absolute;    margin-top: -13px;
+    margin-left: 75%;" *ngIf="item.attachments!=''" ></a>
+            </p>
+            <h5>To:{{item.receiver_name}}</h5>
+            <h5 style="white-space: normal;">Subject:{{item.messages_subject}}</h5>
+          </ion-item>
+          <ion-item-options>
+            <button class="trashcolor" (click)="doConfirm(item.message_id,item,'send')" *ngIf="MESSAGESENTDELETEACCESS=='1'">
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+          </ion-item-options>
+        </ion-item-sliding-->
+
+
+
+        <ion-item-sliding *ngFor="let item of sendLists;">
+
+
+          <ion-item class="msg-item">
+            <ion-item style="float:left">
+
+              <div class="item-checkbox">
+                <label class="checkbox">
+                    <input type="checkbox" style="width: 20px;
+    height: 20px; position: absolute;top: 47px;left:0px" (tap)="getCheckBoxValueSend(item,item.message_id);" value="1">
+                </label>
+              </div>
+
+              <p><a href="#"><img src="img/attach.png" style="
+       width: 15px;
+    height: 15px;
+    position: absolute;margin-top: 22px;
+    margin-left: 75%;" *ngIf="item.attachments!=''" ></a>
+              </p>
+              <div style="overflow: hidden; padding-left: 1.5em;">
+                <h5 style="margin-top:20px" (click)="doDetails(item,'send')">
+                  <strong>To:{{item.receiver_name}}</strong></h5>
+                <h5 style="margin-top:20px" (click)="doDetails(item,'send')">
+                  <strong>Subject:{{item.messages_subject}}</strong></h5>
+
+
+              </div>
+
+              <p style="text-align:right;font-size:10px;position: absolute;
+    top: 74px;
+    left: 211px;">{{item.message_date}}</p>
+
+            </ion-item>
+          </ion-item>
+          <ion-item-options>
+            <button class="trashcolor" (click)="doConfirm(item.message_id,item,'send')" *ngIf="MESSAGESENTDELETEACCESS=='1'">
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+          </ion-item-options>
+        </ion-item-sliding>
+
+
+      </ion-list>
+      <ion-infinite-scroll (ionInfinite)="doSendInfinite($event)" *ngIf="totalCountSend!=0">
+        <ion-infinite-scroll-content loadingText="{{loadingMoreDataContent}}"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-list>
+    <form [formGroup]="form" (ngSubmit)="saveEntry()" enctype='application/x-www-form-urlencoded' method="post">
+
+
+
+
+      <ion-list *ngSwitchCase="'compose'">
+        <div *ngIf="MESSAGESENTCREATEACCESS=='0'">
+          <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+        </div>
+        <div *ngIf="MESSAGESENTCREATEACCESS=='1'">
+          <b>To</b> <span class="mandatory" *ngIf="hideActionButton">*</span>
+          <input *ngIf="popoverThemeJSIonic==0" type="text" (keyup)=address1get($event.target.value); name="to" id="to" class="sugges"
+            onkeyup="message(event);address1get(this.value)" onblur="sptionshide();address1get(this.value)" class="form-control"
+            rows="10" [disabled]="readOnly" formControlName="to" [(ngModel)]="to">
+
+          <ion-textarea style="height:100px" *ngIf="popoverThemeJSIonic>0" formControlName="to" [(ngModel)]="to" (keyup)="presentPopover($event)"
+            class="form-control" rows="8" [disabled]="readOnly">
+          </ion-textarea>
+
+
+
+          <div style="position: relative;top: 12px;width: 180px;">
+            <span><ion-checkbox type="checkbox" name="copytome" formControlName="copytome"  [(ngModel)]="copytome"></ion-checkbox>&nbsp; Email a copy to myself</span>
+            <span>
+            <ion-icon (click)="fileChooser(micro_timestamp)" *ngIf="isUploaded" name="attach" style="color: black;
+    position: relative;
+
+    left: 10px;
+    font-size:20px"></ion-icon>
+           <img  (click)="getPrority(1)"  src="img/low_priority.png" style="width: 16px;
+    height: 16px;
+    position: absolute;
+    margin-left: 40%;"  class="{{priority_lowclass}}"><img  (click)="getPrority(2)"  src="img/high_priority.png"  style="width: 16px;
+    height: 16px;
+    position: absolute;
+    margin-left: 50%;"  class="{{priority_highclass}}">
+
+    </span>
+          </div>
+          <div><br></div>
+          <progress value="{{progress}}" max="100" *ngIf="isProgress"> </progress>
+          <span *ngIf="isProgress" style="padding:2px">{{progress}}%</span>
+          <div *ngIf="addedImgLists.length>0">Attached List:</div>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-auto *ngFor="let item of addedImgLists; let i = index" [attr.data-index]="i"><img src="{{addedImgLists[i].imgSrc}}" /></ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <ion-item>
+            <ion-label stacked>Subject <span class="mandatory" *ngIf="hideActionButton">*</span></ion-label>
+            <ion-input type="text" [disabled]="readOnly" formControlName="subject" [(ngModel)]="subject"></ion-input>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-label stacked>Message <span class="mandatory" *ngIf="hideActionButton">*</span></ion-label>
+            <ion-textarea rows="10" [disabled]="readOnly" formControlName="composemessagecontent" [(ngModel)]="composemessagecontent"></ion-textarea>
+          </ion-item>
+
+
+          <ion-item *ngIf="hideActionButton">
+            <button ion-button color="primary" text-center block [disabled]="!form.valid || isSubmitted">Send Message</button>
+          </ion-item>
+        </div>
+      </ion-list>
+    </form>
+
+
+    <ion-list *ngSwitchCase="'details'">
+      <div>
+        <ion-item style="float:left;">
+          <ion-avatar item-start *ngIf="act==inbox">
+            <img src="{{photo}}">
+          </ion-avatar>
+          <div><b>Subject:</b>{{messages_subject}}</div>
+          <hr>
+          <div><b>From:</b>{{personalhashtagreplaceat}}</div>
+          <br>
+          <div><b>To:</b>{{receiver_idreplaceat}}</div>
+          <br>
+          <div><b>Message:</b></div>
+          <div style="white-space: normal">{{messages_body}}</div>
+          <br>
+          <div *ngIf="attachedFileLists.length>0"><b>Attachments:</b></div>
+          <ion-item>
+            <h6 style="float:right;padding-top:4px" *ngIf="mdate!='undefined'">{{mdate}}</h6>
+          </ion-item>
+        </ion-item>
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-auto *ngFor="let item of attachedFileLists; let i = index" [attr.data-index]="i">
+            <img src="{{attachedFileLists[i].imgSrc}}" />{{attachedFileLists[i].file}}
+            <br>
+            <!--a href="#" (click)="download(attachedFileLists[i].file)">Download</a-->
+            <a href="{{attachedFileLists[i].filepath}}">Download</a>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+      <div><a href="#" (click)="reply(messages_body,messageid)" *ngIf="act=='inbox'">Reply</a>&nbsp; &nbsp; &nbsp; &nbsp;<a href="#"
+          (click)="forward(messages_body,messageid)">Forward</a></div>
+    </ion-list>
+
+  </div>
+
+
+</ion-content>
+<ion-footer color="bluedark" *ngIf="valueforngif">
+  <ion-toolbar color="bluedark">
+    <ul class="quick-list">
+      <li>
+        <button ion-button icon-only clear (click)="redirectToMaps()">
+    	<ion-icon name="home" class="footer-icon">MAPS</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToUser()" clear>
+    	<ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToMessage()" clear>
+    	<ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
+      <ion-badge item-end class="messagecount"  *ngIf="msgcount>0">{{this.msgcount}}</ion-badge>
+    </button>
+        <ion-badge color="danger"></ion-badge>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectCalendar()" clear>
+    	<ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button style="width: 34px;" ion-button icon-only (click)="redirectToSettings()" clear>
+    	<ion-icon name="settings" class="footer-icon">ORG</ion-icon>
+    </button>
+      </li>
+    </ul>
+
+  </ion-toolbar>
+  <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
+</ion-footer>

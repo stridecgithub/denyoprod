@@ -1,0 +1,66 @@
+[
+    {
+        "title": "Dashboard"
+    },
+    {
+        "title": "Calendar"
+    },
+    {
+        "title": "Maps"
+    },
+    {
+        "title": "Units",
+        "subs": [
+            {
+                "title": "Unit Listing",
+                "component": "UnitsPage"
+            },
+            {
+                "title": "Unit Group",
+                "component": "UnitgroupPage"
+            },
+             {
+                "title": "Engine Model",
+                "component": "EnginedetailPage"
+            }
+        ]
+    },
+    {
+        "title": "Settings",
+        "subs": [
+            {
+                "title": "My Account",
+                "component": "MyaccountPage"
+            },
+            {
+                "title": "User List",
+                "component": "UserPage"
+            },
+            {
+                "title": "Company Group",
+                "component": "CompanygroupPage"
+            },
+            {
+                "title": "User Role",
+                "component": "RolePage"
+            },
+            {
+                "title": "Report Template",
+                "component": "ReporttemplatePage"
+            },
+            {
+                "title": "Org Chart",
+                "component": "OrgchartPage"
+            }
+        ]
+    },
+    {
+        "title": "Reports"
+    },
+    {
+        "title": "Message"
+    },
+    {
+        "title": "Logout"
+    }
+]

@@ -1,0 +1,221 @@
+<!--
+  Generated template for the AddserviceinfoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header style="
+    background-color: #00569F;" color="bluedark">
+
+
+  <button style="background-color: #00569F;float:left;" ion-button menuToggle class="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+  <ion-title style="    text-align: center;
+    margin-top: 10px;" class="page-title">{{unitDetailData.pageTitle}}</ion-title>
+
+  <button style="float:left" ion-button (click)="notification()" style="position: absolute;
+    right: 0%;
+    top: 1%;background: transparent;">
+  <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+   <ion-badge style="    margin-top: 5px;
+    margin-right: 7px;" item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
+</button>
+
+  <!--ion-navbar color="bluedark" hideBackButton>
+    <ion-title class="page-title">{{pageTitle}}</ion-title>
+    <ion-buttons start>
+      <button ion-button menuToggle class="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    </ion-buttons>
+
+
+
+    <ion-buttons end>
+      <button ion-button (click)="notification()">
+  <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+   <ion-badge item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
+</button>
+    </ion-buttons>
+  </ion-navbar-->
+  <ion-navbar class="backtoprevious-navbar" hideBackButton>
+    <ion-buttons start class="backtoprevious-start">
+      <button ion-button icon-left class="backtoprevious-button" (click)="previous()">
+ <ion-icon name="arrow-back" class="backtoprevious-icon"></ion-icon>
+ Back to previous
+</button>
+    </ion-buttons>
+    <ion-buttons end>
+      Login As:{{unitDetailData.loginas}}
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="form" (ngSubmit)="saveEntry()" enctype='application/x-www-form-urlencoded' method="post">
+    <ion-list>
+
+
+      <ion-item>
+        <button class="{{unitDetailData.colorcodeindications}}" style="float: left ;width:8px;height:85px">         
+        </button>
+
+        <button (click)="favoriteaction(unitDetailData.unit_id)" class="{{unitDetailData.favoriteindication}}" style="float: right ;width:30px;height:30px;background-color:#ffffff"></button>
+        <div style="overflow: hidden; padding-left: 0.5em;padding-top: 4px">
+          <h5><b>{{unitDetailData.unitname}}</b></h5>
+          <h5>Project Name:{{unitDetailData.projectname}}</h5>
+          <h5 style="white-space:normal">Location:{{unitDetailData.location}}</h5>
+          <h5 *ngIf="unitDetailData.lat!=''">({{unitDetailData.lat}},{{unitDetailData.lng}})</h5>
+          <h5 style="white-space:normal;">Next Servicing Date:{{unitDetailData.ns}}</h5>
+          <h5 style="white-space:normal;">Running Hours:{{unitDetailData.rh}} Hours</h5>
+
+        </div>
+      </ion-item>
+
+      <p><a (click)="getPrority(1)" href="#"><img src="img/low_priority.png" style="
+       width: 29px;
+    height: 29px;
+    position: absolute;    margin-top: -13px;
+    margin-left: 50%;" class="{{priority_lowclass}}"></a><a (click)="getPrority(2)" href="#"><img  src="img/high_priority.png"  style="
+        width: 29px;
+    height: 29px;
+    position: absolute;
+    margin-left: 70%;    margin-top: -13px;" class="{{priority_highclass}}"></a>
+      </p>
+      <!-- min="{{servicemindate}}" max="{{servicemaxdate}}"-->
+      <ion-item>
+        <ion-label stacked>Servicing Date <span class="mandatory" *ngIf="hideActionButton">*</span></ion-label>
+        <ion-datetime pickerFormat="MMM DD YYYY" displayFormat="MM/DD/YYYY" formControlName="serviced_datetime" [(ngModel)]="serviced_datetime"
+          min="{{servicemindate}}" max="{{servicemaxdate}}"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Serviced By <span class="mandatory" *ngIf="hideActionButton">*</span></ion-label>
+        <ion-input type="text" [disabled]=true formControlName="serviced_by" [(ngModel)]="unitDetailData.serviced_by"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Subject <span class="mandatory" *ngIf="hideActionButton">*</span></ion-label>
+        <ion-input type="text" [disabled]="readOnly" formControlName="service_subject" [(ngModel)]="service_subject"></ion-input>
+      </ion-item>
+
+      <b>Remark</b> <span class="mandatory" *ngIf="hideActionButton">*</span>
+      <textarea type="text" (keyup)=address1get($event.target.value); name="to" id="to" class="sugges" onkeyup="sptions(event);address1get(this.value)"
+        onblur="sptionshide();address1get(this.value)" class="form-control" rows="8" [disabled]="readOnly" formControlName="service_remark"
+        [(ngModel)]="service_remark"></textarea>
+
+
+
+      <p><b>Upload Images</b></p>
+      <p>Maximum Number of upload photos:10</p>
+
+
+      <div class="profile-image-wrapper" (click)="takePictureURL(micro_timestamp)" *ngIf="isUploaded">
+        <div class="profile-image-placeholder">
+          <ion-icon name="add" style="color: blue;
+    position: relative;
+    top: -7px;
+    left: 14px;"></ion-icon>
+        </div>
+        <div class="profile-image"></div>
+      </div>
+
+      <progress value="{{progress}}" max="100" *ngIf="isProgress"> </progress>
+      <span *ngIf="isProgress" style="padding:2px">{{progress}}%</span>
+
+      <div *ngIf="addedServiceImgLists.length>0"></div>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-auto *ngFor="let item of addedServiceImgLists; let i = index" [attr.data-index]="i">
+            <ion-item>
+              <ion-avatar item-start><img src="{{addedServiceImgLists[i].imgSrc}}" width="100" height="50" /> </ion-avatar>
+            </ion-item>
+            <a href="#" (click)="doRemoveResouce(addedServiceImgLists[i].resouce_id,item)">
+              <ion-icon name="backspace" style="color: brown;
+    font-size: 20px;
+    position: relative;
+    bottom: 55px;
+    left: 24px;"></ion-icon>
+            </a>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+
+
+
+
+
+      <div class="ion-badge-container">
+        <ion-badge item-end style="height: 66px"><a href="#" (click)="getNextDate(14)" style="color:white;font-weight:bold;margin-top:7px">2 <br>Weeks</a></ion-badge>
+        <ion-badge item-end style="height: 66px"><a href="#" (click)="getNextDate(30)" style="color:white;font-weight:bold;margin-top:7px">1 <br> Months</a></ion-badge>
+        <ion-badge item-end style="height: 66px"><a href="#" (click)="getNextDate(90)" style="color:white;font-weight:bold;margin-top:7px">3 <br> Months</a></ion-badge>
+        <ion-badge item-end style="height: 66px">
+          <a href="#" (click)="getNextDate(0)" style="color:white;font-weight:bold;margin-top:-19px">
+            <ion-icon name="calendar" style="font-size:32pt"></ion-icon>
+          </a>
+
+          <!--<ion-badge item-end><a href="#" (click)="getNextDate(14)" style="color:white;font-weight:bold">2 <br>Weeks</a></ion-badge>
+        <ion-badge item-end><a href="#" (click)="getNextDate(30)" style="color:white;font-weight:bold">1 <br> Months</a></ion-badge>
+        <ion-badge item-end><a href="#" (click)="getNextDate(90)" style="color:white;font-weight:bold">3 <br> Months</a></ion-badge>
+        <ion-badge item-end style="height: 51px;
+    width: 64px;
+    position: relative;
+    left: 3px;
+    top: 4px;">
+          <a href="#" (click)="getNextDate(0)" style="color:white;font-weight:bold">
+
+            <ion-icon name="calendar"></ion-icon>
+          </a>-->
+        </ion-badge>
+      </div>
+      <div style="color: red;   
+   text-align:center;" *ngIf="isFuture>0 && unitDetailData.nextServiceDate==''">Next service date should be future date only</div>
+      <div style="clear:both"><br></div>
+      <div>Next Service Date:{{unitDetailData.nextServiceDate}}</div>
+      <ion-item>
+        <ion-label stacked>Request Denyo Service Support</ion-label>
+        <ion-checkbox [disabled]="readOnly" (click)="showConfirm()" formControlName="is_request" [(ngModel)]="is_request"></ion-checkbox>
+      </ion-item>
+
+      <ion-item *ngIf="hideActionButton">
+        <button ion-button color="primary" text-center block [disabled]="!form.valid  || isSubmitted">Complete and Save</button>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
+<ion-footer color="bluedark">
+  <ion-toolbar color="bluedark">
+    <ul class="quick-list">
+      <li>
+        <button ion-button icon-only clear (click)="redirectToMaps()">
+    	<ion-icon name="home" class="footer-icon">MAPS</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToUser()" clear>
+    	<ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToMessage()" clear>
+    	<ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
+      <ion-badge item-end class="messagecount"  *ngIf="msgcount>0">{{this.msgcount}}</ion-badge>
+    </button>
+        <ion-badge color="danger"></ion-badge>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectCalendar()" clear>
+    	<ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button style="width: 34px;" ion-button icon-only (click)="redirectToSettings()" clear>
+    	<ion-icon name="settings" class="footer-icon">ORG</ion-icon>
+    </button>
+      </li>
+    </ul>
+
+  </ion-toolbar>
+   <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
+</ion-footer>

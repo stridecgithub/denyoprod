@@ -1,0 +1,43 @@
+<form [formGroup]="form" (ngSubmit)="login()">
+  <ion-header>
+    <custom-header [header]="header_data"></custom-header>
+  </ion-header>
+  <ion-content padding class="login-content">
+
+    <!--div #map id="map" style="height:75%"></div-->
+
+    <div class="t-center"><img src="img/denyo_logo.png" class="logo"></div>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>User ID</ion-label>
+        <ion-input type="text" formControlName="userid" [(ngModel)]="userId"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input type="password" formControlName="password" [(ngModel)]="passWrd"></ion-input>
+      </ion-item>
+
+      <ion-item class="forgot" (click)="doMove()">
+        <div>Forgot?</div>
+      </ion-item>
+      <ion-item>
+
+        <div style="color: yellow;  
+    float: right;">Ver 1.40</div>
+      </ion-item>
+      <ion-item>
+        <div padding>
+          <button ion-button color="primary" text-center block [disabled]="!form.valid">Login</button>
+        </div>
+      </ion-item>
+
+    </ion-list>
+
+
+  </ion-content>
+
+  <ion-footer *ngIf="networkType!=''">
+    <div class="network-error">{{networkType}}</div>
+  </ion-footer>
+</form>

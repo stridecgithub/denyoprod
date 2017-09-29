@@ -1,0 +1,267 @@
+<div class="network-error" *ngIf="networkType!=''" 
+style ="position: relative;margin-top: 108%;">{{networkType}}</div>
+<div *ngIf="networkType==''">
+  <ion-select style="padding: 1px 1px 6px 1px;position: relative;
+    margin-top: 16px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
+    <ion-option value="ALL" selected=true>All</ion-option>
+    <ion-option value="SERVICE">Service</ion-option>
+    <ion-option value="EVENT">Event</ion-option>
+    <ion-option value="ALARM">Alarm</ion-option>
+  </ion-select>
+</div>
+<div class="ionic2-calendar" [ngClass]="sizeClass" *ngIf="networkType==''">
+  <div class="ionic2-cal-topnav">
+    <div class="month-selection" style="background-color:#00569F;color:white">
+      <button style=" background:url(img/left_arrow.png) no-repeat center ;width:40px;height:40px;" class="switch-month-button"
+        (click)="plusMonth(-1)"></button>
+      <div style="width: 80%;height: 40px;position: relative;margin-left: 28%;top: 10px;">
+        <!--ion-select (ngModelChange)="setDateSelectionMonth($event)" [(ngModel)]="ctrl.selectedMonth">
+          <ion-option *ngFor="let m of months" [value]="m">{{m}}</ion-option>
+        </ion-select-->{{monthTitle}} - {{calendarYear}}
+
+
+        <!---{{calendarMonth}}-->
+      </div>
+      <button style=" background:url(img/right_arrow.png) no-repeat center ;width:40px;height:40px;" class="switch-month-button"
+        (tap)="plusMonth(1)"></button>
+    </div>
+  </div>
+  <div class="main-view" *ngIf="networkType==''">
+    <div class="ionic2-cal-month-view">
+      <div style="background-color:gray;
+    color: white;" class="ionic2-cal-item ionic2-cal-header" *ngFor="let wd of weekDays">
+        {{wd}}
+      </div>
+      <!-- Data attribute idx should be enough, cause then we can retrieve the date, etc from the idx... -->
+      <!-- [ngClass]="{'out-of-current-month': (d.date.isBefore(ctrl.monthView.firstDayOfMonth) || d.date.isAfter(ctrl.monthView.lastDayOfMonth))}"
+       -->
+      <button class="ionic2-cal-item {{(d.date.year() == currentYear) && (d.date.month()+1 == currentMonth) && (d.date.date() == currentDate) ? 'currentDataHighlights' : 'date-grid-block'}}"
+        [attr.data-idx]="i" [attr.data-dayofmonth]="d.date.date()" [attr.data-month]="d.date.month()+1" [attr.data-year]="d.date.year()"
+        [id]="'month-grid-day-' + i" *ngFor="let d of ctrl.monthView.days; let i = index" (tap)="selectDate(d, $event)" (press)="monthDayGridCellOnPress(d, $event)">
+            <ul class="event-list" [dragula]='"first-bag"' [dragulaModel]='d.events'>
+        <button 
+          class="event-list-item 
+          {{e.endDate.getDate() !== d.date.date() ? 'does-continue' : ''}} 
+          {{e.startDate.getDate() !== d.date.date() ? 'is-continued' : ''}}
+          {{(e.endDate.getDate() !== d.date.date()) || (e.startDate.getDate() !== d.date.date()) ? 'multi-span-' + e.id : ''}}
+          {{activeDragGroup === 'multi-span-' + e.id ? 'active-group-drag' : ''}}" 
+          [ngClass]="e?.class" 
+          *ngFor="let e of d.events"
+          [id]="e.id"
+          (tap)="eventOnClick(e, $event)"
+          (press)="eventOnPress(e, $event)">
+
+
+           <!--p *ngFor="let h of highlighteddata; let i = index" class="{{currentDate == d.date.date() ? 'currentDataHighlights' : ''}}">
+        <span class="{{h.class}}" *ngIf="h.class=='alarm_service' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(63,139,197);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+
+        <span class="{{h.class}}" *ngIf="h.class=='service_event' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(90,192,217);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='alarm' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:#ECAE4B;" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='service' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(63,139,197);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='event' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(90,192,217);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='alarm_service_event' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(63,139,197);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='alarm_event' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(90,192,217);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+      </p-->
+
+         </button>
+      </ul>
+
+      <p *ngFor="let h of highlighteddata; let i = index" class="{{currentDate == d.date.date() ? 'currentDataHighlights' : ''}}">
+        <span class="{{h.class}}" *ngIf="h.class=='alarm_service' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(63,139,197);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+
+        <span class="{{h.class}}" *ngIf="h.class=='service_event' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(90,192,217);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='alarm' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:#ECAE4B;" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='service' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(63,139,197);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='event' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(90,192,217);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='alarm_service_event' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(63,139,197);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+        <span class="{{h.class}}" *ngIf="h.class=='alarm_event' && h.dte==d.date.date()  && h.mne==d.date.month()+1 && h.yrd==d.date.year()"
+          style="font-size:32pt;color:rgb(90,192,217);" (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">&nbsp;</span>
+      </p>
+      <span class="{{currentDate == d.date.date() ? 'currentDataHighlights' : ''}} ionic2-cal-day-of-month" *ngIf="currentDate != d.date.date()"
+        (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">{{d.date.date()}}</span>
+      <span class="{{currentDate == d.date.date()  ? 'currentDataHighlights' : ''}} ionic2-cal-day-of-month" *ngIf="currentDate == d.date.date()"
+        (click)="onTimeSelected(d.date.year(),d.date.month()+1,d.date.date(),'1')">{{d.date.date()}}</span>
+
+
+
+
+      </button>
+    </div>
+  </div>
+  <div class="selection-view" *ngIf="networkType==''">
+    <!--{{ctrl.monthView.selectedDate?.date?.format('MMM Do YYYY')}}-->
+    <!--ion-list class="event-list">
+      <li [ngClass]="e.class" [ngStyle]="e.style" *ngFor="let e of ctrl.monthView?.selectedDate?.events">
+        <span>{{e.startDate | date:"HH:mm"}}: </span>
+      <ion-icon [ngStyle]="e?.iconStyle" [name]="e?.icon"></ion-icon> {{e.name}}
+      </li>
+      </ion-list-->
+
+    <div class="spacing">
+      <div class="list-title"><b>Legend</b></div>
+      <div class="div-action">
+        <button class="add-new-btn trippedcolor" small>
+  Tripped
+ </button>
+        <button class="add-new-btn eventcolor">
+  Event
+ </button>
+        <button class="add-new-btn warningcolor">
+  Warning
+ </button>
+        <button class="add-new-btn servicecolor">
+  Service
+ </button>
+      </div>
+      <h3>{{daySession}}</h3>
+      <br>
+      <!--button ion-button small (click)="doAdd()" style="color:white">
+    <span class="add-calendar-button-inner">
+  +</span>
+ </button-->
+
+
+      <button class="add-new-btn" (click)="doAdd()">
+  	<div class="algn-cent">
+    	<ion-icon name="ios-add-circle-outline"></ion-icon>       
+    </div>
+  </button>
+
+
+      <ion-list *ngIf="totalCountEventDateWise!=0">
+
+
+        <ion-item-sliding *ngFor="let item of calendarResultEvent;"   (ionSwipe)="swipeopensliding()">
+
+          <ion-item *ngIf="EVENTVIEWACCESS=='0'">
+            <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+          </ion-item>
+
+
+          <ion-item *ngIf="item.event_type=='E'  && EVENTVIEWACCESS=='1'" class="msg-item">
+            <div>
+
+              <h2 clear item-right><b>Event:  </b>{{item.event_title}}</h2>
+            </div>
+            <div>Date & Time:{{item.formatted_datetime}}</div>
+            <div style="white-space: normal">Location:{{item.event_location}}</div>
+            <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
+            <div>Created By:{{item.event_addedby_name}}</div>
+          </ion-item>
+          <!--ion-item-options>
+        <button class="editcolor" (click)="doEdit(item,'edit')">                      
+                        <ion-icon name="create" class="icon-size"></ion-icon>
+                    </button>
+        <button class="trashcolor" (click)="doConfirm(item.event_id,item)">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+      </ion-item-options-->
+          <ion-item *ngIf="SERVICEVIEWACCESS=='0'">
+            <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+          </ion-item>
+          <ion-item *ngIf="item.event_type=='S' && SERVICEVIEWACCESS=='1'" class="msg-item">
+
+            <div>
+              <h2 clear item-right><b>Service: </b >{{item.event_title}}</h2>
+            </div>   
+            <div>Unit:{{item.unitname}}</div>         
+            <div>Date & Time:{{item.formatted_datetime}}</div>
+            <div style="white-space: normal">Location:{{item.event_location}}</div>
+            <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
+            <div>Created By:{{item.event_addedby_name}}</div>
+          </ion-item>
+          <!--ion-item-options>
+        <button class="editcolor" (click)="doEdit(item,'edit')">                      
+                        <ion-icon name="create" class="icon-size"></ion-icon>
+                    </button>
+        <button class="trashcolor" (click)="doConfirm(item.service_id,item)">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+      </ion-item-options-->
+
+
+          <ion-item *ngIf="ALARMVIEWACCESS=='0'">
+            <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+          </ion-item>
+          <ion-item *ngIf="item.event_type=='A' && ALARMVIEWACCESS=='1'" class="msg-item">
+  
+            <div>
+              <h2 clear item-right><b>Alarm: </b> {{item.event_title}}</h2>
+            </div>
+            <div>Unit:{{item.unitname}}</div>
+            <div>Date & Time:{{item.formatted_datetime}}</div>
+            <div style="white-space: normal">Location:{{item.event_location}}</div>
+            <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
+          </ion-item>
+          <ion-item-options>
+
+            <button class="editcolor" (click)="doCalendarEdit(item,'Service')" *ngIf="item.event_type=='S' && SERVICEEDITACCESS==1">                      
+                        <ion-icon name="create" class="icon-size"></ion-icon>
+                    </button>
+            <button class="trashcolor" (click)="doCalendarDelete(item,'Service')" *ngIf="item.event_type=='S' && SERVICEDELETEACCESS==1">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+
+
+
+
+            <button class="editcolor" (click)="doCalendarEdit(item,'Event')" *ngIf="item.event_type=='E' && EVENTEDITACCESS==1">                      
+                        <ion-icon name="create" class="icon-size"></ion-icon>
+                    </button>
+            <button class="trashcolor" (click)="doCalendarDelete(item,'Event')" *ngIf="item.event_type=='E' && EVENTDELETEACCESS==1">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+
+
+
+            <button class="trashcolor" (click)="doCalendarDelete(item,'Alarm')" *ngIf="item.event_type=='A'  && ALARMDELETEACCESS==1">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+
+
+            <button class="editcolor" (click)="doAlarmView(item.event_id)" *ngIf="item.event_type=='A'">                        
+                        <ion-icon name="arrow-dropright"  class="icon-size"></ion-icon>
+                    </button>
+
+
+            <button class="editcolor" (click)="doCalendarView(item.event_id)" *ngIf="item.event_type=='E'">                        
+                        <ion-icon name="arrow-dropright"  class="icon-size"></ion-icon>
+                    </button>
+
+
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngIf="totalCountEventDateWise==0">
+          <div class="error">{{noeventtitle}}</div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  

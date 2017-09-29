@@ -1,0 +1,51 @@
+https://scotch.io/tutorials/token-based-authentication-for-angularjs-and-laravel-apps
+
+
+<span class="large" ng-bind-html="unitDetailData.htmlContent"></span>
+
+
+
+
+https://devdactic.com/ionic-2-images/
+
+http://denyoappv2.stridecdev.com/service/store
+main.js:79667 is_mobile=1&serviced_datetime=2007-01-01T13:04:00Z&service_remark=@denyov4 dfvvvvvv&next_service_date=&serviced_by=Super Admin&is_request=undefined&service_subject=Test&remarkget=@denyov4 dfvvvvvv&uploadInfo=[{"imgSrc":"http://denyoappv2.stridecdev.com/staffphotos/stridecdev_1497981946636.jpg","imgDateTime":"2017-06-20T18:06:30.995Z","fileName":"stridecdev_1497981946636.jpg"},{"imgSrc":"http://denyoappv2.stridecdev.com/staffphotos/stridecdev_1497982000095.jpg","imgDateTime":"2017-06-20T18:07:26.545Z","fileName":"stridecdev_1497982000095.jpg"}]&nextServiceDate=Thu Jun 15 2017 00:00:00 GMT+0530 (IST)
+
+
+is_mobile=1&serviced_datetime=2017-06-05T13:03:00Z&service_remark=This is @denyov4 tes&next_service_date=Fri Jun 23 2017 00:00:00 GMT+0530 (IST)&serviced_by=1&is_request=true&service_subject=Test fgggh&micro_timestamp=201752113359&uploadInfo=[{"imgSrc":"http://denyoappv2.stridecdev.com/serviceimages/201752113180_123_1498031280639.jpg","imgDateTime":"2017-06-21T07:48:42.598Z","fileName":"201752113180_123_1498031280639.jpg"},{"imgSrc":"http://denyoappv2.stridecdev.com/serviceimages/201752113193_123_1498031343995.jpg","imgDateTime":"2017-06-21T07:49:51.099Z","fileName":"201752113193_123_1498031343995.jpg"},{"imgSrc":"http://denyoappv2.stridecdev.com/serviceimages/201752113205_123_1498031405603.jpg","imgDateTime":"2017-06-21T07:50:50.906Z","fileName":"201752113205_123_1498031405603.jpg"}]
+
+
+https://stackoverflow.com/questions/35017800/ionic-2-using-angular-2-pipe-breaks-on-ios-cant-find-variable-intl
+
+https://www.npmjs.com/package/ionic2-calendar
+
+
+Need the following API:
+
+calandar API:-
+
+Calendar List:-
+1 filter the services based on date example pass the date YYYY-mm-dd filter the next_service_date from services table of db
+Add Calendar:-
+1 Unit list for Dropdown getunitlist like companygroup
+2  in service type unit/project/location based on filter exampe if pass the unit id related data assigne the text field project and location in textfield
+3 Save the calendar event details based on Service/Event selected type
+
+
+Header & Footer Common call - Keyword ionic header and footer calling one
+ionic generate component navbar
+https://stackoverflow.com/questions/38889380/including-the-common-header-bar-for-ionic-2-angular-2
+https://stackoverflow.com/questions/35936198/ionic-2-global-navbar-for-the-app
+
+Footer hide on when keyboard opend;
+https://forum.ionicframework.com/t/hide-footer-when-keyboard-appear/9254/9
+https://stackoverflow.com/questions/36630543/hide-footer-when-keyboard-appear-ionic
+https://stackoverflow.com/questions/42716744/hide-footer-when-keyboard-appears-ionic2
+
+
+
+
+Push Notification:-
+
+http://tphangout.com/ionic-2-push-notifications-2/
+

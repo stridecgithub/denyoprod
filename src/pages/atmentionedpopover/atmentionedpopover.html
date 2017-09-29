@@ -1,0 +1,12 @@
+<!--
+  Generated template for the PopoverPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content class="pop">
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-item *ngFor="let item of items" (click)='selectone(item)'>
+      {{ item}}
+    </ion-item>
+</ion-content>

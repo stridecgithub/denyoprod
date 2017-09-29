@@ -1,0 +1,157 @@
+<!-- Header -->
+<ion-header>
+  
+  <button ion-button clear menuToggle class="menu-toggle">
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <button ion-button class="bell-icon" clear (click)="notification()">
+    <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+    <ion-badge style="margin-top: 5px; margin-right: 7px;" item-end class="notificationcount" *ngIf="notcount>0">
+      {{this.notcount}}
+    </ion-badge>
+  </button>
+
+  <ion-title class="page-title">{{pageTitle}}</ion-title>
+
+  <ion-navbar class="backtoprevious-navbar" hideBackButton>
+    <ion-buttons start class="backtoprevious-start">
+      <button ion-button icon-left class="backtoprevious-button" (click)="previous()">
+        <ion-icon name="arrow-back" class="backtoprevious-icon"></ion-icon>
+        Back to previous
+      </button>
+    </ion-buttons>
+    <ion-buttons end class="login-as">
+      Login As:{{loginas}}
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<!-- Header -->
+
+
+<ion-content padding class="ion-content" *ngIf="VIEWACCESS==0">
+ 
+  <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+</ion-content>
+<ion-content class="ion-content" *ngIf="VIEWACCESS==1">
+  
+
+  <!-- Account Icons -->
+  <div id="my-account-icons" *ngIf="networkType==''">
+    <div class="user-icon active">
+      <div>
+        <img src="img/myac.png" ng-click="nextpage()">
+      </div>
+      <div>
+        <ion-label>My<br>Account</ion-label>
+      </div>
+    </div>
+    <div class="user-icon" (click)="user()">
+      <div>
+        <img src="img/us.png" ng-click="nextpage()">
+      </div>
+      <div>
+        <ion-label>User<br>List</ion-label>
+      </div>
+    </div>
+    <div class="user-icon" (click)="cgroup()">
+      <div>
+        <img src="img/mycg.png" ng-click="nextpage()">
+      </div>
+      <div>
+        <ion-label>User<br>Group</ion-label>
+      </div>
+    </div>
+    <div class="user-icon" (click)="urole()">
+      <div>
+        <img src="img/ur.png" ng-click="nextpage()">
+      </div>
+      <div>
+        <ion-label>User<br>Role</ion-label>
+      </div>
+    </div>
+  </div>
+  <!-- Account Icons -->
+
+  <!-- Account CTA -->
+  <div id="chart-report-cta"  *ngIf="networkType==''">
+    <button (click)="orgchart()"><img src="img/ORG-chart-icon.png"> Org Chart</button>
+    <button (click)="report()"><img src="img/report-icon.png"> Report Template</button>
+  </div>
+  <!-- Account CTA -->
+
+  <!-- User Info-->
+  <div id="user-main-info" padding  *ngIf="networkType==''">
+    <div class="user-photo">
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="{{photo}}">
+        </ion-avatar>
+      </ion-item>
+    </div>
+    <div class="user-info">
+      <ul class="user-info-list">
+        <li><strong>User ID</strong> {{userid}}</li>
+        <li><strong>Password</strong> *********</li>
+      </ul>
+    </div>
+    <div class="user-hashtag"><b>Personal Hashtag:</b> {{hashtag}}</div>
+  </div>
+  <!-- User Info-->
+
+
+  <!-- User Meta -->
+  <div id="user-meta" padding  *ngIf="networkType==''">
+    <ul class="user-info-list">
+      <li><strong>Roles</strong> {{role}}</li>
+      <li><strong>Email</strong> {{email}}</li>
+      <li><strong>Country</strong> {{country}}</li>
+      <li><strong>Job Position</strong> {{job_position}}</li>
+      <li><strong>Role in ORG Chart</strong> <a (click)="viewOrgChart()" href="#">View in Org Chart</a></li>
+    </ul>
+  </div>
+  <!-- User Meta -->
+
+  <button ion-button color="greenm" text-center block (click)="doEdit(userId)" *ngIf="EDITACCESS==1 && networkType==''">Edit Profile
+  </button>
+</ion-content>
+
+<ion-footer color="bluedark">
+  <ion-toolbar color="bluedark">
+    <ul class="quick-list">
+      <li>
+        <button ion-button icon-only clear (click)="redirectToMaps()">
+          <ion-icon name="home" class="footer-icon">MAPS</ion-icon>
+        </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToUser()" clear>
+          <ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
+        </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToMessage()" clear>
+          <ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
+          <ion-badge item-end class="messagecount" *ngIf="msgcount>0">{{this.msgcount}}</ion-badge>
+        </button>
+        <ion-badge color="danger"></ion-badge>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectCalendar()" clear>
+          <ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
+        </button>
+      </li>
+      <li>
+        <button style="width: 34px;" ion-button icon-only (click)="redirectToSettings()" clear>
+          <ion-icon name="settings" class="footer-icon">ORG</ion-icon>
+        </button>
+      </li>
+    </ul>
+
+  </ion-toolbar>
+  <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
+</ion-footer>

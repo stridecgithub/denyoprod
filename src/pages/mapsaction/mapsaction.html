@@ -1,0 +1,200 @@
+<!--
+  Generated template for the MessagesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header style="
+    background-color: #00569F;" color="bluedark">
+
+
+  <button style="background-color: #00569F;float:left;" ion-button menuToggle class="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+  <ion-title style="    text-align: center;
+    margin-top: 10px;" class="page-title">{{pageTitle}}</ion-title>
+
+  <button style="float:left" ion-button (click)="notification()" style="position: absolute;
+    right: 0%;
+    top: 1%;background: transparent;">
+  <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+   <ion-badge style="    margin-top: 5px;
+    margin-right: 7px;" item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
+</button>
+
+  <!--ion-navbar color="bluedark" hideBackButton>
+    <ion-title class="page-title">{{pageTitle}}</ion-title>
+    <ion-buttons start>
+      <button ion-button menuToggle class="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    </ion-buttons>
+
+
+
+    <ion-buttons end>
+      <button ion-button (click)="notification()">
+  <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+   <ion-badge item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
+</button>
+    </ion-buttons>
+  </ion-navbar-->
+  <ion-navbar class="backtoprevious-navbar" hideBackButton>
+    <ion-buttons start class="backtoprevious-start">
+      <button ion-button icon-left class="backtoprevious-button" (click)="previous()">
+ <ion-icon name="arrow-back" class="backtoprevious-icon"></ion-icon>
+ Back to previous
+</button>
+    </ion-buttons>
+    <ion-buttons end>
+      Login As:{{loginas}}
+    </ion-buttons>
+  </ion-navbar>
+
+
+
+
+</ion-header>
+<ion-content padding class="ion-content" *ngIf="VIEWACCESS==0">
+
+  <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+</ion-content>
+<ion-content padding class="ion-content" *ngIf="VIEWACCESS==1">
+  <!--button ion-button (click)="startTheIterations()">Start</button>
+   <button ion-button (click)="stopTheIterations()">Stop</button>
+  {{timeri}}-->
+  <div #mapaction id="mapaction" style="position: relative;
+    overflow: hidden;
+    height: 55%;"   *ngIf="networkType==''"></div>
+
+  <!--div #map id="map" style="height:75%"></div-->
+
+
+
+  <div class="error" *ngIf="reportAllLists.length==0  && networkType==''">No unit entries found</div>
+  <div class="separator-line" *ngIf="totalCount!=0">&nbsp;</div>
+
+  <div *ngIf="networkType==''">
+    <ion-item style="float:left;width: 50%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">
+
+
+      <!--<ion-content padding class="ion-content"  *ngIf="VIEWACCESS==1">
+<div style="width:40%">
+  <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="reportAllLists.length!=0">-->
+
+      <ion-label>Sort By</ion-label>
+      <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
+        <ion-option value="favorite,desc">Favorite</ion-option>
+        <ion-option value="unitname,asc">Unit Name Ascending</ion-option>
+        <ion-option value="unitname,desc">Unit Name Descending</ion-option>
+        <ion-option value="companygroup_name,asc">Unit Group Ascending</ion-option>
+        <ion-option value="companygroup_name,desc">Unit Group Descending</ion-option>
+        <ion-option value="tripped,desc">Tripped</ion-option>
+        <ion-option value="warning,desc">Warning</ion-option>
+        <ion-option value="running,asc">Running</ion-option>
+        <ion-option value="offline,desc">Offline</ion-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+  <div style="width:50%;float:right;"  *ngIf="networkType==''">
+
+    <!--<ion-item style="float:left;width: 50%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">-->
+
+
+    <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">
+
+      <ion-label>Select Action</ion-label>
+      <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="actpet" (ionChange)="onAction(actpet)">
+        <ion-option value="view">View</ion-option>
+        <ion-option value="hide">Hide on Dashboard</ion-option>
+      </ion-select>
+    </ion-item>
+  </div>
+
+
+  <!--ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="totalCount!=0">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher-->
+  <ion-list *ngIf="totalCount!=0 && networkType==''">
+    <ion-item-sliding *ngFor="let item of reportAllLists;">
+      <ion-item>
+        <div class="item-checkbox">
+          <label class="checkbox">
+                    <input type="checkbox" style="width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 36px;
+    left: 50px;" (click)="getCheckBoxValue(item,item.unit_id,item.viewonid);" value="1">
+                </label>
+        </div>
+        <button class="{{item.colorcodeindications}}" style="float: left ;width:8px;height:70px">
+         
+        </button>
+        <button class="{{item.genstatus}}" style="float:left ;width:30px;height:30px;margin-top: 13px;background-color:#ffffff"></button>
+        <button (click)="favorite(item.unit_id)" class="{{item.favoriteindication}}" style="margin-left: -25px;float: right ;width:30px;height:30px;margin-top: 13px;background-color:#ffffff"></button>
+        <div style="overflow: hidden; padding-left: 3.0em;">
+          <h5 style="padding-top: 4px;" (click)="zoomOut(item)"><b>{{item.unitname}}</b></h5>
+          <h5 (click)="zoomOut(item)"><b>{{item.projectname}}</b></h5>
+          <h5 (click)="zoomOut(item)"><b>Gen Status:</b>{{item.genstatus}}</h5>
+          <h5 (click)="zoomOut(item)"><b>Running Hours:</b>{{item.runninghr}}</h5>
+        </div>
+      </ion-item>
+      <ion-item-options>
+
+        <button class="editcolor" (click)="doEdit(item,'edit')">                      
+                        <ion-icon name="create" class="icon-size"></ion-icon>
+                    </button>
+        <button class="trashcolor" (click)="doConfirm(item.unit_id,item)">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalCount!=0  && networkType==''">
+    <ion-infinite-scroll-content loadingText="Loading More Data"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <!--div #mapContainer id="map"></div-->
+
+</ion-content>
+<ion-footer color="bluedark">
+  <ion-toolbar color="bluedark">
+    <ul class="quick-list">
+      <li>
+        <button ion-button icon-only clear (click)="redirectToMaps()">
+    	<ion-icon name="home" class="footer-icon">MAPS</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToUser()" clear>
+    	<ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToMessage()" clear>
+    	<ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
+      <ion-badge item-end class="messagecount"  *ngIf="msgcount>0">{{this.msgcount}}</ion-badge>
+    </button>
+        <ion-badge color="danger"></ion-badge>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectCalendar()" clear>
+    	<ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button style="width: 34px;" ion-button icon-only (click)="redirectToSettings()" clear>
+    	<ion-icon name="settings" class="footer-icon">ORG</ion-icon>
+    </button>
+      </li>
+    </ul>
+
+  </ion-toolbar>
+  <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
+</ion-footer>

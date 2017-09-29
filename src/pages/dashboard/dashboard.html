@@ -1,0 +1,97 @@
+<ion-header>
+  <button style="float:left;    background: none;" ion-button menuToggle class="menu-toggle">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+
+
+  <button style="float:left" ion-button (click)="notification()" style="position: absolute;
+    right: 0%;
+    top: 1%;background: transparent;">
+  <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+   <ion-badge style="    margin-top: 5px;
+    margin-right: 7px;" item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
+</button>
+
+</ion-header>
+<ion-content padding class="home-content">
+  <!--label for="some_countries">Straight Forward</label>
+  <select name="some_countries" id="some_countries" class="icon-menu">
+<option style="padding-left:0px;" value="">Select a Country</option>
+<option style="background-image:url(flags/usa.png);" value="US">USA</option>
+<option style="background-image:url(flags/india.png)" value="IN">India</option>
+<option style="background-image:url(flags/england.png);" value="UK">England</option>
+<option style="background-image:url(flags/france.png);" value="FR">France</option>
+<option style="background-image:url(flags/germany.png);" value="GE">Germany</option>
+<option style="background-image:url(flags/canada.png);" value="CA">Canada</option>
+<option style="background-image:url(flags/russia.png);" value="RU">Russia</option>
+</select-->
+
+  <!--a href="#"  (click)="countryFlagPage()">Message Push</a-->
+  <div class="dash">
+    <div class="title">
+      Welcome to Denyo<br> E-Management System<br><strong>{{loginas}}</strong>
+    </div>
+    <div class="four-icons">
+      <div class="icon-top">
+        <div class="icon-left" (click)="goPage('MapsPage')">
+          <div class="maps">
+            <span>maps</span>
+          </div>
+        </div>
+        <div class="icon-right" (click)="goPage('UnitsPage')">
+          <div class="units">
+            <span>units</span>
+          </div>
+        </div>
+      </div>
+      <div class="icon-bottom">
+        <div class="icon-left" (click)="goPage('ReportsPage')">
+          <div class="reports">
+            <span>reports</span>
+          </div>
+        </div>
+        <div class="icon-right" (click)="goPage('CalendarPage')">
+          <div class="calendar">
+            <span>calendar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer color="bluedark">
+  <ion-toolbar color="bluedark">
+    <ul class="quick-list">
+      <li>
+        <button ion-button icon-only clear (click)="redirectToMaps()">
+    	<ion-icon name="home" class="footer-icon">MAPS</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToUser()" clear>
+    	<ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToMessage()" clear>
+    	<ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
+      <ion-badge item-end class="messagecount"  *ngIf="msgcount>0">{{this.msgcount}}</ion-badge>
+    </button>
+        <ion-badge color="danger"></ion-badge>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectCalendar()" clear>
+    	<ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
+    </button>
+      </li>
+      <li>
+        <button style="width: 34px;" ion-button icon-only (click)="redirectToSettings()" clear>
+    	<ion-icon name="settings" class="footer-icon">ORG</ion-icon>
+    </button>
+      </li>
+    </ul>
+
+  </ion-toolbar>
+  <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
+</ion-footer>

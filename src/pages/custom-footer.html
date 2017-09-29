@@ -1,0 +1,30 @@
+
+  <ion-toolbar color="bluedark">
+<ul class="quick-list">
+<li>
+    <button ion-button icon-only clear (click)="redirectToMaps()">
+    	<ion-icon name="home" class="footer-icon">MAPS</ion-icon>
+    </button>
+</li>  
+<li>  
+    <button  ion-button icon-only (click)="redirectToUnits()" clear>
+    	<ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
+    </button>
+</li>     
+<li>    
+    <button ion-button icon-only (click)="redirectToMessage()" clear>
+    	<ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
+    </button>
+</li>     
+<li>    
+    <button ion-button icon-only (click)="redirectCalendar()" clear>
+    	<ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
+    </button>
+</li>     
+<li>    
+    <button ion-button icon-only (click)="redirectToSettings()" clear>
+    	<ion-icon name="settings" class="footer-icon">SETTING</ion-icon>
+    </button>
+</li>    
+</ul>
+  </ion-toolbar>

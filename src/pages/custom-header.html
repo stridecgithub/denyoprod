@@ -1,0 +1,11 @@
+<ion-navbar>
+  <button *ngIf="header_data.ismenu" ion-button icon-only menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <button *ngIf="header_data.ishome" class="algo-header-home-icon" ion-button icon-only (click)="homeClick()">
+    <ion-icon class="ion-home" name="home"></ion-icon>
+  </button>
+  <ion-title class="header-title" [ngClass]="{'ishome-title': header_data.ishome,'ismeun-centre': !header_data.ishome}">
+    {{header_data.title}}
+  </ion-title>
+</ion-navbar>

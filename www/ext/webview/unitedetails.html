@@ -1,0 +1,392 @@
+<div id="page-wrapper">
+	<div class="row">
+		<form role="form" action="" method="POST">
+			<input type="hidden" name="_token" value="Rt2GTjpYX4mJucjyi5DFIOPUAdOg8GYkRvyxDKKl">
+			<input type="hidden" class="form-control" id="fuellevel" value="0">
+
+			<input type="hidden" class="form-control" id="loadpowerfactor" value="0">
+
+			<input type="hidden" class="form-control" id="current1" value="0">
+
+			<input type="hidden" class="form-control" id="current2" value="0">
+
+			<input type="hidden" class="form-control" id="current3" value="0">
+
+			<input type="hidden" class="form-control" id="freq" value="0">
+
+			<input type="hidden" class="form-control" id="enginestate" value="0">
+
+			<input type="hidden" class="form-control" id="mode" value="0">
+
+			<input type="hidden" class="form-control" id="volt1" value="0">
+
+			<input type="hidden" class="form-control" id="volt2" value="0">
+
+			<input type="hidden" class="form-control" id="volt3" value="0">
+
+			<input type="hidden" class="form-control" id="batteryvoltage" value="0">
+
+			<input type="hidden" class="form-control" id="oilpressure" value="0">
+
+			<input type="hidden" class="form-control" id="collanttemp" value="0">
+
+			<input type="hidden" class="form-control" id="runninghr" value="0">
+
+			<input type="hidden" class="form-control" id="name" value="0">
+
+			<input type="hidden" class="form-control" id="engspeed" value="0">
+
+			<input type="hidden" class="form-control" id="loadpower" value="0">
+
+			<input type="hidden" class="form-control" id="lat" value="0">
+
+			<input type="hidden" class="form-control" id="long" value="0">
+
+			<input type="hidden" class="form-control" id="loadpower1" value="0">
+
+			<input type="hidden" class="form-control" id="loadpower2" value="0">
+
+			<input type="hidden" class="form-control" id="loadpower3" value="0">
+
+			<input type="hidden" class="form-control" id="alarm" value="0">
+			<input type="hidden" name="unitid" id="unitid" value="2">
+			<div class="unit-listing">
+				<div class="row bar-chart1">
+					<div class="col-xs-12 col-md-12">
+						<div class="title-bar">
+							<div class="pull-left">
+								<div class=""><strong>Comm.Status: </strong><span id="generatorstatus">Online</span></div>
+								<div class=""><strong>Running Hours: </strong><span id="runninghr">0</span></div>
+								<div class=""><strong>Next Servicing: </strong> Jun 22 2017 </div>
+								<div class=""><strong>Fuel Level: </strong><span id="fueltopspan">0</span><span>%</span></div>
+								<div class=""><strong>Load Power: </strong><span id="loadpowerspan">0</span><span> kW</span></div>
+								<div class=""><strong>New Comment: </strong> No Comment </div>
+							</div>
+							<div class="pull-left">
+								<a href="#" class="trippedstatus" id="unitstate" style="margin:70px 0px 20px 10px;"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row bar-chart1">
+					<div class="col-xs-12 col-md-12">
+						<div class="off-man-auto-title">
+							<div class="cnt-mode">Controller Mode:</div>
+							<div class="off-text">
+								<div class="row">
+									<div class="col-md-4" style="padding-right:0px;"><a id="OFFBTN" class="manbtn" style="cursor:pointer;display:none;">OFF</a><a id="OFFBTNd" class="pull-left" style="cursor:pointer; display:block;">OFF</a></div>
+									<div class="col-md-4" style="padding-right:0px;"><a id="MANBTN" class="manbtn" style="cursor:pointer;display:none;">MAN</a><a id="MANBTNd" class="" style="cursor:pointer;  margin-right:0; display:block;">MAN</a></div>
+									<div class="col-md-4"><a id="AUTOBTN" class="manbtn" style="display:none;  ">AUTO</a><a id="AUTOBTNd" class="pull-right" style="cursor:pointer; display:block;">AUTO</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row bar-chart1">
+					<div class="col-md-8 col-xs-8" style="padding-bottom:15px; padding-right:0px;">
+						<div class="off-man-auto">
+							<div class="cnt-stat">Breaker State</div>
+							<div class="off-man-auto-cnt">
+								<img src="http://denyoappv2.stridecdev.com/assets/images/breaker_vector.png" alt="on" id="breakerstate">
+								<a href="#" class="in-out">I / O</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-xs-4">
+						<a href="javascript:void(0);" style="text-decoration:none;" onclick="setalarmtoast('0')">
+							<div class="alarm" style="height:175px;">
+								<img src="http://denyoappv2.stridecdev.com/assets/images/unit/alarm.png" alt="Alarm" id="alarmalert" style="margin-top:20px; width: 60%;"><br>
+								<span style="margin-top:20px;display: block;font-size:18px;">ALARM</span>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="row bar-chart1">
+					<div class="col-md-12 col-xs-12">
+						<div class="off-text-buttons">
+							<div class="row">
+								<div class="col-md-4 col-xs-4" style="padding-right:0px;">
+									<a id="STARTBTN" class="btnon" style="cursor:pointer;color:#FFF;display:;">START</a><a id="STARTBTNd" class="start-disable"
+									 style="color:#FFF;display:none; ">START</a>
+								</div>
+								<div class="col-md-4 col-xs-4" style="padding-right:0px; margin-top:-10px;">
+									<a id="STOPBTN" class="btnoff" style="cursor:pointer;display:none;">STOP</a><a id="STOPBTNd" class="start-disable"
+									 style="margin-top:10px;">STOP</a>
+								</div>
+								<div class="col-md-4 col-xs-4">
+									<form name="faultresetfrm" action="" method="post">
+										<input type="hidden" name="_token" value="3LxEOPQRhSKL2J90lrfqHAx5qoaCBtCOhnEwbigh">
+										<input type='hidden' name='_token' value="3LxEOPQRhSKL2J90lrfqHAx5qoaCBtCOhnEwbigh">
+										<div class="fault"><a id="FAULTBTN" style="cursor:pointer;display:none;">FAULT RESET</a>
+											<a id="FAULTBTNd" class="start-disable">FAULT RESET</a></div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row bar-chart">
+
+					<div class="col-xs-12 col-md-6" style="margin-bottom:10px;">
+						<div class="meter-box">
+							<a href="javascript:void(0);" onclick="settost('VOLT1')">
+								<h5>
+									<span id="volt1span">0</span><span>V</span>
+								</h5>
+							</a>
+							<div class="svg-draw">
+								<div id="volt1" class="volt1gauge demo2"></div>
+							</div>
+							<h2>VOLTAGE</h2>
+							<select style="margin-top:15px;" name="voltageoption" onchange="showvoltage(this.value,'voltage')" tabindex="-1" class="select2-hidden-accessible"
+							 aria-hidden="true">
+																																		<option value="1">L1-L2</option>
+																										<option value="2">L2-L3</option>
+																										<option value="3">L1-L3</option>
+																</select>
+
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6" style="margin-bottom:10px;">
+						<div class="meter-box">
+							<a href="javascript:void(0);" onclick="settost('CURRENT1')">
+								<h5>
+									<span id="current1span">0</span><span>A</span>
+								</h5>
+							</a>
+							<div class="svg-draw">
+								<div id="current1" class="current1gauge demo2"></div>
+							</div>
+							<h2>CURRENT</h2>
+							<select style="margin-top:15px;" name="currentoption" onchange="showcurrent(this.value,'current')" tabindex="-1" class="select2-hidden-accessible"
+							 aria-hidden="true">
+																																		<option value="1">L1-L2</option>
+																										<option value="2">L2-L3</option>
+																										<option value="3">L1-L3</option>
+																</select>
+
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6" style="margin-bottom:10px;">
+						<div class="meter-box">
+							<a href="javascript:void(0);" onclick="settost('FREQ')">
+								<h5>
+									<span id="freqspan">0</span><span>Hz</span>
+								</h5>
+							</a>
+							<div class="svg-draw">
+								<div id="freq" class="freqgauge demo2"></div>
+							</div>
+							<h2>FREQUENCY</h2>
+
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6" style="margin-bottom:10px;">
+						<div class="meter-box">
+							<a href="javascript:void(0);" onclick="settost('ENGINESPEED')">
+								<h5>
+									<span id="enginespeedspan">0</span><span>rpm</span>
+								</h5>
+							</a>
+							<div class="svg-draw">
+								<div id="enginespeed" class="enginespeedgauge demo2"></div>
+							</div>
+							<h2>ENGINE SPEED</h2>
+
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6" style="margin-bottom:10px;">
+						<div class="meter-box">
+							<a href="javascript:void(0);" onclick="settost('FUELLEVEL')">
+								<h5>
+									<span id="fuellevelspan">0</span><span>%</span>
+								</h5>
+							</a>
+							<div class="svg-draw">
+								<div id="fuellevel" class="fuellevelgauge demo2"></div>
+							</div>
+							<h2>FUEL</h2>
+
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6" style="margin-bottom:10px;">
+						<div class="meter-box">
+							<a href="javascript:void(0);" onclick="settost('LOADPOWER')">
+								<h5>
+									<span id="loadpowerspan">0</span><span>kW</span>
+								</h5>
+							</a>
+							<div class="svg-draw">
+								<div id="loadpower" class="loadpowergauge demo2"></div>
+							</div>
+							<h2>LOAD POWER</h2>
+
+						</div>
+					</div>
+
+
+				</div>
+
+				<div class="col-xs-12 col-md-2">
+					<div class="row">
+						<div class="col-xs-12 col-md-6">
+							<div class="row">
+
+								<div class="col-xs-12 col-md-6">
+									<div class="meter-box">
+										<a href="http://denyoappv2.stridecdev.com/2/COLLANTTEMP/showgraph">
+											<h5>
+												<span id="collanttempspan">0</span><span>C</span>
+											</h5>
+											<div class="algn-cent">
+												<span class="collanttempbar"></span>
+												<div class="meter-aign">
+												</div>
+												<img src="http://denyoappv2.stridecdev.com/assets/images/arrowleft.png" style="padding-left:10px; margin-top:-30px;">
+											</div>
+											<h2 style="margin-top:0px;">Coolant temp</h2>
+										</a>
+									</div>
+								</div>
+
+								<div class="col-xs-12 col-md-6">
+									<div class="meter-box">
+										<a href="http://denyoappv2.stridecdev.com/2/OILPRESSURE/showgraph">
+											<h5>
+												<span id="oilpressurespan">0</span><span>bar</span>
+											</h5>
+											<div class="algn-cent">
+												<span class="oilpressurebar"></span>
+												<div class="meter-aign">
+
+												</div>
+												<img src="http://denyoappv2.stridecdev.com/assets/images/arrowleft.png" style="padding-left:10px; margin-top:-30px;">
+											</div>
+											<h2 style="margin-top:0px;">Oil Pressure</h2>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<div class="row">
+
+								<div class="col-xs-12 col-md-6">
+									<div class="meter-box">
+										<a href="http://denyoappv2.stridecdev.com/2/LOADPOWERFACTOR/showgraph">
+											<h5>
+												<span id="loadpowerfactorspan">0</span><span> </span>
+											</h5>
+											<div class="algn-cent">
+												<span class="loadpowerfactorbar"></span>
+												<div class="meter-aign">
+
+												</div>
+												<img src="http://denyoappv2.stridecdev.com/assets/images/arrowleft.png" style="padding-left:10px; margin-top:-30px;">
+											</div>
+											<h2 style="margin-top:0px;">Power Factor</h2>
+										</a>
+									</div>
+								</div>
+
+								<div class="col-xs-12 col-md-6">
+									<div class="meter-box">
+										<a href="http://denyoappv2.stridecdev.com/2/BATTERYVOLTAGE/showgraph">
+											<h5>
+												<span id="batteryvoltagespan">0</span><span>V</span>
+											</h5>
+											<div class="algn-cent">
+												<span class="batteryvoltagebar"></span>
+												<div class="meter-aign">
+
+												</div>
+												<img src="http://denyoappv2.stridecdev.com/assets/images/arrowleft.png" style="padding-left:10px; margin-top:-30px;">
+											</div>
+											<h2 style="margin-top:0px;">Battery Voltage</h2>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<div class="row">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row bar-chart1">
+					<div class="col-xs-6 col-md-6">
+
+						<div class="eng" style="cursor:pointer;" onclick="appEvent('enginedetails');">
+							<div class="eve-al-cent">
+								<img src="http://denyoappv2.stridecdev.com/assets/images/unit/english_details.png" alt="e" style="max-width: 25px;">
+								<h6>ENGINE DETAILS</h6>
+							</div>
+						</div>
+
+
+
+					</div>
+					<div class="col-xs-6 col-md-6">
+
+
+						<div class="serv-info" style="cursor:pointer;" onclick="appEvent('serviceinfo');">
+							<div class="eve-al-cent">
+								<div class="count-block">
+									<img src="http://denyoappv2.stridecdev.com/assets/images/unit/info_circle.png" alt="Service Info" style="max-width: 25px;">
+									<span class="count-icon-new">                                    0
+                                                                        </span>
+									</span>
+								</div>
+								<h6>SERVICING INFO</h6>
+							</div>
+							</a>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="row bar-chart1">
+
+					<div class="col-xs-6 col-md-6">
+
+						<div class="event-log" style="cursor:pointer;" onclick="appEvent('alarmlog');">
+							<div class="eve-al-cent">
+								<img src="http://denyoappv2.stridecdev.com/assets/images/unit/event_log.png" alt="Event Log" style="max-width: 25px;">
+								<h6>ALARM LOG</h6>
+							</div>
+						</div>
+
+
+					</div>
+					<div class="col-xs-6 col-md-6">
+						<div class="orange-tab">
+							<div class="eve-al-cent" style="cursor:pointer;" onclick="appEvent('eventandcomment');">
+								<div class="count-block">
+									<img src="http://denyoappv2.stridecdev.com/assets/images/chat_vector.png" alt="chat_vector" style="max-width: 25px;">
+									<span class="count-icon-new">                                    0
+                                    </span>
+								</div>
+								<h6>EVENTS / COMMENTS</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+	</div>
+
+
+
+</div>
+<!-- /#page-wrapper -->
+</div>
+<div style="min-height:50px;">&nbsp;</div>
+</div>
+</form>

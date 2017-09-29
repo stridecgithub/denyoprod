@@ -1,0 +1,192 @@
+page-alarmlistdetail {
+    .ion-content{
+    background-color:white;
+}
+  .button1{
+background-color: #FBE983;
+ width: 40px;
+ height: 40px;
+ }
+ .button2{
+ background-color: #5584EE;
+ width: 40px;
+ height: 40px;
+ }
+  .button3{
+ background-color: #A4BDFD;
+ width: 40px;
+ height: 40px;
+ }
+  .button4{
+ background-color: #47D6DC;
+ width: 40px;
+ height: 40px;
+ }
+  .button5{
+ background-color: #7AE7BE;
+ width: 40px;
+ height: 40px;
+ }
+  .button6{
+ background-color: #51B749;
+ width: 40px;
+ height: 40px;
+ }
+  .button7{
+ background-color: #FBD75C;
+ width: 40px;
+ height: 40px;
+ }
+  .button8{
+ background-color: #FFB878;
+ width: 40px;
+ height: 40px;
+ }
+ .buttoncolorgroup button:focus {
+border: 1px solid #000;
+}
+ .buttoncolorgroup button.active {
+border: 1px solid #000;
+}
+ /*.buttoncolorgroup button:active,.buttoncolorgroup button:focus,.buttoncolorgroup button:hover{border: 2px solid #000;}
+ */.button9{
+ background-color: #FF877C;
+ width: 40px;
+ height: 40px;
+ }
+  .button10{
+ background-color: #DC2128;
+ width: 40px;
+ height: 40px;
+ }
+  .button11{
+ background-color: #DAADFE;
+ width: 40px;
+ height: 40px;
+ }
+  .button12{
+ background-color: #E1E1E1;
+ width: 40px;
+ height: 40px;
+ }
+.notificationcount{
+  color: white;
+    border-radius: 50px;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    /* border: 1px solid; */
+    background-color: gray;
+} 
+
+
+
+    .messagecount{
+   color: white;
+    border-radius: 50px;
+    position: absolute;
+    right: 1px;
+    top: 3px;
+    /* border: 1px solid; */
+    background-color: gray;
+}
+
+ion-navbar.toolbar{ background:#f0f0f0}
+	.bar-buttons-md {order: inherit;}
+	.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default, .bar-button-default-md:hover:not(.disable-hover), .bar-button-clear-md-default:hover:not(.disable-hover), .bar-button-md-default:hover:not(.disable-hover), .backtoprevious-icon{color:#333;text-transform: capitalize;}
+	#sortbar{padding:0;margin:0;background:#f0f0f0}
+	#sortbar ion-label{margin: 0;width: 100%;padding: 10px 15px;}
+	#sortbar ion-label ion-icon{line-height: 12px;vertical-align: top;}
+#sortbar ion-label button{width: 100%;background:none;padding: 0;}
+.company-name {float: left;}
+.ion-md-arrow-dropup{float: right;}
+.scroll-content{background-color:#fff;}	
+ion-item-sliding{border-bottom: 1px solid #ccc;}
+.item-md{color:#333;padding:0;}
+.item-md h2{margin:10px 0;}
+.label-md b{width:40%;display:inline-block;}
+ion-navbar ion-buttons{margin-right:15px;}
+.add-new-btn{background: #333;color: #fff;padding: 10px;text-align: center;width: 100%;}
+.algn-cent{margin:0 auto;display:table;}
+.algn-cent .ios-add-circle-outline{float:left;}
+.algn-cent span{float:right;font-size: 15px;margin: 6px 10px;}
+.toolbar-title-md{padding:0;}
+.button1{
+background-color: #FBE983;
+ width: 40px;
+ height: 40px;
+ }
+ .button2{
+ background-color: #5584EE;
+ width: 40px;
+ height: 40px;
+ }
+  .button3{
+ background-color: #A4BDFD;
+ width: 40px;
+ height: 40px;
+ }
+  .button4{
+ background-color: #47D6DC;
+ width: 40px;
+ height: 40px;
+ }
+  .button5{
+ background-color: #7AE7BE;
+ width: 40px;
+ height: 40px;
+ }
+  .button6{
+ background-color: #51B749;
+ width: 40px;
+ height: 40px;
+ }
+  .button7{
+ background-color: #FBD75C;
+ width: 40px;
+ height: 40px;
+ }
+  .button8{
+ background-color: #FFB878;
+ width: 40px;
+ height: 40px;
+ }
+ .button9{
+ background-color: #FF877C;
+ width: 40px;
+ height: 40px;
+ }
+  .button10{
+ background-color: #DC2128;
+ width: 40px;
+ height: 40px;
+ }
+  .button11{
+ background-color: #DAADFE;
+ width: 40px;
+ height: 40px;
+ }
+  .button12{
+ background-color: #E1E1E1;
+ width: 40px;
+ height: 40px;
+ }
+  .button0{
+     background-color: #FFFFFF;
+ width: 40px;
+ height: 40px;
+ }
+  .unfavorite
+ {
+     background-image:url('../img/unfav.png');background-size:cover;
+ }
+ .edit
+ {
+     background-image:url('../img/eic.png');background-size:cover;
+ }
+ .trend
+ {
+     background-image:url('../img/trendline.png');background-size:cover;
+ }
+
+}

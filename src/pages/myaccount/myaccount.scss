@@ -1,0 +1,122 @@
+page-myaccount {
+  // Overrides the previous CSS
+  .header {
+    color: #4c4c4c !important;
+  }
+  .ion-content, .scroll-content {
+    background: #f0f0f0 !important;
+  }
+
+  // Account Icons
+  #my-account-icons {
+    display: flex;
+    flex-direction: row;
+    background: #fff;
+    border-top: #cecece 1px solid;
+    border-bottom: #cecece 1px solid;
+    margin-bottom: 3px;
+    padding: 10px 0;
+    .user-icon {
+      flex: 1;
+      text-align: center;
+      border-right: #cecece 1px solid;
+      img {
+        width: 35px;
+      }
+      ion-label {
+        font-size: 10px;
+        margin: 0;
+      }
+      &:nth-child(1), &:nth-child(2) {
+        img {
+          width: 25px;
+          margin-top: 4px;
+        }
+      }
+      &:last-child {
+        border: none;
+      }
+      div {
+        &:first-child {
+          height: 36px;
+        }
+      }
+      &.active {
+        ion-label {
+          color: #005EAE;
+        }
+      }
+    }
+  }
+
+  // Account CTA
+  #chart-report-cta {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 4px;
+    button {
+      flex: 1;
+      background: #fff;
+      text-align: left;
+      padding: 10px 15px;
+      font-size: 14px;
+      line-height: 25px;
+      border-bottom: #cecece 1px solid;
+      img {
+        width: 25px;
+        float: left;
+        margin-right: 15px;
+      }
+      &:first-child {
+        margin-right: 3px;
+        border-right: #cecece 1px solid;
+      }
+    }
+  }
+
+  // User Main Info
+  #user-main-info {
+    background: #fff;
+    border-bottom: #cecece 1px solid;
+    margin-bottom: 4px;
+    .user-photo {
+      float: left;
+      width: 35%;
+      margin-bottom: 10px;
+    }
+    .user-hashtag {
+      clear: both;
+      border-top: #cecece 1px solid;
+      line-height: 45px;
+    }
+    .user-info-list {
+      float: left;
+      width: 65%;
+    }
+  }
+
+  // User info list
+  .user-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      border-bottom: #cecece 1px solid;
+      line-height: 45px;
+      strong {
+        width: 40%;
+        display: inline-block;
+      }
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  // User Meta
+  #user-meta {
+    background: #fff;
+    border-bottom: #cecece 1px solid;
+    margin-bottom: 4px;
+  }
+}
