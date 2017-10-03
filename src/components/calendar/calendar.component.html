@@ -149,7 +149,7 @@
 
 
 
-      <ion-list *ngIf="totalCountEventDateWise!=0">
+      <ion-list *ngIf="totalCountEventDateWise!=0  && onLoad==false">
         <ion-item-sliding *ngFor="let item of calendarResultEvent;">
 
           <ion-item *ngIf="EVENTVIEWACCESS=='0'">
@@ -172,14 +172,6 @@
             <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
             <div>Created By:{{item.event_addedby_name}}</div>
           </ion-item>
-          <!--ion-item-options>
-        <button class="editcolor" (click)="doEdit(item,'edit')">                      
-                        <ion-icon name="create" class="icon-size"></ion-icon>
-                    </button>
-        <button class="trashcolor" (click)="doConfirm(item.event_id,item)">                        
-                         <ion-icon name="trash" class="icon-size"></ion-icon>
-                    </button>
-      </ion-item-options-->
           <ion-item *ngIf="SERVICEVIEWACCESS=='0'">
             <p style="color: red;
     position: relative;
@@ -199,16 +191,6 @@
             <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
             <div>Created By:{{item.event_addedby_name}}</div>
           </ion-item>
-          <!--ion-item-options>
-        <button class="editcolor" (click)="doEdit(item,'edit')">                      
-                        <ion-icon name="create" class="icon-size"></ion-icon>
-                    </button>
-        <button class="trashcolor" (click)="doConfirm(item.service_id,item)">                        
-                         <ion-icon name="trash" class="icon-size"></ion-icon>
-                    </button>
-      </ion-item-options-->
-
-
           <ion-item *ngIf="ALARMVIEWACCESS=='0'">
             <p style="color: red;
     position: relative;
@@ -265,6 +247,116 @@
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
+
+
+
+
+
+
+
+
+
+ <ion-list *ngIf="totalCountEventDateWise!=0 && onLoad==true">
+        <ion-item-sliding *ngFor="let item of calEvents;">
+
+          <ion-item *ngIf="EVENTVIEWACCESS=='0'">
+            <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+          </ion-item>
+
+
+          <ion-item *ngIf="item.event_type=='E'  && EVENTVIEWACCESS=='1'" class="msg-item">
+            <div>
+
+              <h2 clear item-right><b>Event:  </b>{{item.event_title}}</h2>
+            </div>
+            <div *ngIf="item.event_time==''">Time:N/A</div>
+            <div *ngIf="item.event_time!=''">Time:{{item.event_time}}</div>
+            <div style="white-space: normal">Location:{{item.event_location}}</div>
+            <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
+            <div>Created By:{{item.event_addedby_name}}</div>
+          </ion-item>
+          <ion-item *ngIf="SERVICEVIEWACCESS=='0'">
+            <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+          </ion-item>
+          <ion-item *ngIf="item.event_type=='S' && SERVICEVIEWACCESS=='1'" class="msg-item">
+
+            <div>
+              <h2 clear item-right><b>Service: </b >{{item.event_title}}</h2>
+            </div>   
+            <div>Unit:{{item.unitname}}</div>
+            <div *ngIf="item.event_time==''">Time:N/A</div>
+            <div *ngIf="item.event_time!=''">Time:{{item.event_time}}</div>
+            <div style="white-space: normal">Location:{{item.event_location}}</div>
+            <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
+            <div>Created By:{{item.event_addedby_name}}</div>
+          </ion-item>
+          <ion-item *ngIf="ALARMVIEWACCESS=='0'">
+            <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+          </ion-item>
+          <ion-item *ngIf="item.event_type=='A' && ALARMVIEWACCESS=='1'" class="msg-item">
+  
+            <div>
+              <h2 clear item-right><b>Alarm: </b> {{item.event_title}}</h2>
+            </div>
+            <div>Unit:{{item.unitname}}</div>
+            <div>Date & Time:{{item.formatted_datetime}}</div>
+            <div style="white-space: normal">Location:{{item.event_location}}</div>
+            <div style="white-space: normal">Remarks:{{item.event_remark}}</div>
+          </ion-item>
+          <ion-item-options>
+
+            <button class="editcolor" (click)="doCalendarEdit(item,'Service')" *ngIf="item.event_type=='S' && SERVICEEDITACCESS==1">                      
+                        <ion-icon name="create" class="icon-size"></ion-icon>
+                    </button>
+            <button class="trashcolor" (click)="doCalendarDelete(item,'Service')" *ngIf="item.event_type=='S' && SERVICEDELETEACCESS==1">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+
+
+
+
+            <button class="editcolor" (click)="doCalendarEdit(item,'Event')" *ngIf="item.event_type=='E' && EVENTEDITACCESS==1">                      
+                        <ion-icon name="create" class="icon-size"></ion-icon>
+                    </button>
+            <button class="trashcolor" (click)="doCalendarDelete(item,'Event')" *ngIf="item.event_type=='E' && EVENTDELETEACCESS==1">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+
+
+
+            <button class="trashcolor" (click)="doCalendarDelete(item,'Alarm')" *ngIf="item.event_type=='A'  && ALARMDELETEACCESS==1">                        
+                         <ion-icon name="trash" class="icon-size"></ion-icon>
+                    </button>
+
+
+            <button class="editcolor" (click)="doAlarmView(item.event_id)" *ngIf="item.event_type=='A'">                        
+                        <ion-icon name="arrow-dropright"  class="icon-size"></ion-icon>
+                    </button>
+
+
+            <button class="editcolor" (click)="doCalendarView(item.event_id)" *ngIf="item.event_type=='E'">                        
+                        <ion-icon name="arrow-dropright"  class="icon-size"></ion-icon>
+                    </button>
+
+
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+
+
+
       <ion-list>
         <ion-item *ngIf="totalCountEventDateWise==0">
           <div class="error">{{noeventtitle}}</div>

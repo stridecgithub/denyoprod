@@ -1102,12 +1102,15 @@ export class CalendarComponent {
 
         }
 
-        if (currentDateArr.getDate().toLocaleString.length == 1) {
-          dtstr = '0';
-        } else {
+        if (currentDateArr.getDate()>9) {
           dtstr = '';
+        } else {
+          dtstr = '0';
 
         }
+
+        console.log("Date length string:-"+this.getlength(currentDateArr.getDate()));
+
         let curDate = currentDateArr.getFullYear() + "-" + mnstr + cmonth + "-" + dtstr + currentDateArr.getDate();
 
         let months = { '01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June', '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December' };
