@@ -132,7 +132,7 @@
   +</span>
  </button-->
       <br>
-      <div *ngIf="onLoad==true">
+      <div>
         <b>{{currentDateFormatToday}}</b>
         <div *ngIf="daySession!=''">{{daySession}}</div>
       </div>
@@ -149,7 +149,7 @@
 
 
 
-      <ion-list *ngIf="totalCountEventDateWise!=0  && onLoad==false">
+      <ion-list *ngIf="totalCountEventDateWise!=0  && onLoad==true">
         <ion-item-sliding *ngFor="let item of calendarResultEvent;">
 
           <ion-item *ngIf="EVENTVIEWACCESS=='0'">
@@ -255,8 +255,7 @@
 
 
 
-
- <ion-list *ngIf="totalCountEventDateWise!=0 && onLoad==true">
+      <ion-list *ngIf="calEvents.length>0 && onLoad==false">
         <ion-item-sliding *ngFor="let item of calEvents;">
 
           <ion-item *ngIf="EVENTVIEWACCESS=='0'">

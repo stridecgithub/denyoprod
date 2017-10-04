@@ -24,8 +24,12 @@ export class HomePage {
   private apiServiceURL: string = '';
   constructor(private conf: Config, public platform: Platform, private network: Network, public menuCtrl: MenuController, public navCtrl: NavController, private datePicker: DatePicker, public fb: FormBuilder, public device: Device, private http: Http) {
     this.form = fb.group({
-      "userid": ["", Validators.required],
-      "password": ["", Validators.required]
+      //"userid": ["", Validators.required],
+      //"password": ["", Validators.required]
+      "userid": ["", Validators.compose([Validators.maxLength(50), Validators.required])],    
+
+     "password": ["", Validators.compose([Validators.maxLength(50),  Validators.required])]
+     
 
     });
     this.apiServiceURL = conf.apiBaseURL();

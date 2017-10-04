@@ -12,7 +12,7 @@ export class Config {
         return "Permission Denied.";
     }
     serverErrMsg() {
-       // return "Server Error:Service not available";
+        // return "Server Error:Service not available";
         return "";
     }
     networkErrMsg() {
@@ -36,7 +36,7 @@ export class Config {
         }
     }
 
-    sendNotification(message): void {
+    sendNotificationTimer(message): void {
         let notification = this.toastCtrl.create({
             message: message,
             duration: 3000
@@ -45,15 +45,44 @@ export class Config {
     }
 
 
+    sendNotification(message): void {
+        let notification = this.toastCtrl.create({
+            message: message,
+            duration: 3000
+        });
+        notification.present();
+
+           /*
+        notification.onDidDismiss(() => {
+            console.log('Dismissed toast');
+             notification.dismiss();
+        });   */
+    }
+/*
+    sendNotification(message): void {
+        let notification = this.toastCtrl.create({
+            message: message,
+            // duration: 3000,
+            //closeButtonText:"X"
+            showCloseButton: true,
+            closeButtonText: "X",
+            dismissOnPageChange: true
+        });
+        notification.present();
+     
+    }
+    */
+
+
     timeConverter(unixtime) {
-        var u = new Date(unixtime*1000);
-      return u.getUTCFullYear() +
-        '-' + ('0' + u.getUTCMonth()).slice(-2) +
-        '-' + ('0' + u.getUTCDate()).slice(-2) + 
-        ' ' + ('0' + u.getUTCHours()).slice(-2) +
-        ':' + ('0' + u.getUTCMinutes()).slice(-2) +
-        ':' + ('0' + u.getUTCSeconds()).slice(-2) +
-        '.' + (u.getUTCMilliseconds() / 1000).toFixed(3).slice(2, 5) 
+        var u = new Date(unixtime * 1000);
+        return u.getUTCFullYear() +
+            '-' + ('0' + u.getUTCMonth()).slice(-2) +
+            '-' + ('0' + u.getUTCDate()).slice(-2) +
+            ' ' + ('0' + u.getUTCHours()).slice(-2) +
+            ':' + ('0' + u.getUTCMinutes()).slice(-2) +
+            ':' + ('0' + u.getUTCSeconds()).slice(-2) +
+            '.' + (u.getUTCMilliseconds() / 1000).toFixed(3).slice(2, 5)
     }
 
 }

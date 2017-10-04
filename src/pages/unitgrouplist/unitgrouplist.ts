@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, NavParams,Platform } from 'ionic-angular';
+import { NavController, AlertController, NavParams, Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { AddunitsonePage } from '../addunitsone/addunitsone';
@@ -13,7 +13,7 @@ import { NotificationPage } from '../notification/notification';
 import { CalendarPage } from '../calendar/calendar';
 import { EmailPage } from '../email/email';
 import { MapsPage } from '../maps/maps';
-import { OrgchartPage} from '../orgchart/orgchart';
+import { OrgchartPage } from '../orgchart/orgchart';
 import { UnitsPage } from '../units/units';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
@@ -28,13 +28,13 @@ import { Config } from '../../config/config';
 @Component({
   selector: 'page-unitgrouplist',
   templateUrl: 'unitgrouplist.html',
-   providers:[Config]
+  providers: [Config]
 })
 export class Unitgrouplist {
 
- public loginas: any;
+  public loginas: any;
   public pageTitle: string;
- private apiServiceURL: string = "";
+  private apiServiceURL: string = "";
   private permissionMessage: string = "";
   public networkType: string;
   public VIEWACCESS: any;
@@ -66,7 +66,7 @@ export class Unitgrouplist {
     results: 50
   }
   public reportAllLists = [];
-  constructor(private conf: Config, public platform: Platform, private network: Network,public http: Http, public nav: NavController,
+  constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController,
     public alertCtrl: AlertController, public navParams: NavParams) {
     this.pageTitle = 'Units';
     this.str = '';
@@ -74,10 +74,10 @@ export class Unitgrouplist {
     this.companyId = localStorage.getItem("userInfoCompanyId");
     this.userId = localStorage.getItem("userInfoId");
     //Authorization Get Value
-   
+
     //Authorization Get Value
- this.networkType = '';
-     this.permissionMessage = conf.rolePermissionMsg();
+    this.networkType = '';
+    this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
       this.network.onConnect().subscribe(data => {
@@ -102,8 +102,29 @@ export class Unitgrouplist {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Unitgrouplist');
+    this.reportAllLists = [];
+    this.detailvalue = "";
+    localStorage.setItem("viewlist", "");
+    let //body: string = "loginid=" + this.userId,
+      type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+      headers: any = new Headers({ 'Content-Type': type }),
+      options: any = new RequestOptions({ headers: headers }),
+      url: any = this.apiServiceURL + "/msgnotifycount?loginid=" + this.userId;
+    console.log(url);
+    // console.log(body);
+
+    this.http.get(url, options)
+      .subscribe((data) => {
+        console.log("Count Response Success:" + JSON.stringify(data.json()));
+        this.msgcount = data.json().msgcount;
+        this.notcount = data.json().notifycount;
+      }, error => {
+        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+      });
+
+    this.doUnit();
   }
- doRefresh(refresher) {
+  doRefresh(refresher) {
     console.log('doRefresh function calling...');
     this.reportData.startindex = 0;
     this.reportAllLists = [];
@@ -147,7 +168,7 @@ export class Unitgrouplist {
     console.log(url);
     this.http.get(url, options)
       .subscribe((data) => {
-         this.conf.presentLoading(0);
+        this.conf.presentLoading(0);
         res = data.json();
         console.log(JSON.stringify(res));
         console.log("1" + res.units.length);
@@ -202,10 +223,10 @@ export class Unitgrouplist {
         console.log("Total Record:" + this.totalCount);
 
       }, error => {
-         this.conf.presentLoading(0);
+        this.conf.presentLoading(0);
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
-   
+
   }
 
   /**********************/
@@ -227,27 +248,8 @@ export class Unitgrouplist {
     console.log('E');
   }
   ionViewWillEnter() {
-    this.detailvalue = "";
-    localStorage.setItem("viewlist", "");
-    let //body: string = "loginid=" + this.userId,
-      type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-      headers: any = new Headers({ 'Content-Type': type }),
-      options: any = new RequestOptions({ headers: headers }),
-      url: any = this.apiServiceURL + "/msgnotifycount?loginid=" + this.userId;
-    console.log(url);
-    // console.log(body);
 
-    this.http.get(url, options)
-      .subscribe((data) => {
-        console.log("Count Response Success:" + JSON.stringify(data.json()));
-        this.msgcount = data.json().msgcount;
-        this.notcount = data.json().notifycount;
-      }, error => {
-        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-      });
-  
-      this.doUnit();
-    
+
   }
 
   doAdd() {
@@ -317,7 +319,7 @@ console.log(JSON.stringify(this.selectedAction));*/
       }
     }
     if (urlstr != undefined) {
-     
+
       let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
         headers: any = new Headers({ 'Content-Type': type }),
         options: any = new RequestOptions({ headers: headers }),
@@ -344,8 +346,8 @@ console.log(JSON.stringify(this.selectedAction));*/
             // this.conf.sendNotification('Something went wrong!');
           }
         }, error => {
-        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-      });
+          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+        });
     }
   }
   doEdit(item, act, unitId) {
@@ -575,5 +577,5 @@ console.log(JSON.stringify(this.selectedAction));*/
   redirectToSettings() {
     this.nav.push(OrgchartPage);
   }
- 
+
 }

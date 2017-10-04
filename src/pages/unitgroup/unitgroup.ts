@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, NavParams,Platform } from 'ionic-angular';
+import { NavController, AlertController, NavParams, Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { AddunitgroupPage } from '../addunitgroup/addunitgroup';
@@ -15,7 +15,7 @@ import { MapsPage } from '../maps/maps';
 import { CalendarPage } from '../calendar/calendar';
 import { EmailPage } from '../email/email';
 import { Unitgrouplist } from '../unitgrouplist/unitgrouplist';
-import { OrgchartPage} from '../orgchart/orgchart';
+import { OrgchartPage } from '../orgchart/orgchart';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
 /**
@@ -39,7 +39,7 @@ export class UnitgroupPage {
   public CREATEACCESS: any;
   public EDITACCESS: any;
   public DELETEACCESS: any;
-   private apiServiceURL: string = "";
+  private apiServiceURL: string = "";
   private permissionMessage: string = "";
   public networkType: string;
   public totalCount;
@@ -56,8 +56,8 @@ export class UnitgroupPage {
   public colorListArr: any;
   public userId: any;
   public companyId;
-  constructor(private conf: Config, public platform: Platform, private network: Network,public http: Http, public nav: NavController,
-   public alertCtrl: AlertController, public navParams: NavParams) {
+  constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController,
+    public alertCtrl: AlertController, public navParams: NavParams) {
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
     this.companyId = localStorage.getItem("userInfoCompanyId");
@@ -69,7 +69,7 @@ export class UnitgroupPage {
     console.log("Role Authority for Unit Listing Edit:" + this.EDITACCESS);
     this.DELETEACCESS = localStorage.getItem("UNITS_UNITGROUP_DELETE");
     console.log("Role Authority for Unit Listing Delete:" + this.DELETEACCESS);
-     this.networkType = '';
+    this.networkType = '';
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
@@ -94,20 +94,7 @@ export class UnitgroupPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad UnitgroupPage');
-  }
-
-  doRefresh(refresher) {
-    console.log('doRefresh function calling...');
-    this.reportData.startindex = 0;
-    this.reportAllLists = [];
-    this.dounitGroup();
-    setTimeout(() => {
-      refresher.complete();
-    }, 2000);
-  }
-
-
-  ionViewWillEnter() {
+    
     let //body: string = "loginid=" + this.userId,
       type: string = "application/x-www-form-urlencoded; charset=UTF-8",
       headers: any = new Headers({ 'Content-Type': type }),
@@ -130,6 +117,20 @@ export class UnitgroupPage {
     if (this.VIEWACCESS > 0) {
       this.dounitGroup();
     }
+  }
+
+  doRefresh(refresher) {
+    console.log('doRefresh function calling...');
+    this.reportData.startindex = 0;
+    this.reportAllLists = [];
+    this.dounitGroup();
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
+  }
+
+
+  ionViewWillEnter() {
   }
   dounitGroup() {
     this.colorListArr = [
@@ -253,52 +254,51 @@ export class UnitgroupPage {
     }
   }
   doConfirm(id, item) {
-    if(item.totalunits == 0){
-    console.log("Deleted Id" + id);
-    let confirm = this.alertCtrl.create({
-      message: 'Are you sure you want to delete this unit group?',
-      buttons: [{
-        text: 'Yes',
-        handler: () => {
-          this.deleteEntry(id);
-          for (let q: number = 0; q < this.reportAllLists.length; q++) {
-            if (this.reportAllLists[q] == item) {
-              this.reportAllLists.splice(q, 1);
+    if (item.totalunits == 0) {
+      console.log("Deleted Id" + id);
+      let confirm = this.alertCtrl.create({
+        message: 'Are you sure you want to delete this unit group?',
+        buttons: [{
+          text: 'Yes',
+          handler: () => {
+            this.deleteEntry(id);
+            for (let q: number = 0; q < this.reportAllLists.length; q++) {
+              if (this.reportAllLists[q] == item) {
+                this.reportAllLists.splice(q, 1);
+              }
             }
           }
-        }
-      },
-      {
-        text: 'No',
-        handler: () => { }
-      }]
-    });
-    confirm.present();
-  }
-  else
-  {
- console.log("Deleted Id" + id);
-    let confirm = this.alertCtrl.create({
-      message: 'There are some units under this Unit Group.If delete this Unit Group,all units will be deleted.Are you sure you want to delete this unit group?',
-      buttons: [{
-        text: 'Yes',
-        handler: () => {
-          this.deleteEntry(id);
-          for (let q: number = 0; q < this.reportAllLists.length; q++) {
-            if (this.reportAllLists[q] == item) {
-              this.reportAllLists.splice(q, 1);
-            }
-          }
-        }
-      },
-      {
-        text: 'No',
-        handler: () => { }
-      }]
-    });
-    confirm.present();
+        },
+        {
+          text: 'No',
+          handler: () => { }
+        }]
+      });
+      confirm.present();
     }
-  
+    else {
+      console.log("Deleted Id" + id);
+      let confirm = this.alertCtrl.create({
+        message: 'There are some units under this Unit Group.If delete this Unit Group,all units will be deleted.Are you sure you want to delete this unit group?',
+        buttons: [{
+          text: 'Yes',
+          handler: () => {
+            this.deleteEntry(id);
+            for (let q: number = 0; q < this.reportAllLists.length; q++) {
+              if (this.reportAllLists[q] == item) {
+                this.reportAllLists.splice(q, 1);
+              }
+            }
+          }
+        },
+        {
+          text: 'No',
+          handler: () => { }
+        }]
+      });
+      confirm.present();
+    }
+
   }
   deleteEntry(recordID) {
     let
@@ -322,7 +322,7 @@ export class UnitgroupPage {
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
   }
- 
+
   onSegmentChanged(val) {
     let splitdata = val.split(",");
     this.reportData.sort = splitdata[0];
@@ -400,6 +400,9 @@ export class UnitgroupPage {
         // If the request was successful notify the user
         if (data.status === 200) {
           this.conf.sendNotification(res.msg[0].result);
+          this.reportData.startindex = 0;
+          this.reportAllLists = [];
+          this.dounitGroup();
         }
         // Otherwise let 'em know anyway
         else {
@@ -429,9 +432,8 @@ export class UnitgroupPage {
   redirectToSettings() {
     this.nav.push(OrgchartPage);
   }
-   view(id)
-  {
-    localStorage.setItem("uid",id);
+  view(id) {
+    localStorage.setItem("uid", id);
     this.nav.push(Unitgrouplist);
   }
 }

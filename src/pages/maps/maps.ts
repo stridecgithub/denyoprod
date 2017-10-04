@@ -131,8 +131,6 @@ export class MapsPage {
     console.log('ionViewDidLoad MapsPage');
     //this.pageLoad();
     //this.loadMap(0);
-  }
-  ionViewWillEnter() {
     let isNet;
     isNet = localStorage.getItem("isNet");
     console.log("Is Status for Network Map Page:" + isNet);
@@ -142,6 +140,9 @@ export class MapsPage {
     } else {
       this.pageLoad();
     }
+
+  }
+  ionViewWillEnter() {
 
     console.log('ionViewWillEnter MapsPage');
   }
@@ -280,9 +281,9 @@ export class MapsPage {
     localStorage.setItem("unitunitname", item.unitname);
     localStorage.setItem("unitlocation", item.location);
     localStorage.setItem("unitprojectname", item.projectname);
-    localStorage.setItem("unitcolorcode", item.colorcodeindications);
-    localStorage.setItem("unitlat", item.lat);
-    localStorage.setItem("unitlng", item.lng);
+    localStorage.setItem("unitcolorcode", item.colorcode);
+    localStorage.setItem("unitlat", item.latitude);
+    localStorage.setItem("unitlng", item.longtitude);
     localStorage.setItem("runninghr", item.runninghr);
     console.log("RHR" + item.runninghr);
     localStorage.setItem("nsd", item.nextservicedate);
@@ -606,7 +607,7 @@ export class MapsPage {
       options: any = new RequestOptions({ headers: headers }),
       url: any = this.apiServiceURL + "/setunitfavorite";
     console.log(url);
-     console.log("favorites map.ts:" + url);
+    console.log("favorites map.ts:" + url);
     console.log(body);
     this.http.post(url, body, options)
       .subscribe(data => {

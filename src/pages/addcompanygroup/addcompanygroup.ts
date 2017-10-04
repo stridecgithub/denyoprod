@@ -69,7 +69,8 @@ export class AddcompanygroupPage {
     this.loginas = localStorage.getItem("userInfoName");
     // Create form builder validation rules
     this.form = fb.group({
-      "companygroup_name": ["", Validators.required],
+      // "companygroup_name": ["", Validators.required],
+      "companygroup_name": ["", Validators.compose([Validators.maxLength(100), Validators.required])],
       "country": ["", Validators.required],
       "contact": ["", Validators.required],
       "primary": ["", Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(5)])],
@@ -93,7 +94,7 @@ export class AddcompanygroupPage {
         this.networkType = this.conf.networkErrMsg();
       }, error => console.error(error));
 
-       let isNet = localStorage.getItem("isNet");
+      let isNet = localStorage.getItem("isNet");
       if (isNet == 'offline') {
         this.networkType = this.conf.networkErrMsg();
       } else {
@@ -275,7 +276,7 @@ export class AddcompanygroupPage {
   // for the record ID we want to remove from the remote database
   deleteEntry() {
 
-    
+
     let companygroup_name: string = this.form.controls["companygroup_name"].value,
       //body: string = "key=delete&recordID=" + this.recordID,
       type: string = "application/x-www-form-urlencoded; charset=UTF-8",

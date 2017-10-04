@@ -36,7 +36,7 @@ import { ForgotpasswordPage } from '../pages/forgotpassword/forgotpassword';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-import { CountryflagPage } from '../pages/countryflag/countryflag';
+
 @Component({
   templateUrl: 'app.html',
   providers: [Push, LocalNotifications]

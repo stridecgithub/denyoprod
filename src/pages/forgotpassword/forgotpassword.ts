@@ -52,7 +52,9 @@ export class ForgotpasswordPage {
     // Create form builder validation rules
     this.form = fb.group({
       "uname": ["", Validators.required],
-      "email": ["", Validators.required]
+      //"email": ["", Validators.required]
+      "email": ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(50), Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i)])]
+   
     });
  this.pageTitle="Forgot Password";
     this.userId = localStorage.getItem("userInfoId");

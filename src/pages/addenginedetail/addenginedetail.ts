@@ -61,7 +61,8 @@ export class AddenginedetailPage {
     public NP: NavParams,
     public fb: FormBuilder) {
     this.form = fb.group({
-      "enginemodel": ["", Validators.required],
+      //"enginemodel": ["", Validators.required],
+       "enginemodel": ["", Validators.compose([Validators.maxLength(100), Validators.required])],
       "rawhtml": ["", Validators.required]
 
     });

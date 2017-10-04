@@ -434,6 +434,7 @@ export class CalendarComponent {
   }
 
   plusMonth = function (amount: number) {
+    this.calEvents = [];
     this.onLoad = false;
     this.ctrl.dateSelection.add(amount, 'month');
     this.ctrl.selectedMonth = this.monthNum2monthStr(this.ctrl.dateSelection.month());
@@ -767,12 +768,15 @@ export class CalendarComponent {
             startDate: startTime,
             endDate: endTime,
             name: this.eventIdentify[i]['event_title'],
+            event_title: this.eventIdentify[i]['event_title'],
+            //event_unitid: this.eventIdentify[i]['service_unitid'],
             type: 'event',
             event_type: 'E',
             allDay: true,
             icon: 'clock',
             class: 'event',
             iconStyle: { color: 'green' },
+            event_date: this.eventIdentify[i]['event_date'],
             style: { color: 'red' },
             eventlength: this.eventIdentify.length,
             event_time: this.eventIdentify[i]['event_time'],
@@ -816,10 +820,14 @@ export class CalendarComponent {
             data: {},
             id: this.serviceIdentify[j]['service_id'],
             event_id: this.serviceIdentify[j]['service_id'],
+            event_date: this.serviceIdentify[j]['next_service_date'],
             startDate: startTimej,
             endDate: endTimej,
             name: this.serviceIdentify[j]['service_subject'],
+            event_title: this.serviceIdentify[j]['service_subject'],
             unitname: this.serviceIdentify[j]['unitname'],
+            //event_title: this.serviceIdentify[j]['event_title'],
+            event_unitid: this.serviceIdentify[j]['service_unitid'],
             type: 'event',
             allDay: true,
             icon: 'camera',
@@ -860,6 +868,7 @@ export class CalendarComponent {
             event_id: this.alarmIdentity[k]['alarm_id'],
             startDate: startTimeAlarm,
             endDate: endTimeAlarm,
+            event_date: this.alarmIdentity[k]['alarm_received_date'],
             name: this.alarmIdentity[k]['alarm_name'],
             unitname: this.alarmIdentity[k]['unitname'],
             type: 'event',
@@ -1102,14 +1111,14 @@ export class CalendarComponent {
 
         }
 
-        if (currentDateArr.getDate()>9) {
+        if (currentDateArr.getDate() > 9) {
           dtstr = '';
         } else {
           dtstr = '0';
 
         }
 
-        console.log("Date length string:-"+this.getlength(currentDateArr.getDate()));
+        console.log("Date length string:-" + this.getlength(currentDateArr.getDate()));
 
         let curDate = currentDateArr.getFullYear() + "-" + mnstr + cmonth + "-" + dtstr + currentDateArr.getDate();
 
@@ -1137,7 +1146,7 @@ export class CalendarComponent {
             //this.daySession = 'upcoming Event today';
           }*/
         } else {
-         // this.daySession = this.currentDateFormatToday;
+          // this.daySession = this.currentDateFormatToday;
           //this.daySession = 'upcoming Event today';
         }
         this.calendarResultEvent = [];
@@ -1168,6 +1177,11 @@ export class CalendarComponent {
           if (this.totalCountEventDateWise > 0) {
             this.daySession = this.totalCountEventDateWise + ' upcoming Event today';
           }
+
+          if (this.calEvents.length > 0) {
+            this.daySession = this.totalCountEventDateWise + ' upcoming Event today';
+          }
+
           this.currentDateFormatToday = weekdayname.substr(0, 3) + " " + date + " " + cdateform[2] + " " + cdateform[3];
         } else {
           this.daySession = '';
@@ -1336,6 +1350,7 @@ export class CalendarComponent {
   /* Dropdown Filter onchange event */
   /**********************************/
   onSegmentChanged(val) {
+    this.calEvents = [];
     this.noeventtitle = '';
     this.calendarResultEvent = [];
     this.calendarResultAll = [];

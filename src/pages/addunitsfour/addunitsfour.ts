@@ -329,7 +329,7 @@ export class AddunitsfourPage {
           localStorage.setItem("controllerid", '');
           localStorage.setItem("models_id", '');
           localStorage.setItem("neaplateno", '');
-          this.conf.sendNotification(`Units created was successfully added`);
+          this.conf.sendNotificationTimer(`Units created was successfully added`);          
           this.nav.push(UnitsPage);
         }
         // Otherwise let 'em know anyway
@@ -411,7 +411,7 @@ export class AddunitsfourPage {
         if (data.status === 200) {
           this.hideForm = true;
           localStorage.setItem("atMentionResult", '');
-          this.conf.sendNotification(`Units was successfully updated`);
+          this.conf.sendNotificationTimer(`Units was successfully updated`);
           this.nav.push(UnitsPage);
         }
         // Otherwise let 'em know anyway

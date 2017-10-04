@@ -73,8 +73,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { CompanydetailPage } from '../pages/companydetail/companydetail';
 import { Unitgrouplist } from '../pages/unitgrouplist/unitgrouplist';
-import { CountryflagPage } from '../pages/countryflag/countryflag';
-
 //import { CalendarNewEventModal } from '../pages/calendar/calendar-new-event-modal.component';
 import { DragulaModule } from "ng2-dragula/ng2-dragula"
 //import { ITimer } from '../pages/maps/itimer';
@@ -85,9 +83,9 @@ import { RestProvider } from '../providers/rest/rest';
 @NgModule({
   declarations: [
     //ITimer,
-   CalendarComponent,
-    CalendarPage,
-    CountryflagPage,
+    //CalendarComponent,
+    //CalendarPage,
+    
     MyApp,
     HomePage,
     AddalarmlistPage,
@@ -163,9 +161,9 @@ import { RestProvider } from '../providers/rest/rest';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    CalendarPage,
-    CalendarComponent,
-    CountryflagPage,
+    //CalendarPage,
+    //CalendarComponent,
+    
     MyApp,
     HomePage,
     AddalarmlistPage,

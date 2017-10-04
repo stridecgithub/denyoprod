@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { App, ViewController , NavController, NavParams, Platform} from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Http, Headers, RequestOptions } from '@angular/http';
 //import { UserPage } from '../user/user';
@@ -56,14 +56,15 @@ export class AddunitgroupPage {
   private permissionMessage: string = "";
   public networkType: string;
 
-  constructor(private conf: Config, public platform: Platform, private network: Network, public nav: NavController,
+  constructor(public viewCtrl: ViewController, public appCtrl: App, private conf: Config, public platform: Platform, private network: Network, public nav: NavController,
     public http: Http,
     public NP: NavParams,
     public fb: FormBuilder) {
     this.loginas = localStorage.getItem("userInfoName");
     // Create form builder validation rules
     this.form = fb.group({
-      "cname": ["", Validators.required],
+      //"cname": ["", Validators.required],
+      "cname": ["", Validators.compose([Validators.maxLength(100), Validators.required])],
       "remark": ["", Validators.required]
     });
 
@@ -242,7 +243,9 @@ export class AddunitgroupPage {
             this.conf.sendNotification(res.msg[0].result);
           } else {
             this.conf.sendNotification(res.msg[0].result);
-            this.nav.push(UnitgroupPage);
+            // this.nav.setRoot(UnitgroupPage);
+            this.viewCtrl.dismiss();
+            this.appCtrl.getRootNav().push(UnitgroupPage);
           }
         }
         // Otherwise let 'em know anyway
@@ -275,7 +278,9 @@ export class AddunitgroupPage {
             this.conf.sendNotification(res.msg[0].result);
           } else {
             this.conf.sendNotification(res.msg[0].result);
-            this.nav.push(UnitgroupPage);
+            //this.nav.setRoot(UnitgroupPage);
+            this.viewCtrl.dismiss();
+            this.appCtrl.getRootNav().push(UnitgroupPage);
           }
         }
         // Otherwise let 'em know anyway

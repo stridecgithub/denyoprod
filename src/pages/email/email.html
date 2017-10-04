@@ -140,12 +140,16 @@
                   <strong>{{item.sendername}}</strong></h5>
                 <h5 style="margin-top:20px" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">
                   {{item.sendername}}</h5>
-                <h5 style="white-space: normal;" *ngIf="item.message_readstatus==0" (click)="doDetails(item,'inbox')"><b>{{item.messages_subject}}</b></h5>
-                <h5 style="white-space: normal;" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">{{item.messages_subject}}</h5>
+                <!--h5 style="white-space: normal;" *ngIf="item.message_readstatus==0" (click)="doDetails(item,'inbox')"><b>{{item.messages_subject}}</b></h5>
+                <h5 style="white-space: normal;" *ngIf="item.message_readstatus==1" (click)="doDetails(item,'inbox')">{{item.messages_subject}}</h5-->
+                <h5 style="white-space: normal;" (click)="doDetails(item,'inbox')">{{item.messages_subject}}</h5>
               </div>
 
-              <p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==1">{{item.message_date}}</p>
-              <p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==0"><b>{{item.message_date}}</b></p>
+              <!--p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==1">{{item.message_date}}</p>
+              <p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==0"><b>{{item.message_date}}</b></p-->
+
+               <p style="text-align:right;font-size:10px">{{item.message_date}}</p>
+             
 
             </ion-item>
           </ion-item>

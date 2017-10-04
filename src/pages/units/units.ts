@@ -121,6 +121,32 @@ export class UnitsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Units Page');
+    
+    if (this.networkType == '') {
+      this.detailvalue = "";
+      localStorage.setItem("viewlist", "");
+      let //body: string = "loginid=" + this.userId,
+        type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+        headers: any = new Headers({ 'Content-Type': type }),
+        options: any = new RequestOptions({ headers: headers }),
+        url: any = this.apiServiceURL + "/msgnotifycount?loginid=" + this.userId;
+      console.log(url);
+      // console.log(body);
+
+      this.http.get(url, options)
+        .subscribe((data) => {
+          console.log("Count Response Success:" + JSON.stringify(data.json()));
+          this.msgcount = data.json().msgcount;
+          this.notcount = data.json().notifycount;
+        }, error => {
+          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+        });
+      if (this.VIEWACCESS > 0) {
+        this.reportData.startindex = 0;
+        this.reportData.sort = "unit_id";
+        this.doUnit();
+      }
+    }
   }
 
   /*******************/
@@ -251,31 +277,6 @@ export class UnitsPage {
     console.log('E');
   }
   ionViewWillEnter() {
-    if (this.networkType == '') {
-      this.detailvalue = "";
-      localStorage.setItem("viewlist", "");
-      let //body: string = "loginid=" + this.userId,
-        type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-        headers: any = new Headers({ 'Content-Type': type }),
-        options: any = new RequestOptions({ headers: headers }),
-        url: any = this.apiServiceURL + "/msgnotifycount?loginid=" + this.userId;
-      console.log(url);
-      // console.log(body);
-
-      this.http.get(url, options)
-        .subscribe((data) => {
-          console.log("Count Response Success:" + JSON.stringify(data.json()));
-          this.msgcount = data.json().msgcount;
-          this.notcount = data.json().notifycount;
-        }, error => {
-          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-        });
-      if (this.VIEWACCESS > 0) {
-        this.reportData.startindex = 0;
-        this.reportData.sort = "unit_id";
-        this.doUnit();
-      }
-    }
   }
 
   doAdd() {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 //import { CalendarComponent } from '../../components/calendar/calendar.component';
-import {  NavController, Events, Platform } from 'ionic-angular';
+import { NavController, Events, Platform } from 'ionic-angular';
 
 //import { AlarmdetailsPage } from '../alarmdetails/alarmdetails';
 //import { CalendardetailPage } from '../calendardetail/calendardetail';
@@ -341,21 +341,21 @@ export class CalendarPage {
       });
     }
 
-   /* if (service > 0 && type == '') {
-      console.log("E");
-      this.serviceIdentify = data.json().services;
-    } else {
-      console.log("F");
-      if (type == 'service') {
-        console.log("G");
-        this.serviceIdentify = data.json().allservices;
-      }
-      if (type == 'all') {
-        console.log("H");
-        this.serviceIdentify = data.json().allservices;
-      }
-    }
-    */
+    /* if (service > 0 && type == '') {
+       console.log("E");
+       this.serviceIdentify = data.json().services;
+     } else {
+       console.log("F");
+       if (type == 'service') {
+         console.log("G");
+         this.serviceIdentify = data.json().allservices;
+       }
+       if (type == 'all') {
+         console.log("H");
+         this.serviceIdentify = data.json().allservices;
+       }
+     }
+     */
 
     this.serviceIdentify = data.json().services;
     for (var j = 0; j < this.serviceIdentify.length; j += 1) {
@@ -409,7 +409,7 @@ export class CalendarPage {
     }
     */
     // this.alarmIdentity = data.json().allalarms;
-      this.alarmIdentity = data.json().alarms;
+    this.alarmIdentity = data.json().alarms;
 
     for (var k = 0; k < this.alarmIdentity.length; k += 1) {
 
@@ -482,7 +482,7 @@ export class CalendarPage {
       .subscribe((data) => {
         let res = data.json();
         //this.eventIdentify = res.allevents;
-         this.eventIdentify = res.events;
+        this.eventIdentify = res.events;
         for (var i = 0; i < this.eventIdentify.length; i += 1) {
           var startTime;
           var endTime;
@@ -515,6 +515,9 @@ export class CalendarPage {
           });*/
           events.push({
             "data": {},
+            "id": this.eventIdentify[i]['event_id'],
+            "event_id": this.eventIdentify[i]['event_id'],
+            "event_date": this.eventIdentify[i]['event_date'],
             "icon": "clock",
             "class": "event",
             "iconStyle": { "color": "green" }
@@ -536,27 +539,32 @@ export class CalendarPage {
         for (var j = 0; j < this.serviceIdentify.length; j += 1) {
           var startTimej;
           var endTimej;
-          var service_date_arrayj;         
-          service_date_arrayj = this.serviceIdentify[j]['next_service_date'];         
+          var service_date_arrayj;
+          service_date_arrayj = this.serviceIdentify[j]['next_service_date'];
           console.log("DATE FORMAT" + this.serviceIdentify[j]['serviced_datetime']);
           var yearstrj = service_date_arrayj[0];
           var monthstrj = parseInt(service_date_arrayj[1], 10) - 1;
           var datestrj = parseInt(service_date_arrayj[2], 10);
-         
+
           var startMinutej = 20;
           var endMinutej = 10 + startMinutej;
           startTimej = new Date(yearstrj, monthstrj, datestrj, 10, 0 + startMinutej);
-          endTimej = new Date(yearstrj, monthstrj, datestrj, 10, 0 + endMinutej);        
+          endTimej = new Date(yearstrj, monthstrj, datestrj, 10, 0 + endMinutej);
 
           events.push({
             "data": {},
             "icon": "camera",
             "class": "event",
-            "iconStyle": { "color": "green" }
-            , "style": { "color": "green" }
-            , "name": this.serviceIdentify[j]['service_subject'],
+            "iconStyle": { "color": "green" },
+            "style": { "color": "green" },
+            "name": this.serviceIdentify[j]['service_subject'],
+            "event_title": this.serviceIdentify[j]['event_title'],
+            "event_unitid": this.serviceIdentify[j]['service_unitid'],            
             "type": "event",
             "startDate": startTimej,
+            'id': this.serviceIdentify[j]['service_id'],
+            "event_id": this.serviceIdentify[j]['service_id'],
+            "event_date": this.serviceIdentify[j]['next_service_date'],
             "endDate": endTimej,
             "allDay": false
           });
@@ -581,13 +589,13 @@ export class CalendarPage {
           var yearstrk = service_date_arrayk[0];
           var monthstrk = parseInt(service_date_arrayk[1], 10) - 1;
           var datestrk = parseInt(service_date_arrayk[2], 10);
-         
+
           var startMinutek = 20;
           var endMinutek = 10 + startMinutek;
 
           startTimek = new Date(yearstrk, monthstrk, datestrk, 10, 0 + startMinutek);
           endTimek = new Date(yearstrk, monthstrk, datestrk, 10, 0 + endMinutek);
-          
+
           events.push({
             "data": {},
             "icon": "alarm",
@@ -598,6 +606,9 @@ export class CalendarPage {
             "type": "event",
             "startDate": startTimek,
             "endDate": endTimek,
+            'id': this.alarmIdentity[k]['alarm_id'],
+            "event_id": this.alarmIdentity[k]['alarm_id'],
+            "event_date": this.alarmIdentity[k]['alarm_received_date'],
             "allDay": false
           });
 

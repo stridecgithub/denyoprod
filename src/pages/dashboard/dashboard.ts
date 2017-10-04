@@ -11,7 +11,6 @@ import { OrgchartPage } from '../orgchart/orgchart';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
-import { CountryflagPage } from '../countryflag/countryflag';
 import { HomePage } from '../home/home';
 @Component({
   selector: 'page-dashboard',
@@ -87,9 +86,7 @@ export class DashboardPage {
     });
   }
 
-  countryFlagPage() {
-    this.nav.push(CountryflagPage);
-  }
+  
   notification() {
     this.nav.push(NotificationPage);
   }
