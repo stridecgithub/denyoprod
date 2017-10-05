@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="login()">
+<form [formGroup]="form"  method="post">
   <ion-header>
     <custom-header [header]="header_data"></custom-header>
   </ion-header>
@@ -10,12 +10,13 @@
     <ion-list>
       <ion-item>
         <ion-label stacked>User ID</ion-label>
-        <ion-input type="text" formControlName="userid" [(ngModel)]="userId"></ion-input>
+        <ion-input type="text" formControlName="userid"  br-data-dependency="password" [(ngModel)]="userId"></ion-input>
+        <!--  br-data-dependency="password"  -->
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Password</ion-label>
-        <ion-input type="password" formControlName="password" [(ngModel)]="passWrd"></ion-input>
+        <ion-input  #password id="password" type="password" formControlName="password" [(ngModel)]="passWrd"></ion-input>
       </ion-item>
 
       <ion-item class="forgot" (click)="doMove()">
@@ -24,11 +25,11 @@
       <ion-item>
 
         <div style="color: yellow;  
-    float: right;">Ver 1.41</div>
+    float: right;">Ver 1.42</div>
       </ion-item>
       <ion-item>
         <div padding>
-          <button ion-button color="primary" text-center block [disabled]="!form.valid">Login</button>
+          <button ion-button color="primary" (click)="login()" text-center block [disabled]="!form.valid">Login</button>
         </div>
       </ion-item>
 

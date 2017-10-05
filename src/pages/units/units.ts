@@ -94,6 +94,9 @@ export class UnitsPage {
 
 
     this.platform.ready().then(() => {
+       this.platform.registerBackButtonAction(() => {
+          this.previous();
+        });
       this.network.onConnect().subscribe(data => {
         console.log("units.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -565,7 +568,7 @@ console.log(JSON.stringify(this.selectedAction));*/
 
 
   previous() {
-    this.nav.push(DashboardPage);
+    this.nav.setRoot(DashboardPage);
   }
   favorite(unit_id) {
     this.reportData.startindex = 0;

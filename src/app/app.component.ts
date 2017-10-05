@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Directive, ElementRef, Component, ViewChild, Output, EventEmitter, Input, HostListener } from '@angular/core';
 import { Nav, Platform, MenuController, AlertController, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { Keyboard } from '@ionic-native/keyboard';
 import { HomePage } from '../pages/home/home';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 
@@ -36,12 +36,16 @@ import { ForgotpasswordPage } from '../pages/forgotpassword/forgotpassword';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-
+@Directive({
+  selector: '[br-data-dependency]' // Attribute selector
+})
 @Component({
   templateUrl: 'app.html',
-  providers: [Push, LocalNotifications]
+  providers: [Push, LocalNotifications, Keyboard]
 })
 export class MyApp {
+  @Output() input: EventEmitter<string> = new EventEmitter<string>();
+  @Input('br-data-dependency') nextIonInputId: any = null;
   @ViewChild(Nav) nav: Nav;
   @ViewChild('content') navCtrl: NavController;
   rootPage: any = DashboardPage;
@@ -49,8 +53,7 @@ export class MyApp {
   alert: any;
   showLevel1 = null;
   showLevel2 = null;
-  ///private push: Push,
-  constructor(private localNotifications: LocalNotifications, public alertCtrl: AlertController, private push: Push, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public dataService: DataServiceProvider, public menuCtrl: MenuController) {
+  constructor(public elementRef: ElementRef, private keyboard: Keyboard, private localNotifications: LocalNotifications, public alertCtrl: AlertController, private push: Push, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public dataService: DataServiceProvider, public menuCtrl: MenuController) {
 
     this.initializeApp();
     this.dataService.getMenus()
@@ -97,7 +100,7 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       console.log('1:Platform ready');
-      this.platform.registerBackButtonAction(() => {
+      /*this.platform.registerBackButtonAction(() => {
         let userId = localStorage.getItem("userInfoId");
         if (userId == '') {
           console.log("User id logged out");
@@ -116,7 +119,7 @@ export class MyApp {
             this.showAlertExist();
           }
         }
-      });
+      });*/
       this.initPushNotification();
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -124,9 +127,9 @@ export class MyApp {
       setTimeout(() => {
         this.splashScreen.hide();
       }, 100);
+      /* this.keyboard.disableScroll(false);
+       this.keyboard.hideKeyboardAccessoryBar(true);*/
     });
-
-
 
   }
 
@@ -299,29 +302,6 @@ export class MyApp {
     alert.present();
   }
 
-
-  showAlertExist() {
-    this.alert = this.alertCtrl.create({
-      title: 'Exit?',
-      message: 'Do you want to exit the app?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            this.alert = null;
-          }
-        },
-        {
-          text: 'Exit',
-          handler: () => {
-            this.platform.exitApp();
-          }
-        }
-      ]
-    });
-    this.alert.present();
-  }
   public schedule(notification) {
     this.localNotifications.schedule({
       title: notification.title,
@@ -391,7 +371,71 @@ export class MyApp {
 
   }
 
+  @HostListener('keydown', ['$event'])
+  keyEvent(event) {
+    console.log(JSON.stringify(event));
+    console.log(event.srcElement.tagName)
+    if (event.srcElement.tagName !== "INPUT") {
+      return;
+    }
 
+    var code = event.keyCode || event.which;
+    if (code === TAB_KEY_CODE) {
+      event.preventDefault();
+      this.onNext();
+      let previousIonElementValue = this.elementRef.nativeElement.children[0].value;
+      this.input.emit(previousIonElementValue)
+    } else if (code === ENTER_KEY_CODE) {
+      event.preventDefault();
+      this.onEnter();
+      let previousIonElementValue = this.elementRef.nativeElement.children[0].value;
+      this.input.emit(previousIonElementValue)
+    }
+  }
+
+  onEnter() {
+    console.log("onEnter()-kannan appcomponent ts");
+    this.keyboard.close();
+    /*
+    console.log('1');
+    if (!this.nextIonInputId) {
+      console.log("2" + this.nextIonInputId);
+      return;
+    }
+    console.log('3');
+    let nextInputElement = document.getElementById(this.nextIonInputId);
+    console.log('4' + nextInputElement);
+    // On enter, go to next input field
+    if (nextInputElement && nextInputElement.children[0]) {
+      console.log('5' + nextInputElement);
+      let element: any = nextInputElement.children[0];
+      console.log('6' + element);
+      if (element.tagName === "INPUT") {
+        console.log('7' + element.tagName);
+        element.focus();
+        console.log('8' + element.tagName);
+      }
+    }*/
+  }
+
+  onNext() {
+    console.log("onNext()");
+    this.keyboard.close();/*
+    if (!this.nextIonInputId) {
+      return;
+    }
+
+    let nextInputElement = document.getElementById(this.nextIonInputId);
+
+    // On enter, go to next input field
+    if (nextInputElement && nextInputElement.children[0]) {
+      let element: any = nextInputElement.children[0];
+      if (element.tagName === "INPUT") {
+        element.focus();
+      }
+    }*/
+  }
 
 }
-
+const TAB_KEY_CODE = 9;
+const ENTER_KEY_CODE = 13;

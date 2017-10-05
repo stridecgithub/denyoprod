@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController, Platform } from 'ionic-angular';
+import { NavController, MenuController, Platform, AlertController} from 'ionic-angular';
 import { UnitsPage } from '../units/units';
 import { NotificationPage } from '../notification/notification';
 import { MapsPage } from '../maps/maps';
@@ -23,15 +23,35 @@ export class DashboardPage {
   public userId: any;
   public msgcount: any;
   public notcount: any;
+  alert: any;
   public networkType: string = '';
   private apiServiceURL: string = "";
-  constructor(private conf: Config, public platform: Platform, public http: Http, public menuCtrl: MenuController, private network: Network, public navCtrl: NavController, public nav: NavController) {
+  constructor(private conf: Config, public alertCtrl: AlertController, public platform: Platform, public http: Http, public menuCtrl: MenuController, private network: Network, public navCtrl: NavController, public nav: NavController) {
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
     this.menuCtrl.swipeEnable(true);
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-
+      this.platform.registerBackButtonAction(() => {
+        let userId = localStorage.getItem("userInfoId");
+        if (userId == '') {
+          console.log("User id logged out");
+          this.navCtrl.setRoot(HomePage);
+        }
+        console.log('3:registerBackButtonAction');
+        if (this.navCtrl.canGoBack()) {
+          console.log('4:canGoBack if');
+          this.navCtrl.pop();
+        } else {
+          console.log('5:canGoBack else');
+          if (this.alert) {
+            this.alert.dismiss();
+            this.alert = null;
+          } else {
+            this.showAlertExist();
+          }
+        }
+      });
       let userId = localStorage.getItem("userInfoId");
       if (userId == '') {
         console.log("User id logged out action from dashboard.ts");
@@ -86,7 +106,7 @@ export class DashboardPage {
     });
   }
 
-  
+
   notification() {
     this.nav.push(NotificationPage);
   }
@@ -151,5 +171,26 @@ export class DashboardPage {
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
   }
-
+  showAlertExist() {
+    this.alert = this.alertCtrl.create({
+      title: 'Exit?',
+      message: 'Do you want to exit the app?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            this.alert = null;
+          }
+        },
+        {
+          text: 'Exit',
+          handler: () => {
+            this.platform.exitApp();
+          }
+        }
+      ]
+    });
+    this.alert.present();
+  }
 }

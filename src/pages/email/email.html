@@ -148,8 +148,8 @@
               <!--p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==1">{{item.message_date}}</p>
               <p style="text-align:right;font-size:10px" *ngIf="item.message_readstatus==0"><b>{{item.message_date}}</b></p-->
 
-               <p style="text-align:right;font-size:10px">{{item.message_date}}</p>
-             
+              <p style="text-align:right;font-size:10px">{{item.message_date}}</p>
+
 
             </ion-item>
           </ion-item>
@@ -245,10 +245,10 @@
     margin-left: 75%;" *ngIf="item.attachments!=''" ></a>
               </p>
               <div style="overflow: hidden; padding-left: 1.5em;">
-                <h5 style="margin-top:20px" (click)="doDetails(item,'send')">
-                  <strong>To:{{item.receiver_name}}</strong></h5>
-                <h5 style="margin-top:20px" (click)="doDetails(item,'send')">
-                  <strong>Subject:{{item.messages_subject}}</strong></h5>
+                <h5 style="margin-top:20px;white-space:normal" (click)="doDetails(item,'send')">
+                  <strong>To:{{item.receiver_name_str}}</strong></h5>
+                <h5 style="margin-top:20px;white-space:normal" (click)="doDetails(item,'send')">
+                  Subject:{{item.messages_subject}}</h5>
 
 
               </div>
@@ -272,7 +272,7 @@
         <ion-infinite-scroll-content loadingText="{{loadingMoreDataContent}}"></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-list>
-    <form [formGroup]="form" (ngSubmit)="saveEntry()" enctype='application/x-www-form-urlencoded' method="post">
+    <form [formGroup]="form" enctype='application/x-www-form-urlencoded' method="post">
 
 
 
@@ -290,6 +290,14 @@
           <input *ngIf="popoverThemeJSIonic==0" type="text" (keyup)=address1get($event.target.value); name="to" id="to" class="sugges"
             onkeyup="message(event);address1get(this.value)" onblur="sptionshide();address1get(this.value)" class="form-control"
             rows="10" [disabled]="readOnly" formControlName="to" [(ngModel)]="to">
+
+          <!--div [innerHTML]="sanitizer.bypassSecurityTrustHtml(atmentedInnerHTML)" class="atmentionedBlock"></div-->
+          <!--br>
+            To 1:
+          <ion-input type="text"  *ngIf="popoverThemeJSIonic==0" (keyup)=address1get($event.target.value); name="to" id="to" class="sugges" onkeyup="message(event);address1get(this.value)"
+            onblur="sptionshide();address1get(this.value)" class="form-control" rows="10" [disabled]="readOnly" formControlName="to"
+            [(ngModel)]="to"></ion-input-->
+
 
           <ion-textarea style="height:100px" *ngIf="popoverThemeJSIonic>0" formControlName="to" [(ngModel)]="to" (keyup)="presentPopover($event)"
             class="form-control" rows="8" [disabled]="readOnly">
@@ -338,7 +346,7 @@
 
 
           <ion-item *ngIf="hideActionButton">
-            <button ion-button color="primary" text-center block [disabled]="!form.valid || isSubmitted">Send Message</button>
+            <button (click)="saveEntry()" ion-button color="primary" text-center block [disabled]="!form.valid || isSubmitted">Send Message</button>
           </ion-item>
         </div>
       </ion-list>
@@ -351,11 +359,11 @@
           <ion-avatar item-start *ngIf="act==inbox">
             <img src="{{photo}}">
           </ion-avatar>
-          <div><b>Subject:</b>{{messages_subject}}</div>
+          <div style="white-space: normal"><b>Subject:</b>{{messages_subject}}</div>
           <hr>
-          <div><b>From:</b>{{personalhashtagreplaceat}}</div>
+          <div style="white-space: normal"><b>From:</b>{{personalhashtagreplaceat}}</div>
           <br>
-          <div><b>To:</b>{{receiver_idreplaceat}}</div>
+          <div style="white-space: normal"><b>To:</b>{{receiver_idreplaceat}}</div>
           <br>
           <div><b>Message:</b></div>
           <div style="white-space: normal">{{messages_body}}</div>

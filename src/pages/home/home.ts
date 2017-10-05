@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController,  Platform, MenuController } from 'ionic-angular';
+import {  Output, EventEmitter, ElementRef, Input, Component } from '@angular/core';
+import { NavController, Platform, MenuController, AlertController } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Device } from '@ionic-native/device';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -8,12 +8,20 @@ import { ForgotpasswordPage } from '../forgotpassword/forgotpassword';
 import { DatePicker } from '@ionic-native/date-picker';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
+import { Keyboard } from '@ionic-native/keyboard';
+/*@Directive({
+  selector: '[br-data-dependency]' // Attribute selector
+})*/
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [Device, DatePicker, Config]
+  providers: [Device, DatePicker, Config, Keyboard]
 })
 export class HomePage {
+
+  @Output() input: EventEmitter<string> = new EventEmitter<string>();
+  @Input('br-data-dependency') nextIonInputId: any = null;
+
   mapElement: HTMLElement;
   public form: FormGroup;
   public userId: any;
@@ -22,15 +30,14 @@ export class HomePage {
   public userInf: any;
   header_data: any;
   private apiServiceURL: string = '';
-  constructor(private conf: Config, public platform: Platform, private network: Network, public menuCtrl: MenuController, public navCtrl: NavController, private datePicker: DatePicker, public fb: FormBuilder, public device: Device, private http: Http) {
+  alert: any;
+  constructor(public Keyboard: Keyboard, public alertCtrl: AlertController,
+    public elementRef: ElementRef, private conf: Config, public platform: Platform, private network: Network, public menuCtrl: MenuController, public navCtrl: NavController, private datePicker: DatePicker, public fb: FormBuilder, public device: Device, private http: Http) {
     this.form = fb.group({
       //"userid": ["", Validators.required],
       //"password": ["", Validators.required]
-      "userid": ["", Validators.compose([Validators.maxLength(50), Validators.required])],    
-
-     "password": ["", Validators.compose([Validators.maxLength(50),  Validators.required])]
-     
-
+      "userid": ["", Validators.compose([Validators.maxLength(50), Validators.required])],
+      "password": ["", Validators.compose([Validators.maxLength(50), Validators.required])]
     });
     this.apiServiceURL = conf.apiBaseURL();
     this.networkType = '';
@@ -53,11 +60,31 @@ export class HomePage {
     }
     console.log(this.userInf);
     if (this.userInf > 0) {
-      console.log("E");
       this.navCtrl.setRoot(DashboardPage);
     }
 
     this.platform.ready().then(() => {
+
+      this.platform.registerBackButtonAction(() => {
+        let userId = localStorage.getItem("userInfoId");
+        if (userId == '') {
+          console.log("User id logged out");
+          this.navCtrl.setRoot(HomePage);
+        }
+        console.log('3:registerBackButtonAction');
+        if (this.navCtrl.canGoBack()) {
+          console.log('4:canGoBack if');
+          this.navCtrl.pop();
+        } else {
+          console.log('5:canGoBack else');
+          if (this.alert) {
+            this.alert.dismiss();
+            this.alert = null;
+          } else {
+            this.showAlertExist();
+          }
+        }
+      });
       this.network.onConnect().subscribe(data => {
         console.log("home.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -78,14 +105,24 @@ export class HomePage {
   login() {
     let userid: string = this.form.controls["userid"].value,
       password: string = this.form.controls["password"].value;
+    let isEmpty = 1;
+    if (this.form.controls["userid"].value == '') {
+      isEmpty = 0;
+    }
+    if (this.form.controls["password"].value == '') {
+      isEmpty = 0;
+    }
     let isNet = localStorage.getItem("isNet");
     console.log("Is Status for Network Home Page:" + isNet);
     if (isNet == 'offline') {
       this.networkType = this.conf.networkErrMsg();
     } else {
       this.networkType = '';
-      this.loginEntry(userid, password);
+      if (isEmpty > 0) {
+        this.loginEntry(userid, password);
+      }
     }
+    //}
   }
   ionViewDidEnter() {
     // the root left menu should be disabled on this page
@@ -372,7 +409,7 @@ export class HomePage {
 
               }
             }
-          }          
+          }
           this.navCtrl.setRoot(DashboardPage);
         }
 
@@ -386,4 +423,94 @@ export class HomePage {
   doMove() {
     this.navCtrl.push(ForgotpasswordPage);
   }
+  /*
+    @HostListener('keydown', ['$event'])
+    keyEvent(event) {
+      console.log(JSON.stringify(event));
+      console.log(event.srcElement.tagName)
+      if (event.srcElement.tagName !== "INPUT") {
+        return;
+      }
+  
+      var code = event.keyCode || event.which;
+      if (code === TAB_KEY_CODE) {
+        event.preventDefault();
+        this.onNext();
+        let previousIonElementValue = this.elementRef.nativeElement.children[0].value;
+        this.input.emit(previousIonElementValue)
+      } else if (code === ENTER_KEY_CODE) {
+        event.preventDefault();
+        this.onEnter();
+        let previousIonElementValue = this.elementRef.nativeElement.children[0].value;
+        this.input.emit(previousIonElementValue)
+      }
+    }
+  
+    onEnter() {
+      console.log("onEnter()-kannan");
+      this.Keyboard.close();
+      console.log('1');
+      if (!this.nextIonInputId) {
+        console.log("2" + this.nextIonInputId);
+        return;
+      }
+      console.log('3');
+      let nextInputElement = document.getElementById(this.nextIonInputId);
+      console.log('4' + nextInputElement);
+      // On enter, go to next input field
+      if (nextInputElement && nextInputElement.children[0]) {
+        console.log('5' + nextInputElement);
+        let element: any = nextInputElement.children[0];
+        console.log('6' + element);
+        if (element.tagName === "INPUT") {
+          console.log('7' + element.tagName);
+          element.focus();
+          console.log('8' + element.tagName);
+        }
+      }
+    }
+  
+    onNext() {
+      console.log("onNext()");
+      this.Keyboard.close();
+      if (!this.nextIonInputId) {
+        return;
+      }
+  
+      let nextInputElement = document.getElementById(this.nextIonInputId);
+  
+      // On enter, go to next input field
+      if (nextInputElement && nextInputElement.children[0]) {
+        let element: any = nextInputElement.children[0];
+        if (element.tagName === "INPUT") {
+          element.focus();
+        }
+      }
+    }
+    */
+  showAlertExist() {
+    this.alert = this.alertCtrl.create({
+      title: 'Exit?',
+      message: 'Do you want to exit the app?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            this.alert = null;
+          }
+        },
+        {
+          text: 'Exit',
+          handler: () => {
+            this.platform.exitApp();
+          }
+        }
+      ]
+    });
+    this.alert.present();
+  }
 }
+//const TAB_KEY_CODE = 9;
+//const ENTER_KEY_CODE = 13;
+

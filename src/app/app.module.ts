@@ -79,12 +79,13 @@ import { DragulaModule } from "ng2-dragula/ng2-dragula"
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Network } from '@ionic-native/network';
 import { RestProvider } from '../providers/rest/rest';
-
+//import { TabindexDirective } from '../../directives/tabindex.directive';
 @NgModule({
   declarations: [
     //ITimer,
+   // TabindexDirective,
     CalendarComponent,
-    CalendarPage,    
+    CalendarPage,
     MyApp,
     HomePage,
     AddalarmlistPage,
@@ -161,7 +162,7 @@ import { RestProvider } from '../providers/rest/rest';
   bootstrap: [IonicApp],
   entryComponents: [
     CalendarPage,
-    CalendarComponent,    
+    CalendarComponent,
     MyApp,
     HomePage,
     AddalarmlistPage,

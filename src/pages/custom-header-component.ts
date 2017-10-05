@@ -17,6 +17,6 @@ export class CustomHeaderComponent {
     return this.header_data;
   }
   homeClick() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.setRoot(DashboardPage);
   }
 }

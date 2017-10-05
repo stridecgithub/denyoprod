@@ -78,6 +78,9 @@ export class OrgchartPage {
     this.apiServiceURL = conf.apiBaseURL();
     this.networkType = '';
     this.platform.ready().then(() => {
+       this.platform.registerBackButtonAction(() => {
+          this.previous();
+        });
       this.network.onConnect().subscribe(data => {
         console.log("orgchar.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');

@@ -100,6 +100,9 @@ export class MapsActionPage {
     this.companyid = localStorage.getItem("userInfoCompanyId");
     this.networkType = '';
     this.platform.ready().then(() => {
+       this.platform.registerBackButtonAction(() => {
+          this.previous();
+        });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -626,7 +629,7 @@ export class MapsActionPage {
 
 
   previous() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.setRoot(DashboardPage);
   }
   favorite(unit_id) {
     this.reportData.startindex = 0;

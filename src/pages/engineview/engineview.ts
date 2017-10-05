@@ -43,7 +43,9 @@ export class EngineviewPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-
+ this.platform.registerBackButtonAction(() => {
+          this.previous();
+        });
       console.log('Device Resolution Width: ' + platform.width()+16);
       console.log('Device Resolution Height: ' + platform.height());
       this.devicewidth = platform.width()+16;

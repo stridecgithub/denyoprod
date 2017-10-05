@@ -95,6 +95,9 @@ export class CalendarPage {
     this.apiServiceURL = conf.apiBaseURL();
     this.networkType = '';
     this.platform.ready().then(() => {
+        this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("calendar.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -718,7 +721,7 @@ export class CalendarPage {
   }
 
   previous() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.setRoot(DashboardPage);
   }
   notification() {
     this.navCtrl.push(NotificationPage);

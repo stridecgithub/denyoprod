@@ -213,6 +213,9 @@ export class AddcalendarPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
+       this.platform.registerBackButtonAction(() => {
+          this.previous();
+        });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -571,7 +574,7 @@ export class AddcalendarPage {
     }).then(
       date => {
         this.event_date = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-        console.log('Got date: ', date)
+        console.log('Got date: ', this.event_date);
       },
       err => console.log('Error occurred while getting date: ', err)
       );

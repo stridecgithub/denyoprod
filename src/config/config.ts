@@ -48,30 +48,31 @@ export class Config {
     sendNotification(message): void {
         let notification = this.toastCtrl.create({
             message: message,
-            duration: 3000
-        });
-        notification.present();
-
-           /*
-        notification.onDidDismiss(() => {
-            console.log('Dismissed toast');
-             notification.dismiss();
-        });   */
-    }
-/*
-    sendNotification(message): void {
-        let notification = this.toastCtrl.create({
-            message: message,
-            // duration: 3000,
-            //closeButtonText:"X"
-            showCloseButton: true,
-            closeButtonText: "X",
+            duration: 3000,
             dismissOnPageChange: true
         });
         notification.present();
-     
+
+        /*
+     notification.onDidDismiss(() => {
+         console.log('Dismissed toast');
+          notification.dismiss();
+     });   */
     }
-    */
+    /*
+        sendNotification(message): void {
+            let notification = this.toastCtrl.create({
+                message: message,
+                // duration: 3000,
+                //closeButtonText:"X"
+                showCloseButton: true,
+                closeButtonText: "X",
+                dismissOnPageChange: true
+            });
+            notification.present();
+         
+        }
+        */
 
 
     timeConverter(unixtime) {

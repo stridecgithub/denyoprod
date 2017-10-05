@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone, HostListener } from '@angular/core';
 import { ActionSheetController, AlertController, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -24,6 +24,7 @@ import { AtMentionedPopoverPage } from '../atmentionedpopover/atmentionedpopover
 import { PopoverController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
+import { DomSanitizer } from '@angular/platform-browser';
 /**
  * Generated class for the AddserviceinfoPage page.
  *
@@ -35,7 +36,15 @@ import { Config } from '../../config/config';
   templateUrl: 'email.html',
   providers: [Camera, FileChooser, Transfer, File, DatePicker, Keyboard, Config]
 })
+
 export class EmailPage {
+  private key;
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    console.log(JSON.stringify(event));
+    console.log(event);
+    this.key = event.key;
+  }
   @ViewChild('fileInput') fileInput;
 
   isReadyToSave: boolean;
@@ -116,6 +125,7 @@ export class EmailPage {
   public notcount: any;
   public to: any;
   public subject: any;
+  atmentedInnerHTML: string;
   public isEdited: boolean = false;
   form: FormGroup;
   public addedAttachList;
@@ -139,12 +149,14 @@ export class EmailPage {
     results: 50
   }
   public hideActionButton = true;
-  constructor(private conf: Config, public platform: Platform, private network: Network, public actionSheetCtrl: ActionSheetController, public popoverCtrl: PopoverController, public keyboard: Keyboard, private file: File, public http: Http, public alertCtrl: AlertController, public NP: NavParams, public nav: NavController, public navParams: NavParams, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, private filechooser: FileChooser,
+
+  constructor(private conf: Config, private sanitizer: DomSanitizer, public platform: Platform, private network: Network, public actionSheetCtrl: ActionSheetController, public popoverCtrl: PopoverController, public keyboard: Keyboard, private file: File, public http: Http, public alertCtrl: AlertController, public NP: NavParams, public nav: NavController, public navParams: NavParams, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, private filechooser: FileChooser,
     private transfer: Transfer,
     private ngZone: NgZone) {
     this.replyforward = 0;
     this.priority_highclass = '';
     this.priority_lowclass = '';
+    this.atmentedInnerHTML = '';
     // Authority for message send
     this.MESSAGESENTVIEWACCESS = localStorage.getItem("MESSAGE_SENT_VIEW");
     this.MESSAGESENTCREATEACCESS = localStorage.getItem("MESSAGE_SENT_CREATE");
@@ -199,6 +211,9 @@ export class EmailPage {
     this.popoverThemeJSIonic = conf.popoverThemeJSIonic();
     this.networkType = '';
     this.platform.ready().then(() => {
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("email.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -363,8 +378,8 @@ export class EmailPage {
   /*@doCompanyGroup calling on report */
   /****************************/
   doInbox() {
-      this.inboxact=false;
-    this.sendact=false;
+    this.inboxact = false;
+    this.sendact = false;
     //this.conf.presentLoading(1);
     if (this.inboxData.status == '') {
       this.inboxData.status = "messages_id";
@@ -404,8 +419,8 @@ export class EmailPage {
 
 
   doSend() {
-      this.inboxact=false;
-    this.sendact=false;
+    this.inboxact = false;
+    this.sendact = false;
     //this.conf.presentLoading(1);
     if (this.sendData.status == '') {
       this.sendData.status = "messages_id";
@@ -425,7 +440,31 @@ export class EmailPage {
         console.log("1" + res.messages.length);
         console.log("2" + res.messages);
         if (res.messages.length > 0) {
-          this.sendLists = res.messages;
+
+          for (let messageData in res.messages) {
+            let receiverNameOutStr;
+            if (res.messages[messageData].receiver_name != '') {
+              let receiverNamestrArr = res.messages[messageData].receiver_name.split(" ");
+              receiverNameOutStr = receiverNamestrArr.join(",");
+              console.log(receiverNameOutStr);
+            }
+
+            this.sendLists.push({
+              "message_id": res.messages[messageData].message_id,
+              "sender_id": res.messages[messageData].sender_id,
+              "messages_subject": res.messages[messageData].messages_subject,
+              "message_body": res.messages[messageData].message_body,
+              "message_date": res.messages[messageData].message_date,
+              "time_ago": res.messages[messageData].time_ago,
+              "message_priority": res.messages[messageData].message_priority,
+              "personalhashtag": res.messages[messageData].personalhashtag,
+              "receiver_id": res.messages[messageData].receiver_id,
+              "receiver_name": res.messages[messageData].receiver_name,
+              "receiver_name_str": receiverNameOutStr,
+              "attachments": res.messages[messageData].attachments
+            })
+          }
+          //this.sendLists = res.messages;
           this.totalCountSend = res.totalCount;
           this.sendData.startindex += this.sendData.results;
           //this.loadingMoreDataContent = 'Loading More Data';
@@ -722,7 +761,7 @@ export class EmailPage {
   }
 
   saveEntry() {
-
+    // if (this.key != 'Enter') {
     console.log(this.form.controls);
     if (this.isUploadedProcessing == false) {
       /* let name: string = this.form.controls["lat"].value,
@@ -753,6 +792,7 @@ export class EmailPage {
       this.createEntry(this.micro_timestamp, to, copytome, composemessagecontent, subject);
 
     }
+    //}
   }
 
   // Save a new record that has been added to the page's HTML form
@@ -880,6 +920,7 @@ export class EmailPage {
   address1get(hashtag) {
     console.log(hashtag);
     this.hashtag = hashtag;
+    this.atmentedInnerHTML = this.hashtag;
   }
 
 
@@ -895,13 +936,13 @@ export class EmailPage {
       this.choice = 'inbox';
     } else if (this.act == 'inbox' && this.choice == 'inbox') {
       console.log("E" + this.choice);
-      this.nav.push(DashboardPage);
+      this.nav.setRoot(DashboardPage);
     } else if (this.choice == 'send' && this.act == 'send') {
       console.log("F" + this.choice);
-      this.nav.push(DashboardPage);
+      this.nav.setRoot(DashboardPage);
     } else {
       console.log("G" + this.choice);
-      this.nav.push(DashboardPage);
+      this.nav.setRoot(DashboardPage);
     }
   }
 
@@ -940,6 +981,9 @@ export class EmailPage {
     //this.message_readstatus=item.message_readstatus;
     this.receiver_id = item.receiver_id;
     this.receiver_idreplaceat = item.receiver_id.replace("@", "");
+    if (this.act == 'send') {
+      this.receiver_idreplaceat = item.receiver_name_str;
+    }
     this.senderid = item.sender_id;
 
 
@@ -1089,8 +1133,8 @@ export class EmailPage {
       });
   }
   doDetails(item, act) {
-    this.inboxact=false;
-    this.sendact=false;
+    this.inboxact = false;
+    this.sendact = false;
     this.attachedFileLists = []
     this.isSubmitted = false;
     this.act = act;
@@ -1264,8 +1308,8 @@ export class EmailPage {
               }
               // this.conf.sendNotification(data.json().msg.result);
               console.log('Exit 1');
-               this.strinbox = '';
-              this.inboxact='';
+              this.strinbox = '';
+              this.inboxact = '';
               this.inboxData.startindex = 0;
               this.doInbox();
               console.log('Exit 2');
@@ -1335,7 +1379,7 @@ export class EmailPage {
             console.log("Error" + res.msg[0]['Error'])
             if (data.status === 200) {
               this.strsend = '';
-              this.sendact='';
+              this.sendact = '';
               console.log('Enter');
               if (res.msg[0]['Error'] == 0) {
                 this.conf.sendNotification(res.msg[0]['result']);
