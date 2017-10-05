@@ -83,9 +83,8 @@ import { RestProvider } from '../providers/rest/rest';
 @NgModule({
   declarations: [
     //ITimer,
-    //CalendarComponent,
-    //CalendarPage,
-    
+    CalendarComponent,
+    CalendarPage,    
     MyApp,
     HomePage,
     AddalarmlistPage,
@@ -161,9 +160,8 @@ import { RestProvider } from '../providers/rest/rest';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    //CalendarPage,
-    //CalendarComponent,
-    
+    CalendarPage,
+    CalendarComponent,    
     MyApp,
     HomePage,
     AddalarmlistPage,

@@ -281,9 +281,9 @@ export class MapsActionPage {
     localStorage.setItem("unitunitname", item.unitname);
     localStorage.setItem("unitlocation", item.location);
     localStorage.setItem("unitprojectname", item.projectname);
-    localStorage.setItem("unitcolorcode", item.colorcodeindications);
-    localStorage.setItem("unitlat", item.lat);
-    localStorage.setItem("unitlng", item.lng);
+     localStorage.setItem("unitcolorcode", item.colorcode);
+    localStorage.setItem("unitlat", item.latitude);
+    localStorage.setItem("unitlng", item.longtitude);
     localStorage.setItem("runninghr", item.runninghr);
     console.log("RHR" + item.runninghr);
     localStorage.setItem("nsd", item.nextservicedate);
