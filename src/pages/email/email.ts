@@ -920,7 +920,25 @@ export class EmailPage {
   address1get(hashtag) {
     console.log(hashtag);
     this.hashtag = hashtag;
-    this.atmentedInnerHTML = this.hashtag;
+
+    if (this.to != '') {
+      let atmentArr = this.to.split(" ");
+      //this.hashtag = atmentArr.join(",");
+      this.atmentedInnerHTML = '';
+      for (let i = 0; i < atmentArr.length; i++) {
+        console.log(atmentArr[i].length - 1);
+        if (atmentArr[i].length - 1 > 0) {
+          this.atmentedInnerHTML += "<span class='atment'>" + atmentArr[i] + "</span><a class='delete-lnk' href='#' (click)='doRemoveResouce(" + i + ")'>X</a>";
+        }
+      }
+
+    }
+    var str = " i am from Tamil nadu.";
+    var res = str.split(" ");  //split by space
+    res.pop();  //remove last element
+    console.log(res.join(" ") + ".");  //join back together
+
+
   }
 
 

@@ -78,14 +78,13 @@ import { DragulaModule } from "ng2-dragula/ng2-dragula"
 //import { ITimer } from '../pages/maps/itimer';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Network } from '@ionic-native/network';
-import { RestProvider } from '../providers/rest/rest';
 //import { TabindexDirective } from '../../directives/tabindex.directive';
 @NgModule({
   declarations: [
     //ITimer,
    // TabindexDirective,
-    CalendarComponent,
-    CalendarPage,
+    //CalendarComponent,
+    //CalendarPage,
     MyApp,
     HomePage,
     AddalarmlistPage,
@@ -161,8 +160,8 @@ import { RestProvider } from '../providers/rest/rest';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    CalendarPage,
-    CalendarComponent,
+    //CalendarPage,
+    //CalendarComponent,
     MyApp,
     HomePage,
     AddalarmlistPage,
@@ -235,9 +234,7 @@ import { RestProvider } from '../providers/rest/rest';
     SplashScreen,
     GoogleMaps,
     Geolocation,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-    DataServiceProvider,
-    RestProvider
+    { provide: ErrorHandler, useClass: IonicErrorHandler },DataServiceProvider
   ]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Component, ViewChild, Output, EventEmitter, Input, HostListener } from '@angular/core';
+import {  ElementRef, Component, ViewChild, Output, EventEmitter, Input, HostListener } from '@angular/core';
 import { Nav, Platform, MenuController, AlertController, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,9 +36,9 @@ import { ForgotpasswordPage } from '../pages/forgotpassword/forgotpassword';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-@Directive({
+/*@Directive({
   selector: '[br-data-dependency]' // Attribute selector
-})
+})*/
 @Component({
   templateUrl: 'app.html',
   providers: [Push, LocalNotifications, Keyboard]
