@@ -2027,7 +2027,7 @@ window.setInterval(function(){
 						if(individualData[1] <= 20)
 						tmpval = "-"+parseInt(((individualData[1] * 15)) / 10);
 						else
-						tmpval = "-"+parseInt(((individualData[1] * 17)) / 10);
+						tmpval = "-"+parseInt(((individualData[1] * 12)) / 10);
 						$("#collanttempbar").css("margin-top", tmpval+"px");
 					}
 

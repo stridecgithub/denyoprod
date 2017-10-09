@@ -360,7 +360,7 @@ export class MapsPage {
             lng: 103.70307100000002,
             passive: true
           },
-          zoom: 11,
+          zoom: 9,
           tilt: 30,
         }
       };

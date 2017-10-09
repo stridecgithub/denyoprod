@@ -93,30 +93,35 @@
           <ul *ngIf="networkType==''">
 
             <li *ngFor="let parent of parents; let i=index">
-              <img src="{{apiServiceURL}}/staffphotos/{{parent.photo}}" (click)="presentPopover($event,parent)" *ngIf="parent.photo!=''">
-              <img src="{{apiServiceURL}}/images/default.png" (click)="presentPopover($event,parent)" *ngIf="parent.photo=='' ">
-
+              <div class="img-out">
+                <img src="{{apiServiceURL}}/staffphotos/{{parent.photo}}" (click)="presentPopover($event,parent)" *ngIf="parent.photo!=''">
+                <img src="{{apiServiceURL}}/images/default.png" (click)="presentPopover($event,parent)" *ngIf="parent.photo=='' ">
+              </div>
               <h3>{{parent.firstname}}</h3>
               <h3>{{parent.lastname}}</h3>
               <h4>{{parent.job_position}}</h4>
               <ul>
                 <li *ngFor="let child of parent.childs; let i=index">
+                  <div class="img-out">
                   <img src="{{apiServiceURL}}/staffphotos/{{child.photo}}" (click)="presentPopover($event,child)" *ngIf="child.photo!=''">
                   <img src="{{apiServiceURL}}/images/default.png" (click)="presentPopover($event,child)" *ngIf="child.photo==''">
+                  </div>
                   <h3>{{child.firstname}}</h3>
                   <h3>{{child.lastname}}</h3>
                   <h4>{{child.job_position}}</h4>
                   <ul>
                     <li *ngFor="let gchild of child.grandchilds; let i=index">
-                      <img src="{{apiServiceURL}}/staffphotos/{{gchild.photo}}" (click)="presentPopover($event,gchild)" *ngIf="gchild.photo!=''">
+                      <div class="img-out"><img src="{{apiServiceURL}}/staffphotos/{{gchild.photo}}" (click)="presentPopover($event,gchild)" *ngIf="gchild.photo!=''">
                       <img src="{{apiServiceURL}}/images/default.png" (click)="presentPopover($event,gchild)" *ngIf="gchild.photo==''">
+                      </div>
                       <h3>{{gchild.firstname}}</h3>
                       <h3>{{gchild.lastname}}</h3>
                       <h4>{{gchild.job_position}}</h4>
                       <ul>
                         <li *ngFor="let ggchild of gchild.grantgrandchilds; let i=index">
-                          <img src="{{apiServiceURL}}/staffphotos/{{ggchild.photo}}" (click)="presentPopover($event,ggchild)" *ngIf="ggchild.photo!=''">
+                         <div class="img-out"> <img src="{{apiServiceURL}}/staffphotos/{{ggchild.photo}}" (click)="presentPopover($event,ggchild)" *ngIf="ggchild.photo!=''">
                           <img src="{{apiServiceURL}}/images/default.png" (click)="presentPopover($event,ggchild)" *ngIf="ggchild.photo==''">
+                         </div>
                           <h3>{{ggchild.firstname}}</h3>
                           <h3>{{ggchild.lastname}}</h3>
                           <h4>{{ggchild.job_position}}</h4>
