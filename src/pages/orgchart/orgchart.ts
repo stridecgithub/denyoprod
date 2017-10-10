@@ -65,11 +65,20 @@ export class OrgchartPage {
   pinchW: any;
   pinchH: any;
   rotation: any;
+  imgwidth: any;
+  imgheight: any;
+  imgradius: any;
+  fontsize: any;
+
   iframeContent: any;
   constructor(private el: ElementRef, private conf: Config, public platform: Platform, private network: Network, public NP: NavParams, public popoverCtrl: PopoverController, public http: Http, public nav: NavController,
     public alertCtrl: AlertController, public navParams: NavParams) {
     //this.width = 1;
     //this.height = 150";
+    this.imgwidth = 80;
+    this.imgheight = 80;
+    this.imgradius = 40;
+    this.fontsize = 11;
     this.pinchW = 1;
     this.pinchH = 1;
     this.rotation = 0;
@@ -130,32 +139,57 @@ export class OrgchartPage {
     console.log("pinchEvent" + JSON.stringify(e))
     console.log("pinchW is" + this.pinchW);
     console.log("pinchH is" + this.pinchH)
-    this.width = this.pinchW * parseInt(e.scale) + parseInt(this.devicewidth);
-    this.height = this.pinchH * parseInt(e.scale) + parseInt(this.deviceheight);
+
+    console.log("Additional Event" + e.additionalEvent);
+    if (e.additionalEvent == 'pinchout') {
+      console.log("Additional Event pichout 1");
+
+      this.fontsize = this.fontsize + 1;
+
+
+      console.log("Image size above 80");
+      this.imgwidth = this.imgwidth + 1;
+      this.imgheight = this.imgheight + 1;
+      this.imgradius = parseInt(this.imgwidth) / 2;
+
+      /*this.width = this.pinchW * parseInt(e.scale) + parseInt(this.devicewidth);
+      this.height = this.pinchH * parseInt(e.scale) + parseInt(this.deviceheight);
+      this.imgwidth = this.pinchW * parseInt(e.scale) + this.imgwidth;
+      this.imgheight = this.pinchH * parseInt(e.scale) + this.imgheight;
+      this.imgradius = this.imgwidth + parseInt(e.scale) / 2;
+      this.fontsize = this.fontsize + parseInt(e.scale);*/
+      //this.imgwidth =
+
+    } else {
+      console.log("Additional Event pinch in 2");
+      // if (this.imgwidth > 0 && this.imgheight > 0) {
+      /* this.width = this.pinchW * parseInt(e.scale) - parseInt(this.devicewidth);
+       this.height = this.pinchH * parseInt(e.scale) - parseInt(this.deviceheight);
+       this.imgwidth = this.pinchW * parseInt(e.scale) - this.imgwidth;
+       this.imgheight = this.pinchH * parseInt(e.scale) - this.imgheight;
+       this.imgradius = this.imgwidth - parseInt(e.scale) / 2;
+       this.fontsize = this.fontsize - parseInt(e.scale);*/
+      //}
+
+      this.fontsize = this.fontsize - 1;
+
+
+      console.log("Image size above 80");
+      this.imgwidth = this.imgwidth - 1;
+      this.imgheight = this.imgheight - 1;
+      this.imgradius = parseInt(this.imgwidth) / 2;
+
+    }
+
+
     console.log("E Scale is" + e.scale);
-    console.log("Width is" + this.width);
-    console.log("Height is" + this.height);
+    //console.log("Width is" + this.width);
+    //console.log("Height is" + this.height);
+    console.log("Image width is" + this.imgwidth);
+    console.log("Image height is" + this.imgheight);
+    console.log("Image radius is" + this.imgradius);
 
     this.rotation = e.rotation;
-
-    if (this.timeout == null) {
-      this.timeout = setTimeout(() => {
-        this.timeout = null;
-        this.updateWidthHeightPinch();
-      }, 1000);
-    } else {
-      clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => {
-        this.timeout = null;
-        this.updateWidthHeightPinch();
-      }, 1000);
-    }
-  }
-
-  panEvent(e) {
-    console.log("panEvent" + JSON.stringify(e))
-    this.width = this.pinchW * e.scale;
-    this.height = this.pinchH * e.scale;
 
     if (this.timeout == null) {
       this.timeout = setTimeout(() => {
