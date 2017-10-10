@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, AlertController, NavParams , Platform} from 'ionic-angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController, AlertController, NavParams, Platform, Gesture } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { AddorgchartonePage } from '../addorgchartone/addorgchartone';
@@ -28,10 +28,15 @@ import { Config } from '../../config/config';
   providers: [Config]
 })
 export class OrgchartPage {
+  private gesture: Gesture;
+  @ViewChild('image') ElementRef;
   public responseResultCompanyGroup: any;
   public pageTitle: string;
   public loginas: any;
   public htmlContent;
+
+  public devicewidth;
+  public deviceheight;
   private apiServiceURL: string = "";
   private permissionMessage: string = "";
   public networkType: string;
@@ -53,9 +58,21 @@ export class OrgchartPage {
   public companyId: any;
   public VIEWACCESS: any;
   public CREATEACCESS: any;
+  public tap: number = 600;
+  timeout: any;
+  width: any;
+  height: any;
+  pinchW: any;
+  pinchH: any;
+  rotation: any;
   iframeContent: any;
-  constructor(private conf: Config, public platform: Platform, private network: Network, public NP: NavParams, public popoverCtrl: PopoverController, public http: Http, public nav: NavController,
-     public alertCtrl: AlertController, public navParams: NavParams) {
+  constructor(private el: ElementRef, private conf: Config, public platform: Platform, private network: Network, public NP: NavParams, public popoverCtrl: PopoverController, public http: Http, public nav: NavController,
+    public alertCtrl: AlertController, public navParams: NavParams) {
+    //this.width = 1;
+    //this.height = 150";
+    this.pinchW = 1;
+    this.pinchH = 1;
+    this.rotation = 0;
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
     this.companyId = localStorage.getItem("userInfoCompanyId");
@@ -73,14 +90,20 @@ export class OrgchartPage {
 
 
     //Authorization Get Value
-     this.networkType = '';
-     this.permissionMessage = conf.rolePermissionMsg();
+    this.networkType = '';
+    this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.networkType = '';
     this.platform.ready().then(() => {
-       this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
+
+      console.log('Device Resolution Width: ' + platform.width() + 16);
+      console.log('Device Resolution Height: ' + platform.height());
+      this.devicewidth = platform.width();
+      this.deviceheight = platform.height();
+
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("orgchar.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -92,7 +115,7 @@ export class OrgchartPage {
         this.networkType = this.conf.networkErrMsg();
       }, error => console.error(error));
 
-       let isNet = localStorage.getItem("isNet");
+      let isNet = localStorage.getItem("isNet");
       if (isNet == 'offline') {
         this.networkType = this.conf.networkErrMsg();
       } else {
@@ -100,6 +123,67 @@ export class OrgchartPage {
       }
     });
   }
+
+
+
+  tapEvent(e) {
+    console.log("tapEvent" + JSON.stringify(e))
+    if (this.tap != 700) {
+      this.tap = 700;
+    }
+    else
+      this.tap = 600;
+  }
+
+  pinchEvent(e) {
+    console.log("pinchEvent" + JSON.stringify(e))
+    console.log("pinchW is" + this.pinchW);
+    console.log("pinchH is" + this.pinchH)
+    this.width = this.pinchW * parseInt(e.scale) + parseInt(this.devicewidth);
+    this.height = this.pinchH * parseInt(e.scale) + parseInt(this.deviceheight);
+    console.log("E Scale is" + e.scale);
+    console.log("Width is" + this.width);
+    console.log("Height is" + this.height);
+
+    this.rotation = e.rotation;
+
+    if (this.timeout == null) {
+      this.timeout = setTimeout(() => {
+        this.timeout = null;
+        this.updateWidthHeightPinch();
+      }, 1000);
+    } else {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        this.timeout = null;
+        this.updateWidthHeightPinch();
+      }, 1000);
+    }
+  }
+
+  panEvent(e) {
+    console.log("panEvent" + JSON.stringify(e))
+    this.width = this.pinchW * e.scale;
+    this.height = this.pinchH * e.scale;
+
+    if (this.timeout == null) {
+      this.timeout = setTimeout(() => {
+        this.timeout = null;
+        this.updateWidthHeightPinch();
+      }, 1000);
+    } else {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        this.timeout = null;
+        this.updateWidthHeightPinch();
+      }, 1000);
+    }
+  }
+  updateWidthHeightPinch() {
+    this.pinchW = this.width;
+    this.pinchH = this.height;
+  }
+
   presentPopover(myEvent, item) {
     let popover = this.popoverCtrl.create(PopoverPage, { item: item });
     popover.present({
@@ -162,6 +246,17 @@ export class OrgchartPage {
 
 
   ionViewDidLoad() {
+
+    //create gesture obj w/ ref to DOM element
+    this.gesture = new Gesture(this.el.nativeElement);
+
+    //listen for the gesture
+    this.gesture.listen();
+
+
+
+    //turn on listening for pinch or rotate events
+    this.gesture.on('pinch', e => this.pinchEvent(e));
     console.log('ionViewDidLoad OrgchartPage');
   }
 
@@ -208,7 +303,7 @@ export class OrgchartPage {
     }
 
     console.log(this.apiServiceURL + "/orgchart?company_id=" + this.companyId + "&is_mobile=1");
-    }
+  }
   doOrgChart() {
     //this.conf.presentLoading(1);
     let //body: string = "loginid=" + this.userId,
@@ -233,7 +328,7 @@ export class OrgchartPage {
           //this.totalCount = 0;
         }
       }, error => {
-        this.networkType = this.conf.serverErrMsg() ;//+ "\n" + error;
+        this.networkType = this.conf.serverErrMsg();//+ "\n" + error;
       });
 
   }
@@ -275,7 +370,7 @@ export class OrgchartPage {
   redirectToUser() {
     this.nav.push(UnitsPage);
   }
-  
+
   redirectToMessage() {
     this.nav.setRoot(EmailPage);
   }
