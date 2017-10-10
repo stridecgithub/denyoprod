@@ -1,0 +1,14 @@
+{
+    "locations": [ 
+        {
+            "title": "Generator 1",
+            "latitude": 1.3240612,
+            "longitude": 103.699125
+        },
+        {
+            "title": "Generator 2",
+            "latitude": 1.3249773,
+            "longitude": 103.703071
+        }
+    ]
+}

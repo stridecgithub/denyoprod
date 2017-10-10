@@ -126,15 +126,6 @@ export class OrgchartPage {
 
 
 
-  tapEvent(e) {
-    console.log("tapEvent" + JSON.stringify(e))
-    if (this.tap != 700) {
-      this.tap = 700;
-    }
-    else
-      this.tap = 600;
-  }
-
   pinchEvent(e) {
     console.log("pinchEvent" + JSON.stringify(e))
     console.log("pinchW is" + this.pinchW);
