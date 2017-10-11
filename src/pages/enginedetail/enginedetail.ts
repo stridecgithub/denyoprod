@@ -162,7 +162,7 @@ export class EnginedetailPage {
    
   }
   previous() {
-    this.nav.push(DashboardPage);
+    this.nav.setRoot(DashboardPage);
   }
   doAdd() {
     this.nav.push(AddenginedetailPage);

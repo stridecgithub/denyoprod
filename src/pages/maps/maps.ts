@@ -599,7 +599,7 @@ export class MapsPage {
   }
 
   previous() {
-    this.navCtrl.pop(DashboardPage);
+    this.navCtrl.setRoot(DashboardPage);
   }
   favorite(unit_id) {
     this.reportData.startindex = 0;
