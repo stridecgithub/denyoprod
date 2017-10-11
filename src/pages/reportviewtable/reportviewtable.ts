@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions } from '@angular/http';
 //import { MyaccountPage } from '../myaccount/myaccount';
 //import { UnitgroupPage } from '../unitgroup/unitgroup';
 //import { CompanygroupPage } from '../companygroup/companygroup';
-import { FormGroup,  FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 //import { RolePage } from '../role/role';
 //import { HomePage } from '../home/home';
 import { UnitsPage } from '../units/units';
@@ -18,7 +18,7 @@ import { ReportsPage } from '../reports/reports';
 import { OrgchartPage } from '../orgchart/orgchart';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { FileOpener } from '@ionic-native/file-opener';
-import { FileTransfer,  FileTransferObject } from '@ionic-native/file-transfer';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Network } from '@ionic-native/network';
@@ -26,7 +26,7 @@ import { Config } from '../../config/config';
 @Component({
   selector: 'page-reportviewtable',
   templateUrl: 'reportviewtable.html',
-  providers: [ FileOpener, FileTransfer, File, DocumentViewer,Config]
+  providers: [FileOpener, FileTransfer, File, DocumentViewer, Config]
 })
 export class ReportviewtablePage {
   //@ViewChild('mapContainer') mapContainer: ElementRef;
@@ -45,7 +45,7 @@ export class ReportviewtablePage {
   public notcount: any;
   public from: any;
   public requestsuccess: any;
-  requestsuccessview:any;
+  requestsuccessview: any;
   public to: any;
   public noentrymsg: any;
   public responseTemplate: any;
@@ -56,13 +56,29 @@ export class ReportviewtablePage {
   private apiServiceURL: string = "";
   private permissionMessage: string = "";
   public networkType: string;
-  constructor(private conf: Config, public platform: Platform, private network: Network,private document: DocumentViewer, private sanitizer: DomSanitizer, private transfer: FileTransfer, private file: File, private fileOpener: FileOpener, public NP: NavParams,
+  public DATEANDTIME: boolean;
+  public RUNNINGHR: boolean;
+  public FUELLEVEL: boolean;
+  public VOLT1: boolean;
+  public VOLT2: boolean;
+  public VOLT3: boolean;
+  LOADPOWERFACTOR: boolean;
+  CURRENT1: boolean;
+  CURRENT2: boolean;
+  CURRENT3: boolean;
+  FREQ: boolean;
+  ENGINESTATE: boolean;
+  COLLANTTEMP: boolean;
+  BATTERYVOLTAGE: boolean;
+  OILPRESSURE: boolean;
+  ENGSPEED: boolean;
+  constructor(private conf: Config, public platform: Platform, private network: Network, private document: DocumentViewer, private sanitizer: DomSanitizer, private transfer: FileTransfer, private file: File, private fileOpener: FileOpener, public NP: NavParams,
     public fb: FormBuilder, public http: Http, public navCtrl: NavController, public nav: NavController) {
     this.pageTitle = 'Reports Preview & Download';
     this.graphview = 0;
     this.requestsuccess = '';
     this.pdfdownloadview = 0;
-    this.requestsuccessview=0;
+    this.requestsuccessview = 0;
     this.loginas = localStorage.getItem("userInfoName");
     this.userid = localStorage.getItem("userInfoId");
     this.companyid = localStorage.getItem("userInfoCompanyId");
@@ -72,13 +88,13 @@ export class ReportviewtablePage {
       "seltemplate": [""],
       "seltimeframe": [""],
     });
- this.networkType = '';
-     this.permissionMessage = conf.rolePermissionMsg();
+    this.networkType = '';
+    this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-       this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -101,7 +117,7 @@ export class ReportviewtablePage {
   ionViewWillEnter() {
     this.success = 0;
     this.requestsuccess = '';
-    this.requestsuccessview=0;
+    this.requestsuccessview = 0;
     let //body: string = "loginid=" + this.userId,
       type: string = "application/x-www-form-urlencoded; charset=UTF-8",
       headers: any = new Headers({ 'Content-Type': type }),
@@ -119,7 +135,7 @@ export class ReportviewtablePage {
   ionViewDidLoad() {
     this.requestsuccess = '';
     this.success = 0;
-    this.requestsuccessview=0;
+    this.requestsuccessview = 0;
     let seltypeBtn = localStorage.getItem("buttonRpt");
     console.log("Select Type Button Submit" + seltypeBtn);
     let action;
@@ -174,18 +190,143 @@ export class ReportviewtablePage {
 
       console.log("Report submit url is:-" + url);
       let res;
-      this.conf.presentLoading(1);     
-      this.http.get(url, options)       
+      this.conf.presentLoading(1);
+      this.http.get(url, options)
         .subscribe((data) => {
 
           // If the request was successful notify the user
           res = data.json();
+          res.has
           console.log("Report Preview Success Response:-" + JSON.stringify(res));
           if (seltypeBtn == '1') {
             this.success = 1;
           }
           if (res.reportdata.length > 0) {
             this.reportAllLists = res.reportdata;
+            if (res.reportdata[0].DATEANDTIME) {
+              this.DATEANDTIME = true;
+            } else {
+              this.DATEANDTIME = false;
+
+            }
+
+            if (res.reportdata[0].RUNNINGHR) {
+
+              this.RUNNINGHR = true;
+            } else {
+
+              this.RUNNINGHR = false;
+            }
+
+            if (res.reportdata[0].FUELLEVEL) {
+
+              this.FUELLEVEL = true;
+            } else {
+              this.FUELLEVEL = false;
+
+            }
+
+            if (res.reportdata[0].VOLT1) {
+              this.VOLT1 = true;
+
+            } else {
+              this.VOLT1 = false;
+
+            }
+
+            if (res.reportdata[0].VOLT2) {
+              this.VOLT2 = true;
+            } else {
+              this.VOLT2 = false;
+
+            }
+
+            if (res.reportdata[0].VOLT3) {
+
+              this.VOLT3 = true;
+            } else {
+
+              this.VOLT3 = false;
+            }
+
+            if (res.reportdata[0].LOADPOWERFACTOR) {
+
+              this.LOADPOWERFACTOR = true;
+            } else {
+
+              this.LOADPOWERFACTOR = false;
+            }
+            if (res.reportdata[0].CURRENT1) {
+
+              this.CURRENT1 = true;
+            } else {
+
+              this.CURRENT1 = false;
+            }
+
+            if (res.reportdata[0].CURRENT2) {
+
+              this.CURRENT2 = true;
+            } else {
+
+              this.CURRENT2 = false;
+            }
+
+            if (res.reportdata[0].CURRENT3) {
+
+              this.CURRENT3 = true;
+            } else {
+
+              this.CURRENT3 = false;
+            }
+
+            if (res.reportdata[0].FREQ) {
+
+              this.FREQ = true;
+            } else {
+
+              this.FREQ = false;
+            }
+
+            if (res.reportdata[0].ENGINESTATE) {
+
+              this.ENGINESTATE = true;
+            } else {
+
+              this.ENGINESTATE = false;
+            }
+
+            if (res.reportdata[0].COLLANTTEMP) {
+
+              this.COLLANTTEMP = true;
+            } else {
+
+              this.COLLANTTEMP = false;
+            }
+            if (res.reportdata[0].BATTERYVOLTAGE) {
+
+              this.BATTERYVOLTAGE = true;
+            } else {
+
+              this.BATTERYVOLTAGE = false;
+            }
+
+            if (res.reportdata[0].OILPRESSURE) {
+
+              this.OILPRESSURE = true;
+            } else {
+
+              this.OILPRESSURE = false;
+            }
+            if (res.reportdata[0].ENGSPEED) {
+
+              this.ENGSPEED = true;
+            } else {
+
+              this.ENGSPEED = false;
+            }
+
+
           }
 
           if (data.status === 200) {
@@ -198,8 +339,8 @@ export class ReportviewtablePage {
 
           this.noentrymsg = 'No report entries found';
         }, error => {
-        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-      });
+          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+        });
 
 
     } else if (seltypeBtn == '3' && this.graphview == 0) {
@@ -234,9 +375,9 @@ export class ReportviewtablePage {
       console.log("Report submit url is:-" + url);
       let res;
       this.conf.presentLoading(1);
-     
+
       this.http.get(url, options)
-       
+
         .subscribe((data) => {
           this.conf.presentLoading(0);
           // If the request was successful notify the user
@@ -270,9 +411,9 @@ export class ReportviewtablePage {
 
 
         }, error => {
-           this.conf.presentLoading(0);
-        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-      });
+          this.conf.presentLoading(0);
+          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+        });
       //  {"msg":{"result":"success"},"pdf":"reports_generator_1.pdf"}
 
 
@@ -281,11 +422,11 @@ export class ReportviewtablePage {
 
       if (seltypeBtn == '1') {
         this.graphview = 0;
-        this.requestsuccessview=1;
+        this.requestsuccessview = 1;
         this.requestsuccess = 'Request successfully sent';
         console.log(this.requestsuccess);
       } else {
-        this.iframeContent = "<iframe  src="+this.apiServiceURL+"/reports/viewreport?is_mobile=1" +
+        this.iframeContent = "<iframe  src=" + this.apiServiceURL + "/reports/viewreport?is_mobile=1" +
           "&selunit=" + this.NP.get("selunit") +
           "&seltimeframe=" + this.NP.get("seltimeframe") +
           "&seltemplate=" + this.NP.get("seltemplate") +
@@ -300,8 +441,18 @@ export class ReportviewtablePage {
       }
     }
 
+
+    let data = { "123": "test1", "2365": "test2", "1233": "test3", "112365": "test4" };
+
+    let result = "";
+    for (let key in data) {
+      result += "key:  " + key + "  value: " + data[key] + "  ";
+    };
+
+    console.log(result);
+
   }
- 
+
   notification() {
     this.navCtrl.push(NotificationPage);
   }

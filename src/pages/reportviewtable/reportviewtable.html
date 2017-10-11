@@ -56,53 +56,61 @@
 
 </ion-content>
 
-<ion-content padding class="ion-content"  *ngIf="networkType==''">
+<ion-content padding class="ion-content" *ngIf="networkType==''">
   <div class="error" *ngIf="success==1" style="color:red;text-align:center">Request report generated successfully.kindly check your valid email address</div>
   <div class="error" *ngIf="reportAllLists.length==0" style="color:red;text-align:center">{{noentrymsg}}</div>
 
   <div class="tree-outer">
     <div class="tree-overflow">
       <div id="treehtml">
-        <div class="tree">
+        <div class="tree" style="width:100%">
 
           <!--ul><li>fdsfdsf fdsfsdf gdgfdgfsdgfds gfdsgfdgs gfdsgdsg gfdsgfdsgdf gfdsgfds gfdsgd gdsfgdsgdfsg gfdsg fdsfsdf fdkjfhasjfhashfjkdfhaskd fjkdshfkjhfkjahfashf fskhfkdfhkfhsahfs fdskjfhkfhshfsdkf
              </li>
            </ul-->
-          <ion-grid *ngIf="reportAllLists.length>0">
-            <ion-row style="color: white;
+          <ion-grid *ngIf=" reportAllLists.length>0">
+          <ion-row style="color: white;
     background-color: gray;
     font-size: 12px;">
 
-              <ion-col col-auto>DATEANDTIME</ion-col>
-              <ion-col col-auto>FUELLEVEL</ion-col>
-              <ion-col col-auto>LOADPOWERFACTOR</ion-col>
-              <ion-col col-auto>CURRENT1</ion-col>
-              <ion-col col-auto>FREQ</ion-col>
-              <ion-col col-auto>ENGINESTATE</ion-col>
-              <ion-col col-auto>COLLANTTEMP</ion-col>
-              <ion-col col-auto>VOLT1</ion-col>
-              <ion-col col-auto>BATTERYVOLTAGE</ion-col>
-              <ion-col col-auto>OILPRESSURE</ion-col>
-              <ion-col col-auto>RUNNINGHR</ion-col>
-              <ion-col col-auto>ENGSPEED</ion-col>
+            <ion-col *ngIf="DATEANDTIME">Date & Time</ion-col>
+            <ion-col *ngIf="FUELLEVEL">Fuel Level</ion-col>
+            <ion-col *ngIf="LOADPOWERFACTOR">Load Power Factor</ion-col>
+            <ion-col *ngIf="CURRENT1">Current 1</ion-col>
+            <ion-col *ngIf="CURRENT2">Current 2</ion-col>
+            <ion-col *ngIf="CURRENT2">Current 3</ion-col>
+            <ion-col *ngIf="FREQ">Frequency</ion-col>
+            <ion-col *ngIf="ENGINESTATE">Engine State</ion-col>
+            <ion-col *ngIf="COLLANTTEMP">Coolant Temp</ion-col>
+            <ion-col *ngIf="VOLT1">Voltage 1(Generator)</ion-col>
+            <ion-col *ngIf="VOLT2">Voltage 2(Generator)</ion-col>
+            <ion-col *ngIf="VOLT3">Voltage 3(Generator)</ion-col>
+            <ion-col *ngIf="BATTERYVOLTAGE">Battery Voltage</ion-col>
+            <ion-col *ngIf="OILPRESSURE">Oil Pressure</ion-col>
+            <ion-col *ngIf="RUNNINGHR">Running Hours</ion-col>
+            <ion-col *ngIf="ENGSPEED">Engine Speed</ion-col>
 
-            </ion-row>
-            <ion-row *ngFor="let item  of reportAllLists" style="color: blue;
+          </ion-row>
+          <ion-row *ngFor="let item  of reportAllLists" style="color: blue;
     background-color: lightblue;
     font-size: 12px;">
-              <ion-col col-auto>{{item.DATEANDTIME}}</ion-col>
-              <ion-col col-auto>{{item.FUELLEVEL}}</ion-col>
-              <ion-col col-auto>{{item.LOADPOWERFACTOR}}</ion-col>
-              <ion-col col-auto>{{item.CURRENT1}}</ion-col>
-              <ion-col col-auto>{{item.FREQ}}</ion-col>
-              <ion-col col-auto>{{item.ENGINESTATE}}</ion-col>
-              <ion-col col-auto>{{item.COLLANTTEMP}}</ion-col>
-              <ion-col col-auto>{{item.VOLT1}}</ion-col>
-              <ion-col col-auto>{{item.BATTERYVOLTAGE}}</ion-col>
-              <ion-col col-auto>{{item.OILPRESSURE}}</ion-col>
-              <ion-col col-auto>{{item.RUNNINGHR}}</ion-col>
-              <ion-col col-auto>{{item.ENGSPEED}}</ion-col>
-            </ion-row>
+            <ion-col *ngIf="DATEANDTIME">{{item.DATEANDTIME}}</ion-col>
+            <ion-col *ngIf="FUELLEVEL">{{item.FUELLEVEL}}</ion-col>
+            <ion-col *ngIf="LOADPOWERFACTOR">{{item.LOADPOWERFACTOR}}</ion-col>
+            <ion-col *ngIf="CURRENT1">{{item.CURRENT1}}</ion-col>
+            <ion-col *ngIf="CURRENT2">{{item.CURRENT2}}</ion-col>
+            <ion-col *ngIf="CURRENT3">{{item.CURRENT3}}</ion-col>
+            <ion-col *ngIf="FREQ">{{item.FREQ}}</ion-col>
+            <ion-col *ngIf="ENGINESTATE">{{item.ENGINESTATE}}</ion-col>
+            <ion-col *ngIf="COLLANTTEMP">{{item.COLLANTTEMP}}</ion-col>
+            <ion-col *ngIf="VOLT1">{{item.VOLT1}}</ion-col>
+            <ion-col *ngIf="VOLT2">{{item.VOLT2}}</ion-col>
+            <ion-col *ngIf="VOLT3">{{item.VOLT3}}</ion-col>
+            <ion-col *ngIf="BATTERYVOLTAGE">{{item.BATTERYVOLTAGE}}</ion-col>
+            <ion-col *ngIf="OILPRESSURE">{{item.OILPRESSURE}}</ion-col>
+            <ion-col *ngIf="RUNNINGHR">{{item.RUNNINGHR}}</ion-col>
+            <ion-col *ngIf="ENGSPEED">{{item.ENGSPEED}}</ion-col>
+          </ion-row>
           </ion-grid>
         </div>
       </div>
@@ -150,5 +158,5 @@
     </ul>
 
   </ion-toolbar>
-    <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
+  <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
 </ion-footer>
