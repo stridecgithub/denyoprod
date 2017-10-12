@@ -126,6 +126,7 @@ export class AddorgcharttwoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddorgcharttwoPage');
+    localStorage.setItem("fromModule", "AddorgcharttwoPage");
     this.pageLoad();
   }
 

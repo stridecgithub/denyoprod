@@ -92,6 +92,7 @@ export class RolePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RolePage');
+     localStorage.setItem("fromModule", "RolePage");
   }
 
   /*******************/

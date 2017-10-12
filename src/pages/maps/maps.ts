@@ -131,6 +131,7 @@ export class MapsPage {
     //this.loadMap(0);
   }
   ionViewDidLoad() {
+     localStorage.setItem("fromModule","MapsPage");
     console.log('ionViewDidLoad MapsPage');
     //this.pageLoad();
     //this.loadMap(0);

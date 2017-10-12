@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams,Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { UserPage } from '../user/user';
@@ -15,7 +15,7 @@ import { MapsPage } from '../maps/maps';
 //import { ReportsPage } from '../reports/reports';
 import { CalendarPage } from '../calendar/calendar';
 import { EmailPage } from '../email/email';
-import { OrgchartPage} from '../orgchart/orgchart';
+import { OrgchartPage } from '../orgchart/orgchart';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
 /**
@@ -27,7 +27,7 @@ import { Config } from '../../config/config';
 @Component({
   selector: 'page-userorgchart',
   templateUrl: 'userorgchart.html',
-  providers: [FileChooser, Transfer, File,Config]
+  providers: [FileChooser, Transfer, File, Config]
 })
 export class UserorgchartPage {
   // Define FormBuilder /model properties
@@ -79,10 +79,10 @@ export class UserorgchartPage {
   private apiServiceURL: string = "";
   private permissionMessage: string = "";
   public networkType: string;
-  constructor(private conf: Config, public platform: Platform, private network: Network,public navCtrl: NavController,
+  constructor(private conf: Config, public platform: Platform, private network: Network, public navCtrl: NavController,
     public http: Http,
     public NP: NavParams,
-    public fb: FormBuilder,   
+    public fb: FormBuilder,
     private transfer: Transfer,
     private ngZone: NgZone) {
     this.loginas = localStorage.getItem("userInfoName");
@@ -96,13 +96,13 @@ export class UserorgchartPage {
 
     this.userId = localStorage.getItem("userInfoId");
     this.companyId = localStorage.getItem("userInfoCompanyId");
- this.networkType = '';
-     this.permissionMessage = conf.rolePermissionMsg();
+    this.networkType = '';
+    this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-       this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -124,7 +124,8 @@ export class UserorgchartPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddcompanygroupPage');
+    console.log('ionViewDidLoad UserorgchartPage');
+    localStorage.setItem("fromModule", "UserorgchartPage");
     this.pageLoad();
   }
 
@@ -134,8 +135,7 @@ export class UserorgchartPage {
     this.pageLoad();
 
   }
-  pageLoad()
-  {
+  pageLoad() {
     let //body: string = "loginid=" + this.userId,
       type: string = "application/x-www-form-urlencoded; charset=UTF-8",
       headers: any = new Headers({ 'Content-Type': type }),
@@ -169,10 +169,10 @@ export class UserorgchartPage {
       console.log("EDIT" + this.company_group);
       this.getUserListData();
       this.report_to = editItem.report_to;
-      console.log("RTO"+this.report_to);
-      
-       this.naDisplay=0;
-       
+      console.log("RTO" + this.report_to);
+
+      this.naDisplay = 0;
+
       if (this.NP.get("record").role_id == 1) {
         this.naDisplay = 1;
       }
@@ -233,7 +233,7 @@ export class UserorgchartPage {
       console.log("Upload Device Image File:" + userPhotoFile);
       this.fileTrans(userPhotoFile);
     }
-     this.contact = this.contact.replace("+", "%2B");
+    this.contact = this.contact.replace("+", "%2B");
     let body: string = "is_mobile=1&firstname=" + this.first_name +
       "&lastname=" + this.last_name +
       "&photo=" + this.photo +
@@ -289,7 +289,7 @@ export class UserorgchartPage {
       console.log("Upload Device Image File:" + userPhotoFile);
       this.fileTrans(userPhotoFile);
     }
-     this.contact = this.contact.replace("+", "%2B");
+    this.contact = this.contact.replace("+", "%2B");
     let body: string = "is_mobile=1&staff_id=" + this.recordID +
       "&firstname=" + this.first_name +
       "&lastname=" + this.last_name +
@@ -368,37 +368,37 @@ export class UserorgchartPage {
   // Determine whether we are adding a new record or amending an
   // existing record
   saveEntry() {
-        let isNet = localStorage.getItem("isNet");
+    let isNet = localStorage.getItem("isNet");
     if (isNet == 'offline') {
       this.networkType = this.conf.networkErrMsg();
     } else {
-    let job_position: string = this.form.controls["job_position"].value,
-      company_group: string = this.form.controls["company_group"].value,
-      report_to: string = this.form.controls["report_to"].value;
-    this.userInfo.push({
-      'job_position': job_position,
-      'company_group': company_group,
-      'report_to': report_to,
-      'first_name': this.first_name,
-      'last_name': this.last_name,
-      'photo': this.photo,
-      'email': this.email,
-      'country': this.country,
-      'contact': this.contact,
-      'createdby': this.createdby,
-      'username': this.username,
-      'password': this.password,
-      'hashtag': this.hashtag,
-      'role': this.role
+      let job_position: string = this.form.controls["job_position"].value,
+        company_group: string = this.form.controls["company_group"].value,
+        report_to: string = this.form.controls["report_to"].value;
+      this.userInfo.push({
+        'job_position': job_position,
+        'company_group': company_group,
+        'report_to': report_to,
+        'first_name': this.first_name,
+        'last_name': this.last_name,
+        'photo': this.photo,
+        'email': this.email,
+        'country': this.country,
+        'contact': this.contact,
+        'createdby': this.createdby,
+        'username': this.username,
+        'password': this.password,
+        'hashtag': this.hashtag,
+        'role': this.role
 
-    });
-    if (this.isEdited) {
-      this.updateEntry(this.userInfo, this.userId);
+      });
+      if (this.isEdited) {
+        this.updateEntry(this.userInfo, this.userId);
+      }
+      else {
+        this.createEntry(this.userInfo, this.userId);
+      }
     }
-    else {
-      this.createEntry(this.userInfo, this.userId);
-    }
-  }
   }
 
 
@@ -417,8 +417,8 @@ export class UserorgchartPage {
     let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
       headers: any = new Headers({ 'Content-Type': type }),
       options: any = new RequestOptions({ headers: headers }),
-     // url: any = this.apiServiceURL + "/getcompanies?loginid=" + this.userId+"comapnyid="+this.companyId;
-       url: any = this.apiServiceURL + "/getcompanies?loginid=" + this.userId;
+      // url: any = this.apiServiceURL + "/getcompanies?loginid=" + this.userId+"comapnyid="+this.companyId;
+      url: any = this.apiServiceURL + "/getcompanies?loginid=" + this.userId;
     let res;
     this.http.get(url, options)
       .subscribe(data => {
@@ -431,53 +431,49 @@ export class UserorgchartPage {
   }
 
   getUserListData() {
-    if(this.isEdited==true)
-    {
-      this.userId=this.recordID;
-    let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-      headers: any = new Headers({ 'Content-Type': type }),
-      options: any = new RequestOptions({ headers: headers }),
-      url: any = this.apiServiceURL + "/getstaffs?loginid=" + this.userId + "&company_id=" + this.company_group;
-    let res;
-    console.log("Report To API:" + url)
-    this.http.get(url, options)
-      .subscribe(data => {
-        res = data.json();
-        // this.responseResultReportTo="N/A";
-        if(this.report_to == 0)
-      {
-        this.len=0;
-      }
-      else
-      {
-        this.len = res.TotalCount;
-      }
-        console.log("length" + res.TotalCount);
-        this.naDisplay = 1;
-        this.responseResultReportTo = res.staffslist;
-      }, error => {
-        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-      });
+    if (this.isEdited == true) {
+      this.userId = this.recordID;
+      let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+        headers: any = new Headers({ 'Content-Type': type }),
+        options: any = new RequestOptions({ headers: headers }),
+        url: any = this.apiServiceURL + "/getstaffs?loginid=" + this.userId + "&company_id=" + this.company_group;
+      let res;
+      console.log("Report To API:" + url)
+      this.http.get(url, options)
+        .subscribe(data => {
+          res = data.json();
+          // this.responseResultReportTo="N/A";
+          if (this.report_to == 0) {
+            this.len = 0;
+          }
+          else {
+            this.len = res.TotalCount;
+          }
+          console.log("length" + res.TotalCount);
+          this.naDisplay = 1;
+          this.responseResultReportTo = res.staffslist;
+        }, error => {
+          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+        });
     }
-    else
-    {
- let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-      headers: any = new Headers({ 'Content-Type': type }),
-      options: any = new RequestOptions({ headers: headers }),
-      url: any = this.apiServiceURL + "/getstaffs?loginid=" + this.userId + "&company_id=" + this.company_group;
-    let res;
-    console.log("Report To API:" + url)
-    this.http.get(url, options)
-      .subscribe(data => {
-        res = data.json();
-        // this.responseResultReportTo="N/A";
-        this.len = res.TotalCount;
-        console.log("length" + res.TotalCount);
-        this.naDisplay = 1;
-        this.responseResultReportTo = res.staffslist;
-      }, error => {
-        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-      });
+    else {
+      let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+        headers: any = new Headers({ 'Content-Type': type }),
+        options: any = new RequestOptions({ headers: headers }),
+        url: any = this.apiServiceURL + "/getstaffs?loginid=" + this.userId + "&company_id=" + this.company_group;
+      let res;
+      console.log("Report To API:" + url)
+      this.http.get(url, options)
+        .subscribe(data => {
+          res = data.json();
+          // this.responseResultReportTo="N/A";
+          this.len = res.TotalCount;
+          console.log("length" + res.TotalCount);
+          this.naDisplay = 1;
+          this.responseResultReportTo = res.staffslist;
+        }, error => {
+          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+        });
     }
 
   }
@@ -558,7 +554,7 @@ export class UserorgchartPage {
     });
   }
 
- 
+
   notification() {
     this.navCtrl.push(NotificationPage);
   }

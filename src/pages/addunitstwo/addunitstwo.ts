@@ -113,7 +113,8 @@ export class AddunitstwoPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddunitsonePage');
+    console.log('ionViewDidLoad AddunitstwoPage');
+     localStorage.setItem("fromModule", "AddunitstwoPage");
     this.pageLoad();
   }
 

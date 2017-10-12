@@ -54,6 +54,7 @@ export class PopoverPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PopoverPage');
+     localStorage.setItem("fromModule", "PopoverPage");
   }
   close(itemData) {
     this.viewCtrl.dismiss(itemData);

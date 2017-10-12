@@ -97,6 +97,7 @@ export class UserPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
+     localStorage.setItem("fromModule", "UserPage");
   }
 
   /*******************/

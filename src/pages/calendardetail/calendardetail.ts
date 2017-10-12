@@ -98,6 +98,7 @@ export class CalendardetailPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CalendardetailPage');
+    localStorage.setItem("fromModule", "CalendardetailPage");
   }
   ionViewWillEnter() {
     if (this.NP.get("event_id")) {

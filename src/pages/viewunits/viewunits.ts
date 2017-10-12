@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController,Platform } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 import { UnitdetailsPage } from '../unitdetails/unitdetails';
 import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions } from '@angular/http';
@@ -17,7 +17,7 @@ import { Config } from '../../config/config';
   selector: 'page-viewunits',
   templateUrl: 'viewunits.html'
   ,
-   providers:[Config]
+  providers: [Config]
 })
 export class ViewunitsPage {
 
@@ -47,7 +47,7 @@ export class ViewunitsPage {
     results: 8
   }
   public reportAllLists = [];
-  constructor(private conf: Config, public platform: Platform, private network: Network,public http: Http, public nav: NavController,
+  constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController,
     public alertCtrl: AlertController, public navParams: NavParams) {
     this.pageTitle = 'Units';
     this.str = '';
@@ -55,11 +55,11 @@ export class ViewunitsPage {
     this.companyId = localStorage.getItem("userInfoCompanyId");
     this.userId = localStorage.getItem("userInfoId");
     this.ulist = localStorage.getItem("viewlist");
- this.networkType = '';
+    this.networkType = '';
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-   
+
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -87,6 +87,7 @@ export class ViewunitsPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewunitsPage');
+    localStorage.setItem("fromModule", "ViewunitsPage");
   }
   exit() {
     this.nav.push(UnitdetailsPage, {
@@ -196,7 +197,7 @@ export class ViewunitsPage {
         this.conf.presentLoading(0);
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
-    
+
   }
   doRefresh(refresher) {
     console.log('doRefresh function calling...');

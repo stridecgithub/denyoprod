@@ -128,9 +128,9 @@ export class AddunitsthreePage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-       this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -142,7 +142,7 @@ export class AddunitsthreePage {
         this.networkType = this.conf.networkErrMsg();
       }, error => console.error(error));
 
-       let isNet = localStorage.getItem("isNet");
+      let isNet = localStorage.getItem("isNet");
       if (isNet == 'offline') {
         this.networkType = this.conf.networkErrMsg();
       } else {
@@ -152,7 +152,8 @@ export class AddunitsthreePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddunitsonePage');
+    console.log('ionViewDidLoad AddunitsthreePage');
+    localStorage.setItem("fromModule", "AddunitsthreePage");
     this.pageLoad();
 
   }
@@ -493,7 +494,7 @@ export class AddunitsthreePage {
   // Determine whether we are adding a new record or amending an
   // existing record
   saveEntry() {
-     let isNet = localStorage.getItem("isNet");
+    let isNet = localStorage.getItem("isNet");
     if (isNet == 'offline') {
       this.networkType = this.conf.networkErrMsg();
     } else {

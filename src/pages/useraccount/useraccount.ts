@@ -146,7 +146,8 @@ export class UseraccountPage {
     }
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UseraccountPage');
+    console.log('ionViewDidLoad UseraccountPage');    
+     localStorage.setItem("fromModule", "UseraccountPage");
     this.pageLoad();
   }
 

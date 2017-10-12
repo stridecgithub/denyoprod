@@ -97,6 +97,7 @@ export class UnitgroupPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad UnitgroupPage');
+    localStorage.setItem("fromModule", "UnitgroupPage");
     
     let //body: string = "loginid=" + this.userId,
       type: string = "application/x-www-form-urlencoded; charset=UTF-8",

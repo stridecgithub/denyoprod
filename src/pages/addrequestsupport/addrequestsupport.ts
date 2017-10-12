@@ -131,6 +131,7 @@ export class AddrequestsupportPage {
   ionViewDidLoad() {
     this.addedImgListsRequest = [];
     console.log('ionViewDidLoad AddrequestsupportPage');
+     localStorage.setItem("fromModule", "AddrequestsupportPage");
   }
   favoriteaction(unit_id) {
 		let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,

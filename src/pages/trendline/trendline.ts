@@ -72,6 +72,7 @@ export class TrendlinePage {
 	ionViewDidLoad() {
 		this.pageTitle = "Trendline";
 		console.log('ionViewDidLoad TrendlinePage');
+		localStorage.setItem("fromModule", "TrendlinePage");
 	}
 
 	ionViewWillEnter() {

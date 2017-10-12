@@ -99,6 +99,7 @@ export class AddunitgroupPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddunitgroupPage');
+     localStorage.setItem("fromModule", "AddunitgroupPage");
   }
   ionViewWillEnter() {
     this.resetFields();

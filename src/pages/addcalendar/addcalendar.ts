@@ -241,6 +241,7 @@ export class AddcalendarPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad  AddcalendarPage');
+    localStorage.setItem("fromModule", "AddcalendarPage");
   }
 
 

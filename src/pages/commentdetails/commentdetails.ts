@@ -138,6 +138,8 @@ export class CommentdetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommentdetailsPage');
+    
+    localStorage.setItem("fromModule", "CommentdetailsPage");
   }
   ionViewWillEnter() {
 

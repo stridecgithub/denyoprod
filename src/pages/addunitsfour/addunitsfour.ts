@@ -94,7 +94,7 @@ export class AddunitsfourPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-        this.platform.registerBackButtonAction(() => {
+      this.platform.registerBackButtonAction(() => {
         this.previous();
       });
       this.network.onConnect().subscribe(data => {
@@ -118,7 +118,8 @@ export class AddunitsfourPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddunitsonePage');
+    console.log('ionViewDidLoad AddunitsfourPage');
+    localStorage.setItem("fromModule", "AddunitsfourPage");
     this.pageLoad();
 
   }
@@ -332,7 +333,7 @@ export class AddunitsfourPage {
           localStorage.setItem("controllerid", '');
           localStorage.setItem("models_id", '');
           localStorage.setItem("neaplateno", '');
-          this.conf.sendNotificationTimer(`Units created was successfully added`);          
+          this.conf.sendNotificationTimer(`Units created was successfully added`);
           this.nav.push(UnitsPage);
         }
         // Otherwise let 'em know anyway
@@ -527,7 +528,7 @@ export class AddunitsfourPage {
       });
 
   }
-  
+
 
 
 

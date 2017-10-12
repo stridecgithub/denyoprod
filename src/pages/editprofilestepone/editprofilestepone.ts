@@ -112,6 +112,7 @@ export class EditprofilesteponePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditprofilesteponePage');
+     localStorage.setItem("fromModule", "EditprofilesteponePage");
     this.pageLoad();
   }
 

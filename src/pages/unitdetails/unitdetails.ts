@@ -147,6 +147,7 @@ export class UnitdetailsPage {
 			}
 		}
 		console.log('ionViewDidLoad UnitdetailsPage');
+		localStorage.setItem("fromModule", "UnitdetailsPage");
 		// UnitDetails Api Call		
 		let
 			type: string = "application/x-www-form-urlencoded; charset=UTF-8",

@@ -100,6 +100,7 @@ export class AlarmlistdetailPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlarmlistdetailPage');
+     localStorage.setItem("fromModule", "AlarmlistdetailPage");
   }
   favoriteaction(unit_id) {
 		let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,

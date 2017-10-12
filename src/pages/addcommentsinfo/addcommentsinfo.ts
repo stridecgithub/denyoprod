@@ -116,9 +116,9 @@ export class AddcommentsinfoPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-       this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -130,7 +130,7 @@ export class AddcommentsinfoPage {
         this.networkType = this.conf.networkErrMsg();
       }, error => console.error(error));
 
-       let isNet = localStorage.getItem("isNet");
+      let isNet = localStorage.getItem("isNet");
       if (isNet == 'offline') {
         this.networkType = this.conf.networkErrMsg();
       } else {
@@ -141,6 +141,7 @@ export class AddcommentsinfoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddcommentsinfoPage');
+    localStorage.setItem("fromModule", "AddcommentsinfoPage");
   }
   favoriteaction(unit_id) {
     let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
@@ -236,7 +237,7 @@ export class AddcommentsinfoPage {
     });
   }
 
-  
+
 
   fileTrans(path, micro_timestamp) {
     const fileTransfer: TransferObject = this.transfer.create();
@@ -315,7 +316,7 @@ export class AddcommentsinfoPage {
   }
 
   saveEntry() {
-     let isNet = localStorage.getItem("isNet");
+    let isNet = localStorage.getItem("isNet");
     if (isNet == 'offline') {
       this.networkType = this.conf.networkErrMsg();
     } else {

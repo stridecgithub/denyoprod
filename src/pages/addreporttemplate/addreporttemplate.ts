@@ -93,6 +93,8 @@ console.log("Selected DAta:"+JSON.stringify(this.getCheckboxData));
 }*/
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddreporttemplatePage');
+    
+    localStorage.setItem("fromModule", "AddreporttemplatePage");
   }
   ionViewWillEnter() {
     if (this.NP.get("record")) {

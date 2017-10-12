@@ -286,6 +286,7 @@ export class ReportsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReportsPage');
+    localStorage.setItem("fromModule", "ReportsPage");
   }
   notification() {
     this.navCtrl.push(NotificationPage);

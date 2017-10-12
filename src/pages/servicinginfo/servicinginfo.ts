@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController,Platform } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 import { CompanygroupPage } from '../companygroup/companygroup';
 import { UserPage } from '../user/user';
 import { MyaccountPage } from '../myaccount/myaccount';
@@ -17,7 +17,7 @@ import { MapsPage } from '../maps/maps';
 //import { ReportsPage } from '../reports/reports';
 import { CalendarPage } from '../calendar/calendar';
 import { EmailPage } from '../email/email';
-import { OrgchartPage} from '../orgchart/orgchart';
+import { OrgchartPage } from '../orgchart/orgchart';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
 /**
@@ -29,7 +29,7 @@ import { Config } from '../../config/config';
 @Component({
   selector: 'page-servicinginfo',
   templateUrl: 'servicinginfo.html',
-   providers:[Config]
+  providers: [Config]
 })
 export class ServicinginfoPage {
   public pageTitle: string;
@@ -39,8 +39,8 @@ export class ServicinginfoPage {
   public service_remark: any;
   public msgcount: any;
   public notcount: any;
-  public photo:any;
- 
+  public photo: any;
+
   public VIEWACCESS: any;
   public CREATEACCESS: any;
   public EDITACCESS: any;
@@ -66,15 +66,15 @@ export class ServicinginfoPage {
   public userId: any;
   public reportAllLists = [];
   public addedServiceImgLists = [];
-  public addedImgLists=[];
+  public addedImgLists = [];
   public loginas: any;
   public loadingMoreDataContent: string;
   private apiServiceURL: string = "";
   private permissionMessage: string = "";
   public networkType: string;
   public totalCount;
-  constructor(private conf: Config, public platform: Platform, private network: Network,public http: Http,
-     public alertCtrl: AlertController, public NP: NavParams, public navParams: NavParams, public nav: NavController) {
+  constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http,
+    public alertCtrl: AlertController, public NP: NavParams, public navParams: NavParams, public nav: NavController) {
     this.pageTitle = 'Servicing Info';
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
@@ -86,8 +86,8 @@ export class ServicinginfoPage {
     console.log("Role Authority for Unit Listing Edit:" + this.EDITACCESS);
     this.DELETEACCESS = localStorage.getItem("UNITS_SERVICINGINFO_DELETE");
     console.log("Role Authority for Unit Listing Delete:" + this.DELETEACCESS);
- this.networkType = '';
-     this.permissionMessage = conf.rolePermissionMsg();
+    this.networkType = '';
+    this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
       this.network.onConnect().subscribe(data => {
@@ -112,6 +112,7 @@ export class ServicinginfoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServicinginfoPage');
+    localStorage.setItem("fromModule", "ServicinginfoPage");
   }
   ionViewWillEnter() {
     let //body: string = "loginid=" + this.userId,
@@ -135,37 +136,37 @@ export class ServicinginfoPage {
       console.log("Service Info Record Param Value:" + JSON.stringify(this.NP.get("record")));
       let editItem = this.NP.get("record");
       let favorite;
-    //this.unitDetailData.unit_id = editItem.unit_id;
-    //this.unitDetailData.unitname = editItem.unitname;
-    //this.unitDetailData.location = editItem.location;
-    //this.unitDetailData.projectname = editItem.projectname;
-    this.unitDetailData.runninghr = editItem.runninghr;
-    this.unitDetailData.gen_status = editItem.gen_status;
-    this.unitDetailData.nextservicedate = editItem.nextservicedate;
-if (this.NP.get("record").favoriteindication == 'favorite') {
-			favorite = "favorite";
-		}
-		else {
-			favorite = "unfavorite";
+      //this.unitDetailData.unit_id = editItem.unit_id;
+      //this.unitDetailData.unitname = editItem.unitname;
+      //this.unitDetailData.location = editItem.location;
+      //this.unitDetailData.projectname = editItem.projectname;
+      this.unitDetailData.runninghr = editItem.runninghr;
+      this.unitDetailData.gen_status = editItem.gen_status;
+      this.unitDetailData.nextservicedate = editItem.nextservicedate;
+      if (this.NP.get("record").favoriteindication == 'favorite') {
+        favorite = "favorite";
+      }
+      else {
+        favorite = "unfavorite";
 
-		}
-this.unitDetailData.favoriteindication = favorite;
-    this.unitDetailData.unit_id = localStorage.getItem("unitId");
-    if (this.unitDetailData.unit_id == undefined) {
-      this.unitDetailData.unit_id = editItem.unit_id;
-    }
-    if (this.unitDetailData.unit_id == 'undefined') {
-      this.unitDetailData.unit_id = editItem.unit_id;
-    }
-    this.unitDetailData.unitname = localStorage.getItem("unitunitname");
-    this.unitDetailData.location = localStorage.getItem("unitlocation");
-    this.unitDetailData.projectname = localStorage.getItem("unitprojectname");
-    this.unitDetailData.colorcodeindications = localStorage.getItem("unitcolorcode");
-    console.log("Unit Details Color Code:" + this.unitDetailData.colorcodeindications);
-    this.unitDetailData.lat = localStorage.getItem("unitlat");
-    this.unitDetailData.lng = localStorage.getItem("unitlng");
-     this.unitDetailData.rh=localStorage.getItem("runninghr");
-     this.unitDetailData.ns=localStorage.getItem("nsd");
+      }
+      this.unitDetailData.favoriteindication = favorite;
+      this.unitDetailData.unit_id = localStorage.getItem("unitId");
+      if (this.unitDetailData.unit_id == undefined) {
+        this.unitDetailData.unit_id = editItem.unit_id;
+      }
+      if (this.unitDetailData.unit_id == 'undefined') {
+        this.unitDetailData.unit_id = editItem.unit_id;
+      }
+      this.unitDetailData.unitname = localStorage.getItem("unitunitname");
+      this.unitDetailData.location = localStorage.getItem("unitlocation");
+      this.unitDetailData.projectname = localStorage.getItem("unitprojectname");
+      this.unitDetailData.colorcodeindications = localStorage.getItem("unitcolorcode");
+      console.log("Unit Details Color Code:" + this.unitDetailData.colorcodeindications);
+      this.unitDetailData.lat = localStorage.getItem("unitlat");
+      this.unitDetailData.lng = localStorage.getItem("unitlng");
+      this.unitDetailData.rh = localStorage.getItem("runninghr");
+      this.unitDetailData.ns = localStorage.getItem("nsd");
 
     }
     this.reportData.startindex = 0;
@@ -213,7 +214,7 @@ this.unitDetailData.favoriteindication = favorite;
       this.unit_id = editItem.unit_id;
     } else {
       this.unit_id = editItem.service_unitid;
-    }    
+    }
     let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
       headers: any = new Headers({ 'Content-Type': type }),
       options: any = new RequestOptions({ headers: headers }),
@@ -232,12 +233,11 @@ this.unitDetailData.favoriteindication = favorite;
           this.totalCount = res.totalCount;
           this.reportData.startindex += this.reportData.results;
           this.loadingMoreDataContent = 'Loading More Data';
-           for(var i=0;i<res.services.length;i++)
-           {
+          for (var i = 0; i < res.services.length; i++) {
             this.photo = res.services[i].user_photo;
-            console.log("PHOTO"+this.photo);
-           }
-         
+            console.log("PHOTO" + this.photo);
+          }
+
         } else {
           this.totalCount = 0;
           this.loadingMoreDataContent = 'No More Data';
@@ -248,7 +248,7 @@ this.unitDetailData.favoriteindication = favorite;
         this.conf.presentLoading(0);
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
-    
+
   }
 
   notification() {
@@ -307,31 +307,29 @@ this.unitDetailData.favoriteindication = favorite;
 
 
   doEdit(item, act) {
-    if(item.event_type.toLowerCase()=='s')
-    {
-    localStorage.setItem("microtime", "");
-    this.nav.setRoot(AddserviceinfoPage, {
-      record: item,
-      act: 'Edit',
-      from:'service'
-    });
-  }
-  else
-  {
-    this.conf.sendNotification("Not Applicable!!!")
-  }
+    if (item.event_type.toLowerCase() == 's') {
+      localStorage.setItem("microtime", "");
+      this.nav.setRoot(AddserviceinfoPage, {
+        record: item,
+        act: 'Edit',
+        from: 'service'
+      });
+    }
+    else {
+      this.conf.sendNotification("Not Applicable!!!")
+    }
   }
   servicedetails(item, act) {
     localStorage.setItem("microtime", "");
     this.nav.push(ServicedetailsPage, {
       record: item,
       act: 'Edit',
-      from:'service'
+      from: 'service'
     });
   }
 
   doConfirm(id, item) {
-   
+
     console.log("Deleted Id" + id);
     let confirm = this.alertCtrl.create({
       message: 'Are you sure you want to delete this service info?',
@@ -352,8 +350,8 @@ this.unitDetailData.favoriteindication = favorite;
       }]
     });
     confirm.present();
-  
-  
+
+
   }
   deleteEntry(recordID) {
     let

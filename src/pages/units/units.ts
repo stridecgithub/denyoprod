@@ -125,6 +125,8 @@ export class UnitsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad Units Page');
     
+    localStorage.setItem("fromModule", "UnitsPage");
+    
     if (this.networkType == '') {
       this.detailvalue = "";
       localStorage.setItem("viewlist", "");

@@ -88,6 +88,7 @@ export class ReporttemplatePage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReporttemplatePage');
+     localStorage.setItem("fromModule", "ReporttemplatePage");
   }
 
 

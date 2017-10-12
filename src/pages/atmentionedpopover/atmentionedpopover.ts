@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,  ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
 //import { EmailPage } from '../email/email';
 //import { Http, Headers, RequestOptions } from '@angular/http';
 /**
@@ -15,7 +15,7 @@ import { NavController, NavParams,  ViewController } from 'ionic-angular';
 export class AtMentionedPopoverPage {
   public items = [];
   data: any;
-  constructor( public viewCtrl: ViewController, public NP: NavParams, public nav: NavController) {
+  constructor(public viewCtrl: ViewController, public NP: NavParams, public nav: NavController) {
     this.data = this.NP.get("data");
     this.initializeItems();
   }
@@ -60,7 +60,8 @@ export class AtMentionedPopoverPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PopoverPage');
+    console.log('ionViewDidLoad AtmentionedPopoverPage');
+    localStorage.setItem("fromModule", "AtmentionedPopoverPage");
   }
   selectone(itemData) {
     this.viewCtrl.dismiss(itemData);

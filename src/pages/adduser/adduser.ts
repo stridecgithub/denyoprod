@@ -93,7 +93,7 @@ export class AdduserPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-        this.platform.registerBackButtonAction(() => {
+      this.platform.registerBackButtonAction(() => {
         this.previous();
       });
       this.network.onConnect().subscribe(data => {
@@ -117,7 +117,9 @@ export class AdduserPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddcompanygroupPage');
+    console.log('ionViewDidLoad AddUserPage');
+
+    localStorage.setItem("fromModule", "AddUserPage");
     this.pageLoad();
 
   }
@@ -422,7 +424,7 @@ export class AdduserPage {
       });
 
   }
-  
+
   doUploadPhoto() {
 
     const options: CameraOptions = {

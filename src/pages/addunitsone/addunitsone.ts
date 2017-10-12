@@ -107,6 +107,7 @@ export class AddunitsonePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddunitsonePage');
+     localStorage.setItem("fromModule", "AddunitsonePage");
     this.pageLoadedData();
   }
 

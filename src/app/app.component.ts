@@ -1,4 +1,4 @@
-import {  ElementRef, Component, ViewChild, Output, EventEmitter, Input, HostListener } from '@angular/core';
+import { ElementRef, Component, ViewChild, Output, EventEmitter, Input, HostListener } from '@angular/core';
 import { Nav, Platform, MenuController, AlertController, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -99,6 +99,7 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      localStorage.setItem("fromModule", "root");
       console.log('1:Platform ready');
       /*this.platform.registerBackButtonAction(() => {
         let userId = localStorage.getItem("userInfoId");
@@ -137,6 +138,7 @@ export class MyApp {
   // of remote operations
 
   openPage(page) {
+    localStorage.setItem("fromModule", page.component);
     if (page.component == 'UnitsPage') {
       this.nav.push(UnitsPage);
     } else if (page.component == 'UnitgroupPage') {
@@ -167,8 +169,11 @@ export class MyApp {
       this.menuCtrl.close();
       this.nav.push(CalendarPage);
     } else if (page.title == 'Maps') {
-      this.menuCtrl.close();
-      this.nav.setRoot(MapsPage);
+      let fromModule = localStorage.getItem("fromModule");
+      if (fromModule != 'MapsPage') {
+        this.menuCtrl.close();
+        this.nav.setRoot(MapsPage);
+      }
     } else if (page.title == 'Reports') {
       this.menuCtrl.close();
       this.nav.push(ReportsPage);
@@ -214,6 +219,7 @@ export class MyApp {
     return this.showLevel2 === idx;
   };
   logout() {
+    localStorage.setItem("fromModule", "");
     localStorage.setItem("userInfo", "");
     localStorage.setItem("userInfoId", "");
     localStorage.setItem("userInfoName", "");
@@ -335,7 +341,7 @@ export class MyApp {
           record: navids,
           act: 'Push'
         });
-
+        localStorage.setItem("fromModule", "EmailPage");
       } else if (navtypes == 'OA') {
         this.nav.push(AlarmdetailsPage, {
           record: navids,
@@ -348,24 +354,27 @@ export class MyApp {
           record: navids,
           act: 'Push'
         });
-
+        localStorage.setItem("fromModule", "AlarmdetailsPage");
       } else if (navtypes == 'C') {
         //this.nav.push(CommentdetailsPage);
         this.nav.push(CommentdetailsPage, {
           record: navids,
           act: 'Push'
         });
+        localStorage.setItem("fromModule", "CommentdetailsPage");
       } else if (navtypes == 'E') {
         this.nav.push(CalendardetailPage, {
           event_id: navids,
           act: 'Push'
         });
+        localStorage.setItem("fromModule", "CalendardetailPage");
       } else if (navtypes == 'S') {
         // this.nav.push(ServicedetailsPage);
         this.nav.push(ServicedetailsPage, {
           record: navids,
           act: 'Push'
         });
+        localStorage.setItem("fromModule", "ServicedetailsPage");
       }
     });
 

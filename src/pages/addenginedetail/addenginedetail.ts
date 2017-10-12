@@ -96,7 +96,8 @@ export class AddenginedetailPage {
     });
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddenginedetailPage');
+    console.log('ionViewDidLoad AddenginedetailPage');    
+    localStorage.setItem("fromModule", "AddenginedetailPage");
   }
   ionViewWillEnter() {
 

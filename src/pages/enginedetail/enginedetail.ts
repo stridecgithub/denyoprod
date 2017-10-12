@@ -83,6 +83,7 @@ export class EnginedetailPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnginedetailPage');
+    localStorage.setItem("fromModule", "EnginedetailPage");
   }
   ionViewWillEnter() {
 

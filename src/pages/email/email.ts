@@ -235,7 +235,9 @@ export class EmailPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddserviceinfoPage');
+    console.log('ionViewDidLoad EmailPage');
+
+    localStorage.setItem("fromModule", "EmailPage");
 
   }
 

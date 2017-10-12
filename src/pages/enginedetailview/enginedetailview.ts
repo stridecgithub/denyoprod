@@ -96,6 +96,7 @@ export class EnginedetailviewPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnginedetailviewPage');
+     localStorage.setItem("fromModule", "EnginedetailviewPage");
   }
   doRefresh(refresher) {
     console.log('doRefresh function calling...');

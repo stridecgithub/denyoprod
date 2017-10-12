@@ -283,6 +283,7 @@ export class OrgchartPage {
     //turn on listening for pinch or rotate events
     this.gesture.on('pinch', e => this.pinchEvent(e));
     console.log('ionViewDidLoad OrgchartPage');
+    localStorage.setItem("fromModule", "OrgchartPage");
   }
 
 

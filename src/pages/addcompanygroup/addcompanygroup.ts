@@ -108,6 +108,7 @@ export class AddcompanygroupPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddcompanygroupPage');
+    localStorage.setItem("fromModule", "AddcompanygroupPage");
   }
 
   // Determine whether we adding or editing a record

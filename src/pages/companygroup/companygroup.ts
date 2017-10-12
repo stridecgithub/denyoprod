@@ -101,6 +101,7 @@ export class CompanygroupPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CompanygroupPage');
+     localStorage.setItem("fromModule", "CompanygroupPage");
   }
 
   /*******************/

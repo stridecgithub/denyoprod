@@ -105,6 +105,8 @@ export class AlarmlogPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlarmlogPage');
+    
+     localStorage.setItem("fromModule", "AlarmlogPage");
   }
 
   favoriteaction(unit_id) {

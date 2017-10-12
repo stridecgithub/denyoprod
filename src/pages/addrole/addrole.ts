@@ -301,6 +301,7 @@ export class AddrolePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddRolePage');
+    localStorage.setItem("fromModule", "AddRolePage");
   }
 
   // Determine whether we adding or editing a record

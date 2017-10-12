@@ -117,6 +117,7 @@ export class EditprofilesteptwoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditprofilesteptwoPage');
+     localStorage.setItem("fromModule", "EditprofilesteptwoPage");
     this.pageLoad();
   }
 

@@ -117,6 +117,7 @@ export class AddorgchartonePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddorgchartonePage');
+    localStorage.setItem("fromModule", "AddorgchartonePage");
     this.pageLoad();
   }
   ionViewWillEnter() {

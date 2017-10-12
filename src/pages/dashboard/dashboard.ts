@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, MenuController, Platform, AlertController} from 'ionic-angular';
+import { NavController, MenuController, Platform, AlertController } from 'ionic-angular';
 import { UnitsPage } from '../units/units';
 import { NotificationPage } from '../notification/notification';
 import { MapsPage } from '../maps/maps';
@@ -86,7 +86,10 @@ export class DashboardPage {
     } else {
       this.networkType = '';
       if (page == 'MapsPage') {
-        this.nav.setRoot(MapsPage);
+        let fromModule = localStorage.getItem("fromModule");
+        if (fromModule != 'MapsPage') {
+          this.nav.setRoot(MapsPage);
+        }
       } else if (page == 'ReportsPage') {
         this.nav.push(ReportsPage);
       } else if (page == 'CalendarPage') {
@@ -119,8 +122,8 @@ export class DashboardPage {
   redirectCalendar() {
     this.nav.push(CalendarPage);
   }
-  redirectToMaps() {
-    this.nav.setRoot(MapsPage);
+  redirectToMaps() {   
+      this.nav.setRoot(MapsPage);
     //this.nav.push(DashboardmapPage);
   }
   redirectToSettings() {

@@ -154,6 +154,7 @@ export class MyaccountPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad My Account Page');
+     localStorage.setItem("fromModule", "MyaccountPage");
   }
   doEdit(userid) {
     this.nav.push(EditprofilesteponePage, {

@@ -233,7 +233,8 @@ export class AddserviceinfoPage {
   }
   ionViewDidLoad() {
     this.addedServiceImgLists = [];
-    console.log('ionViewDidLoad AddserviceinfoPage');
+    console.log('ionViewDidLoad AddserviceinfoPage');    
+    localStorage.setItem("fromModule", "AddserviceinfoPage");
   }
   favoriteaction(unit_id) {
     let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,

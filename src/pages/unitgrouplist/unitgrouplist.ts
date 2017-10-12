@@ -105,6 +105,7 @@ export class Unitgrouplist {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Unitgrouplist');
+    localStorage.setItem("fromModule", "Unitgrouplist");
     this.reportAllLists = [];
     this.detailvalue = "";
     localStorage.setItem("viewlist", "");

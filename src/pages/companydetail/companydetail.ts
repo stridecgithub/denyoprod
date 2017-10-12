@@ -70,7 +70,7 @@ export class CompanydetailPage {
 
 
   constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController, public NP: NavParams,
-     public alertCtrl: AlertController, public navParams: NavParams) {
+    public alertCtrl: AlertController, public navParams: NavParams) {
 
     this.loadingMoreDataContent = 'Loading More Data';
     this.loginas = localStorage.getItem("userInfoName");
@@ -80,7 +80,7 @@ export class CompanydetailPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-        this.platform.registerBackButtonAction(() => {
+      this.platform.registerBackButtonAction(() => {
         this.previous();
       });
       this.network.onConnect().subscribe(data => {
@@ -105,7 +105,8 @@ export class CompanydetailPage {
 
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Companydetail');
+    console.log('ionViewDidLoad CompanydetailPage');
+    localStorage.setItem("fromModule", "CompanydetailPage");
   }
   ionViewWillEnter() {
     let comid = this.NP.get("record");

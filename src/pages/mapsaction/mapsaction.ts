@@ -100,9 +100,9 @@ export class MapsActionPage {
     this.companyid = localStorage.getItem("userInfoCompanyId");
     this.networkType = '';
     this.platform.ready().then(() => {
-       this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -129,6 +129,7 @@ export class MapsActionPage {
     this.loadMap(0);
   }
   ionViewDidLoad() {
+    localStorage.setItem("fromModule", "MapsPage");
     console.log('ionViewDidLoad MapsPage');
     //this.pageLoad();
     //this.loadMap(0);
@@ -284,7 +285,7 @@ export class MapsActionPage {
     localStorage.setItem("unitunitname", item.unitname);
     localStorage.setItem("unitlocation", item.location);
     localStorage.setItem("unitprojectname", item.projectname);
-     localStorage.setItem("unitcolorcode", item.colorcode);
+    localStorage.setItem("unitcolorcode", item.colorcode);
     localStorage.setItem("unitlat", item.latitude);
     localStorage.setItem("unitlng", item.longtitude);
     localStorage.setItem("runninghr", item.runninghr);
@@ -305,7 +306,7 @@ export class MapsActionPage {
       options: any = new RequestOptions({ headers: headers }),
       url: any = this.apiServiceURL + "/msgnotifycount?loginid=" + this.userid;
     console.log(url);
-     console.log("pageLad mapsaction.ts:" + url);
+    console.log("pageLad mapsaction.ts:" + url);
     // console.log(body);
 
     this.http.get(url, options)
@@ -386,7 +387,7 @@ export class MapsActionPage {
           target: {
             lat: val.latitude,
             lng: val.longtitude,
-            passive:true
+            passive: true
           },
           zoom: 16,
           tilt: 30,
@@ -402,7 +403,7 @@ export class MapsActionPage {
           target: {
             lat: val.latitude,
             lng: val.longtitude,
-            passive:true
+            passive: true
           },
           zoom: 16,
           tilt: 30,
@@ -640,7 +641,7 @@ export class MapsActionPage {
       options: any = new RequestOptions({ headers: headers }),
       url: any = this.apiServiceURL + "/setunitfavorite";
     console.log(url);
-     console.log("favorites mapsactions.ts:" + url);
+    console.log("favorites mapsactions.ts:" + url);
     console.log(body);
     this.http.post(url, body, options)
       .subscribe(data => {
@@ -790,7 +791,7 @@ export class MapsActionPage {
       options: any = new RequestOptions({ headers: headers }),
       url: any = this.apiServiceURL + urlstr;
     console.log(url);
-     console.log("onAction mapsaction.ts:" + url + "urlstr mapsaction.ts" + urlstr);
+    console.log("onAction mapsaction.ts:" + url + "urlstr mapsaction.ts" + urlstr);
 
     this.http.get(url, options)
       .subscribe((data) => {

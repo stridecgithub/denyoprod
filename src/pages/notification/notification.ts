@@ -89,6 +89,7 @@ export class NotificationPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NotificationPage');
+    localStorage.setItem("fromModule", "NotificationPage");
   }
   notificationdetails(item, nottype) {
     console.log(nottype);

@@ -138,6 +138,7 @@ export class ServicedetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServicedetailsPage');
+     localStorage.setItem("fromModule", "ServicedetailsPage");
   }
   favoriteaction(unit_id) {
 		let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
