@@ -72,220 +72,220 @@ export class AddalarmPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.loginas = localStorage.getItem("userInfoName");
-    this.platform.ready().then(() => {      
-        this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
-        this.network.onConnect().subscribe(data => {
-          console.log("maps.ts Platform ready-onConnent:" + data.type);
-          localStorage.setItem("isNet", 'online');
-          this.networkType = '';
-        }, error => console.error(error));
-        this.network.onDisconnect().subscribe(data => {
-          console.log("maps.ts Platform ready-onDisconnect:" + data.type);
-          localStorage.setItem("isNet", 'offline');
-          this.networkType = this.conf.networkErrMsg();
-        }, error => console.error(error));
+    this.platform.ready().then(() => {
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
+      this.network.onConnect().subscribe(data => {
+        console.log("maps.ts Platform ready-onConnent:" + data.type);
+        localStorage.setItem("isNet", 'online');
+        this.networkType = '';
+      }, error => console.error(error));
+      this.network.onDisconnect().subscribe(data => {
+        console.log("maps.ts Platform ready-onDisconnect:" + data.type);
+        localStorage.setItem("isNet", 'offline');
+        this.networkType = this.conf.networkErrMsg();
+      }, error => console.error(error));
 
-        let isNet = localStorage.getItem("isNet");
-        if (isNet == 'offline') {
-          this.networkType = this.conf.networkErrMsg();
-        } else {
-          this.networkType = '';
-        }
-      });
-      // Create form builder validation rules
-      this.form = fb.group({
-        "assigned_to": ["", Validators.required],
-        "remark": ["", Validators.required],
-        "subject": ["", Validators.required],
-        "assignedby": ["", Validators.required]
-      });
-      let already = localStorage.getItem("microtime");
-      if (already != undefined && already != 'undefined' && already != '') {
-        this.micro_timestamp = already;
+      let isNet = localStorage.getItem("isNet");
+      if (isNet == 'offline') {
+        this.networkType = this.conf.networkErrMsg();
       } else {
-        let dateStr = new Date();
-        let yearstr = dateStr.getFullYear();
-        let monthstr = dateStr.getMonth();
-        let datestr = dateStr.getDate();
-        let hrstr = dateStr.getHours();
-        let mnstr = dateStr.getMinutes();
-        let secstr = dateStr.getSeconds();
-        this.micro_timestamp = yearstr + "" + monthstr + "" + datestr + "" + hrstr + "" + mnstr + "" + secstr;
-
+        this.networkType = '';
       }
-      localStorage.setItem("microtime", this.micro_timestamp);
-      this.uname = localStorage.getItem("userInfoName");
-      this.userId = localStorage.getItem("userInfoId");
-      this.companyid = localStorage.getItem("userInfoCompanyId");
+    });
+    // Create form builder validation rules
+    this.form = fb.group({
+      "assigned_to": ["", Validators.required],
+      "remark": ["", Validators.required],
+      "subject": ["", Validators.required],
+      "assignedby": ["", Validators.required]
+    });
+    let already = localStorage.getItem("microtime");
+    if (already != undefined && already != 'undefined' && already != '') {
+      this.micro_timestamp = already;
+    } else {
+      let dateStr = new Date();
+      let yearstr = dateStr.getFullYear();
+      let monthstr = dateStr.getMonth();
+      let datestr = dateStr.getDate();
+      let hrstr = dateStr.getHours();
+      let mnstr = dateStr.getMinutes();
+      let secstr = dateStr.getSeconds();
+      this.micro_timestamp = yearstr + "" + monthstr + "" + datestr + "" + hrstr + "" + mnstr + "" + secstr;
+
     }
+    localStorage.setItem("microtime", this.micro_timestamp);
+    this.uname = localStorage.getItem("userInfoName");
+    this.userId = localStorage.getItem("userInfoId");
+    this.companyid = localStorage.getItem("userInfoCompanyId");
+  }
 
 
   ionViewDidLoad() {
-        console.log('ionViewDidLoad AddalarmPage');
-      }
+    console.log('ionViewDidLoad AddalarmPage');
+  }
   favoriteaction(unit_id) {
-        let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
-        type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-        headers: any = new Headers({ 'Content-Type': type }),
-        options: any = new RequestOptions({ headers: headers }),
-        url: any = this.apiServiceURL + "/setunitfavorite";
-        console.log(url);
-        console.log(body);
-        this.http.post(url, body, options)
-          .subscribe(data => {
-            let favorite;
-            if (data.json().favorite == '1') {
-              favorite = "favorite";
-            }
-            else {
-              favorite = "unfavorite";
+    let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
+      type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+      headers: any = new Headers({ 'Content-Type': type }),
+      options: any = new RequestOptions({ headers: headers }),
+      url: any = this.apiServiceURL + "/setunitfavorite";
+    console.log(url);
+    console.log(body);
+    this.http.post(url, body, options)
+      .subscribe(data => {
+        let favorite;
+        if (data.json().favorite == '1') {
+          favorite = "favorite";
+        }
+        else {
+          favorite = "unfavorite";
 
-            }
-            this.unitDetailData.favoriteindication = favorite;
-          }, error => {
-            this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-          });
+        }
+        this.unitDetailData.favoriteindication = favorite;
+      }, error => {
+        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+      });
 
-      }
+  }
   ionViewWillEnter() {
-        this.unitDetailData.unitname = localStorage.getItem("unitunitname");
-        this.unitDetailData.location = localStorage.getItem("unitlocation");
-        this.unitDetailData.projectname = localStorage.getItem("unitprojectname");
-        this.unitDetailData.colorcodeindications = localStorage.getItem("unitcolorcode");
-        console.log("Unit Details Color Code:" + this.unitDetailData.colorcodeindications);
-        this.unitDetailData.lat = localStorage.getItem("unitlat");
-        this.unitDetailData.lng = localStorage.getItem("unitlng");
-        this.unitDetailData.rh = localStorage.getItem("runninghr");
-        this.unitDetailData.ns = localStorage.getItem("nsd");
-        this.unitDetailData.favoriteindication = localStorage.getItem("unitfav");
-        this.getUserListData();
+    this.unitDetailData.unitname = localStorage.getItem("unitunitname");
+    this.unitDetailData.location = localStorage.getItem("unitlocation");
+    this.unitDetailData.projectname = localStorage.getItem("unitprojectname");
+    this.unitDetailData.colorcodeindications = localStorage.getItem("unitcolorcode");
+    console.log("Unit Details Color Code:" + this.unitDetailData.colorcodeindications);
+    this.unitDetailData.lat = localStorage.getItem("unitlat");
+    this.unitDetailData.lng = localStorage.getItem("unitlng");
+    this.unitDetailData.rh = localStorage.getItem("runninghr");
+    this.unitDetailData.ns = localStorage.getItem("nsd");
+    this.unitDetailData.favoriteindication = localStorage.getItem("unitfav");
+    this.getUserListData();
 
-        if(this.NP.get("record")) {
-          console.log(this.NP.get("act"));
-          this.isEdited = true;
-          this.selectEntry(this.NP.get("record"));
-          // this.pageTitle = 'Edit Company Group';
-          this.readOnly = false;
-          this.hideActionButton = true;
-        }
+    if (this.NP.get("record")) {
+      console.log(this.NP.get("act"));
+      this.isEdited = true;
+      this.selectEntry(this.NP.get("record"));
+      // this.pageTitle = 'Edit Company Group';
+      this.readOnly = false;
+      this.hideActionButton = true;
+    }
     else {
-          this.isEdited = false;
-          //this.pageTitle = 'New  Org Chart';
-        }
+      this.isEdited = false;
+      //this.pageTitle = 'New  Org Chart';
+    }
 
     let //body: string = "loginid=" + this.userId,
       type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-        headers: any = new Headers({ 'Content-Type': type }),
-        options: any = new RequestOptions({ headers: headers }),
-        url: any = this.apiServiceURL + "/msgnotifycount?loginid=" + this.userId;
-        this.http.get(url, options)
-          .subscribe((data) => {
-            this.msgcount = data.json().msgcount;
-            this.notcount = data.json().notifycount;
-          }, error => {
-            this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-          });
-      }
+      headers: any = new Headers({ 'Content-Type': type }),
+      options: any = new RequestOptions({ headers: headers }),
+      url: any = this.apiServiceURL + "/msgnotifycount?loginid=" + this.userId;
+    this.http.get(url, options)
+      .subscribe((data) => {
+        this.msgcount = data.json().msgcount;
+        this.notcount = data.json().notifycount;
+      }, error => {
+        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+      });
+  }
   selectEntry(item) {
-        this.subject = item.alarm_name;
-        this.assignedby = this.uname;
-        this.assigned_to = item.assigned_to;
-        this.recordID = item.alarm_id;
+    this.subject = item.alarm_name;
+    this.assignedby = this.uname;
+    this.assigned_to = item.assigned_to;
+    this.recordID = item.alarm_id;
 
 
-      }
+  }
   getUserListData() {
-        let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+    let type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+      headers: any = new Headers({ 'Content-Type': type }),
+      options: any = new RequestOptions({ headers: headers }),
+      url: any = this.apiServiceURL + "/getstaffs?loginid=" + this.userId + "&company_id=" + this.companyid;
+    let res;
+    console.log(url);
+    this.http.get(url, options)
+      .subscribe(data => {
+        res = data.json();
+        // console.log(data.json);
+        this.responseResultReportTo = res.staffslist;
+      }, error => {
+        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+      });
+
+  }
+  saveEntry() {
+    let dateStr = new Date();
+    let yearstr = dateStr.getFullYear();
+    let monthstr = dateStr.getMonth();
+    let datestr = dateStr.getDate();
+    let alarm_assigned_date = yearstr + "-" + monthstr + "-" + datestr;
+    this.remark = localStorage.getItem("atMentionResult");
+    let isNet = localStorage.getItem("isNet");
+    if (isNet == 'offline') {
+      this.networkType = this.conf.networkErrMsg();
+    } else {
+      this.networkType = '';
+      this.isSubmitted = true;
+      let body: string = "is_mobile=1&alarmid=" + this.recordID +
+        "&alarm_assigned_by=" + this.userId +
+        "&alarm_assigned_to=" + this.assigned_to +
+        "&alarm_remark=" + this.remark +
+        "&alarm_assigned_date=" + alarm_assigned_date,//this.micro_timestamp
+
+        type: string = "application/x-www-form-urlencoded; charset=UTF-8",
         headers: any = new Headers({ 'Content-Type': type }),
         options: any = new RequestOptions({ headers: headers }),
-        url: any = this.apiServiceURL + "/getstaffs?loginid=" + this.userId + "&company_id=" + this.companyid;
-        let res;
-        console.log(url);
-        this.http.get(url, options)
-          .subscribe(data => {
-            res = data.json();
-            // console.log(data.json);
-            this.responseResultReportTo = res.staffslist;
-          }, error => {
-            this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-          });
+        url: any = this.apiServiceURL + "/alarms/assignalarm";
+      console.log(url);
+      console.log(body);
 
-      }
-  saveEntry() {
-        let dateStr = new Date();
-        let yearstr = dateStr.getFullYear();
-        let monthstr = dateStr.getMonth();
-        let datestr = dateStr.getDate();
-        let alarm_assigned_date = yearstr + "-" + monthstr + "-" + datestr;
-        this.remark = localStorage.getItem("atMentionResult");
-        let isNet = localStorage.getItem("isNet");
-        if(isNet == 'offline') {
-          this.networkType = this.conf.networkErrMsg();
-        } else {
-          this.networkType = '';
-          this.isSubmitted = true;
-          let body: string = "is_mobile=1&alarmid=" + this.recordID +
-          "&alarm_assigned_by=" + this.userId +
-          "&alarm_assigned_to=" + this.assigned_to +
-          "&alarm_remark=" + this.remark +
-          "&alarm_assigned_date=" + alarm_assigned_date,//this.micro_timestamp
-
-          type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-          headers: any = new Headers({ 'Content-Type': type }),
-          options: any = new RequestOptions({ headers: headers }),
-          url: any = this.apiServiceURL + "/alarms/assignalarm";
-          console.log(url);
-          console.log(body);
-
-          this.http.post(url, body, options)
-            .subscribe((data) => {
-              //console.log("Response Success:" + JSON.stringify(data.json()));
-              // If the request was successful notify the user
-              if (data.status === 200) {
-                this.hideForm = true;
-                this.conf.sendNotification(`successfully Assigned`);
-                localStorage.setItem("userPhotoFile", "");
-                localStorage.setItem("atMentionResult", '');
-                this.nav.push(AlarmlogPage);
-              }
-              // Otherwise let 'em know anyway
-              else {
-                this.conf.sendNotification('Something went wrong!');
-              }
-            }, error => {
-              this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-            });
-        }
-      }
+      this.http.post(url, body, options)
+        .subscribe((data) => {
+          //console.log("Response Success:" + JSON.stringify(data.json()));
+          // If the request was successful notify the user
+          if (data.status === 200) {
+            this.hideForm = true;
+            this.conf.sendNotification(`successfully Assigned`);
+            localStorage.setItem("userPhotoFile", "");
+            localStorage.setItem("atMentionResult", '');
+            this.nav.push(AlarmlogPage);
+          }
+          // Otherwise let 'em know anyway
+          else {
+            this.conf.sendNotification('Something went wrong!');
+          }
+        }, error => {
+          this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+        });
+    }
+  }
 
   address1get(hashtag) {
-        console.log(hashtag);
-        this.unitDetailData.hashtag = hashtag;
-      }
+    console.log(hashtag);
+    this.unitDetailData.hashtag = hashtag;
+  }
   previous() {
-        this.nav.push(AlarmdetailsPage,
-          {
-            record: this.NP.get("record")
-          });
-      }
+    this.nav.push(AlarmdetailsPage,
+      {
+        record: this.NP.get("record")
+      });
+  }
   notification() {
-        this.nav.push(NotificationPage);
-      }
+    this.nav.push(NotificationPage);
+  }
   redirectToUser() {
-        this.nav.push(UnitsPage);
-      }
+    this.nav.push(UnitsPage);
+  }
   redirectToMessage() {
-        this.nav.setRoot(EmailPage);
-      }
+    this.nav.setRoot(EmailPage);
+  }
   redirectCalendar() {
-        this.nav.push(CalendarPage);
-      }
+    this.nav.push(CalendarPage);
+  }
   redirectToMaps() {
-        this.nav.setRoot(MapsPage);
-      }
+    this.nav.setRoot(MapsPage);
+  }
   redirectToSettings() {
-        this.nav.push(OrgchartPage);
-      }
+    this.nav.push(OrgchartPage);
+  }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, NavParams,Platform } from 'ionic-angular';
+import { NavController, AlertController, NavParams, Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 //import { MyaccountPage } from '../myaccount/myaccount';
 import { UnitsPage } from '../units/units';
@@ -60,17 +60,17 @@ export class AlarmdetailsPage {
     results: 8
   }
   public reportAllLists = [];
-  constructor(private conf: Config, public platform: Platform, private network: Network,public http: Http, public nav: NavController,
-     public alertCtrl: AlertController, public NP: NavParams) {
+  constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController,
+    public alertCtrl: AlertController, public NP: NavParams) {
     this.pageTitle = 'Units';
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
     this.companyId = localStorage.getItem("userInfoCompanyId");
-     this.networkType = '';
+    this.networkType = '';
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-        this.platform.registerBackButtonAction(() => {
+      this.platform.registerBackButtonAction(() => {
         this.previous();
       });
       this.network.onConnect().subscribe(data => {
@@ -101,29 +101,29 @@ export class AlarmdetailsPage {
     console.log('ionViewDidLoad AlarmdetailsPage');
   }
   favoriteaction(unit_id) {
-		let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
-			type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-			headers: any = new Headers({ 'Content-Type': type }),
-			options: any = new RequestOptions({ headers: headers }),
-			url: any = this.apiServiceURL + "/setunitfavorite";
-		console.log(url);
-		console.log(body);
-		this.http.post(url, body, options)
-			.subscribe(data => {
-				let favorite;
-				if (data.json().favorite == '1') {
-					favorite = "favorite";
-				}
-				else {
-					favorite = "unfavorite";
+    let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
+      type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+      headers: any = new Headers({ 'Content-Type': type }),
+      options: any = new RequestOptions({ headers: headers }),
+      url: any = this.apiServiceURL + "/setunitfavorite";
+    console.log(url);
+    console.log(body);
+    this.http.post(url, body, options)
+      .subscribe(data => {
+        let favorite;
+        if (data.json().favorite == '1') {
+          favorite = "favorite";
+        }
+        else {
+          favorite = "unfavorite";
 
-				}
-				this.unitDetailData.favoriteindication = favorite;
-			}, error => {
+        }
+        this.unitDetailData.favoriteindication = favorite;
+      }, error => {
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
 
-	}
+  }
   ionViewWillEnter() {
 
     this.unitDetailData.favoriteindication = localStorage.getItem("unitfav");
@@ -155,16 +155,16 @@ export class AlarmdetailsPage {
           headers1: any = new Headers({ 'Content-Type': type1 }),
           options1: any = new RequestOptions({ headers: headers1 }),
           url1: any = this.apiServiceURL + "/getalarmdetails";
-        console.log(url1);
+        console.log(url1 + "?" + body);
         this.http.post(url1, body, options1)
           //this.http.get(url1, options1)
           .subscribe((data) => {
-            console.log("servicebyid Response Success:" + JSON.stringify(data.json()));
+            console.log("getalarmdetails Response Success:" + JSON.stringify(data.json()));
             console.log("Alarm Details:" + data.json().alarms[0]);
-            this.selectEntry(data.json().alarms[0]);
+            this.selectEntry(data.json().alarms[0], 'Push');
           }, error => {
-        this.networkType = this.conf.serverErrMsg();// + "\n" + error;
-      });
+            this.networkType = this.conf.serverErrMsg();// + "\n" + error;
+          });
 
       }
 
@@ -185,7 +185,7 @@ export class AlarmdetailsPage {
 
 
   }
-  selectEntry(item) {
+  selectEntry(item, act) {
 
 
     let alrmunitid = localStorage.getItem("iframeunitId");
@@ -195,7 +195,7 @@ export class AlarmdetailsPage {
     if (alrmunitid == undefined) {
       alrmunitid = '';
     }
-    if (alrmunitid != '') {
+    if (act != 'Push') {
       this.unitDetailData.unitname = localStorage.getItem("unitunitname");
       this.unitDetailData.location = localStorage.getItem("unitlocation");
       this.unitDetailData.projectname = localStorage.getItem("unitprojectname");
@@ -217,15 +217,24 @@ export class AlarmdetailsPage {
       this.unitDetailData.ns = item.nextservicedate;
     }*/
 
-
-
-    console.log("selectEntry Array" + JSON.stringify(item.alarm_unit_id));
-    console.log("item.alarm_unit_id" + item.alarm_unit_id);
-    localStorage.setItem("unitId", item.alarm_unit_id);
-    localStorage.setItem("iframeunitId", item.alarm_unit_id);
-    this.alarm_name = item.alarm_name;
-    this.alarm_assginedby_name = item.alarm_assginedby_name;
-    this.alarm_assginedto_name = item.alarm_assginedto_name;
+    else {
+      console.log("selectEntry Array" + JSON.stringify(item.alarm_unit_id));
+      console.log("item.alarm_unit_id" + item.alarm_unit_id);
+      localStorage.setItem("unitId", item.alarm_unit_id);
+      localStorage.setItem("iframeunitId", item.alarm_unit_id);
+      this.alarm_name = item.alarm_name;
+      this.alarm_assginedby_name = item.alarm_assginedby_name;
+      this.unitDetailData.unitname = item.unitname;
+      this.unitDetailData.location = item.location;
+      this.unitDetailData.projectname = item.projectname;
+      this.unitDetailData.colorcodeindications = item.colorcode;
+      console.log("Unit Details Color Code:" + this.unitDetailData.colorcodeindications);
+      this.unitDetailData.lat = item.latitude;
+      this.unitDetailData.lng = item.longtitude;
+      this.unitDetailData.rh = item.runninghr;
+      this.unitDetailData.ns = item.nextservicedate;
+      this.alarmid = item.alarm_id;
+    }
 
   }
   editalarm() {
