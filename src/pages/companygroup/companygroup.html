@@ -57,6 +57,13 @@
         <span>Add New Company Group</span>
     </div>
   </button>
+   <ion-item style="width: 100%; margin: 0; padding-left: 10px;background-color:white" *ngIf="networkType==''">
+    <ion-label>Sort By</ion-label>
+    <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
+      <ion-option value="companygroup_name,asc" selected="true">Group Name Asc</ion-option>
+      <ion-option value="companygroup_name,desc">Group Name Desc</ion-option>
+    </ion-select>
+  </ion-item>
 </ion-header>
 <ion-content padding class="ion-content" *ngIf="VIEWACCESS==0">
   <p style="color: red;
@@ -80,13 +87,7 @@
     </button>
   </ion-item-->
 
-  <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="networkType==''">
-    <ion-label>Sort By</ion-label>
-    <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
-      <ion-option value="companygroup_name,asc" selected="true">Group Name Asc</ion-option>
-      <ion-option value="companygroup_name,desc">Group Name Desc</ion-option>
-    </ion-select>
-  </ion-item>
+ 
   <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="totalCount!=0">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>

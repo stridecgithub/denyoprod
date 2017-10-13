@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header style="
-    background-color: #00569F;" color="bluedark">
+    background-color: #00569F;height:50px" color="bluedark">
 
 
   <button ion-button clear menuToggle class="menu-toggle">
@@ -63,41 +63,58 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+  <ion-item style="width: 100%; margin: 0; padding-left: 10px;border-bottom: 0px solid #ccc;background-color:white" *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0  && inboxsortaction==true">
+    <ion-label>Sort By</ion-label>
+    <ion-select style="padding: 1px 1px 6px 1px;position: fixed;
+    left: 25%;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
+      <ion-option value="messagesinbox_isfavaurite,desc">Favorite</ion-option>
+      <ion-option value="sendername,asc">Sender Ascending</ion-option>
+      <ion-option value="sendername,desc">Sender Descending</ion-option>
+      <ion-option value="messages_subject,asc">Subject Ascending</ion-option>
+      <ion-option value="messages_subject,desc">Subject Descending</ion-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-item style="width: 123px;
+    float: right;
+    bottom: 50px;background-color:white" *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0 && inboxsortaction==true">
+    <ion-label>Action</ion-label>
+    <ion-select [(ngModel)]="inboxact" (ionChange)="onActionInbox(inboxact,inboxLists)">
+      <ion-option value="inboxdelete">Delete</ion-option>
+      <ion-option value="inboxunread">Mark as Unread</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <ion-item style="border-bottom: 0px solid #ccc;background-color:white" *ngIf="MESSAGESENTVIEWACCESS=='1' && totalCountSend>0 && sendsortaction==true">
+        <ion-label style="padding-left:7px">Sort By</ion-label>
+        <ion-select style="padding: 1px 1px 6px 1px;position: fixed;
+    left: 25%;" [(ngModel)]="pet" (ionChange)="onSendSegmentChanged(pet)">
+
+          <ion-option value="messages_subject,asc">Subject Ascending</ion-option>
+          <ion-option value="messages_subject,desc">Subject Descending</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item style="width: 123px;
+    float: right;
+    bottom: 50px;background-color:white" *ngIf="MESSAGESENTVIEWACCESS=='1' && totalCountSend>0  && sendsortaction==true">
+        <ion-label>Action</ion-label>
+        <ion-select [(ngModel)]="sendact" (ionChange)="onActionSend(sendact,sendLists)">         
+          <ion-option value="senddelete">Delete</ion-option>
+        </ion-select>
+      </ion-item>
+
 </ion-header>
 
 <ion-content padding class="ion-content" *ngIf="networkType!=''">
 
 </ion-content>
 
-<ion-content padding class="ion-content" *ngIf="networkType==''">
+<ion-content padding class="ion-content" *ngIf="networkType==''"  id="{{isCompose == true ? 'email-content-scroll-compose' : 'email-content-scroll'}}">
 
   <div [ngSwitch]="choice">
     <ion-list *ngSwitchCase="'inbox'">
-      <ion-item style="width: 100%; margin: 0; padding-left: 10px;border-bottom: 2px solid #ccc" *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0">
-        <ion-label>Sort By</ion-label>
-        <ion-select style="padding: 1px 1px 6px 1px;position: fixed;
-    left: 25%;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
-          <ion-option value="messagesinbox_isfavaurite,desc">Favorite</ion-option>
-          <ion-option value="sendername,asc">Sender Ascending</ion-option>
-          <ion-option value="sendername,desc">Sender Descending</ion-option>
-          <ion-option value="messages_subject,asc">Subject Ascending</ion-option>
-          <ion-option value="messages_subject,desc">Subject Descending</ion-option>
-        </ion-select>
-      </ion-item>
-      <!--div class="separator-line" *ngIf="totalCount!=0">&nbsp;</div-->
       <div class="error" *ngIf="totalCount==0 && MESSAGEINBOXVIEWACCESS=='1' && networkType==''">No message entries found</div>
-
-
-      <ion-item style="width: 123px;
-    float: right;
-    bottom: 48px;" *ngIf="MESSAGEINBOXVIEWACCESS=='1' && totalCount>0">
-        <ion-label>Action</ion-label>
-        <ion-select [(ngModel)]="inboxact" (ionChange)="onActionInbox(inboxact,inboxLists)">
-          <!--ion-option value="">Select Action</ion-option-->
-          <ion-option value="inboxdelete">Delete</ion-option>
-          <ion-option value="inboxunread">Mark as Unread</ion-option>
-        </ion-select>
-      </ion-item>
       <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="totalCount!=0">
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
         </ion-refresher-content>
@@ -115,14 +132,11 @@
         <ion-item-sliding *ngFor="let item of inboxLists;">
           <ion-item class="msg-item" style="position: relative;
     margin-top: -6px;">
-
-
             <div class="item-checkbox">
               <label class="checkbox">
                     <input type="checkbox" style="width: 20px;height: 20px;position: absolute;top: 55px;left:0px" (tap)="getCheckBoxValueInbox(item,item.message_id);" value="1">
                 </label>
             </div>
-
             <ion-avatar item-start style="padding-left: 22px;">
               <img src="{{item.senderphoto}}">
             </ion-avatar>
@@ -165,28 +179,10 @@
       </ion-infinite-scroll>
     </ion-list>
     <ion-list *ngSwitchCase="'send'">
-      <ion-item style="border-bottom: 2px solid #ccc" *ngIf="MESSAGESENTVIEWACCESS=='1' && totalCountSend>0">
-        <ion-label>Sort By</ion-label>
-        <ion-select style="padding: 1px 1px 6px 1px;position: fixed;
-    left: 25%;" [(ngModel)]="pet" (ionChange)="onSendSegmentChanged(pet)">
-          <!--ion-option value="sendername,asc">Sender Ascending</ion-option>
-          <ion-option value="sendername,desc">Sender Descending</ion-option-->
-
-          <ion-option value="messages_subject,asc">Subject Ascending</ion-option>
-          <ion-option value="messages_subject,desc">Subject Descending</ion-option>
-        </ion-select>
-      </ion-item>
+      
       <div class="error" *ngIf="totalCountSend==0 && MESSAGESENTVIEWACCESS=='1'">No sent item entries found</div>
 
-      <ion-item style="width: 123px;
-    float: right;
-    bottom: 50px;" *ngIf="MESSAGESENTVIEWACCESS=='1' && totalCountSend>0">
-        <ion-label>Action</ion-label>
-        <ion-select [(ngModel)]="sendact" (ionChange)="onActionSend(sendact,sendLists)">
-          <!--ion-option value="">Select Action</ion-option-->
-          <ion-option value="senddelete">Delete</ion-option>
-        </ion-select>
-      </ion-item>
+      
       <ion-refresher (ionRefresh)="doSendRefresh($event)" *ngIf="totalCountSend!=0">
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
         </ion-refresher-content>
@@ -293,7 +289,7 @@
 
           <!--div [innerHTML]="sanitizer.bypassSecurityTrustHtml(atmentedInnerHTML)" class="atmentionedBlock"></div-->
 
-        
+
           <!--br>
             To 1:
           <ion-input type="text"  *ngIf="popoverThemeJSIonic==0" (keyup)=address1get($event.target.value); name="to" id="to" class="sugges" onkeyup="message(event);address1get(this.value)"
@@ -307,7 +303,8 @@
 
 
 
-          <div style="position: relative;top: 12px;width: 180px;"><!-- top: 36px-->
+          <div style="position: relative;top: 12px;width: 180px;">
+            <!-- top: 36px-->
             <span><ion-checkbox type="checkbox" name="copytome" formControlName="copytome"  [(ngModel)]="copytome"></ion-checkbox>&nbsp; Email a copy to myself</span>
             <span>
             <ion-icon (click)="fileChooser(micro_timestamp)" *ngIf="isUploaded" name="attach" style="color: black;

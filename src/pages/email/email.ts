@@ -53,6 +53,9 @@ export class EmailPage {
   public uploadResultBase64Data;
   public inboxLists = [];
   public sendLists = [];
+  public inboxsortaction: boolean = false;
+  public sendsortaction: boolean = false;
+  public isCompose: boolean = false;
   public loginas: any;
   public hashtag;
   public photo: any;
@@ -153,6 +156,10 @@ export class EmailPage {
   constructor(private conf: Config, private sanitizer: DomSanitizer, public platform: Platform, private network: Network, public actionSheetCtrl: ActionSheetController, public popoverCtrl: PopoverController, public keyboard: Keyboard, private file: File, public http: Http, public alertCtrl: AlertController, public NP: NavParams, public nav: NavController, public navParams: NavParams, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, private filechooser: FileChooser,
     private transfer: Transfer,
     private ngZone: NgZone) {
+
+    this.inboxsortaction = true;
+    this.sendsortaction = false;
+
     this.replyforward = 0;
     this.priority_highclass = '';
     this.priority_lowclass = '';
@@ -380,8 +387,13 @@ export class EmailPage {
   /*@doCompanyGroup calling on report */
   /****************************/
   doInbox() {
+    this.isCompose = false;
     this.inboxact = false;
     this.sendact = false;
+
+    this.inboxsortaction = true;
+    this.sendsortaction = false;
+
     //this.conf.presentLoading(1);
     if (this.inboxData.status == '') {
       this.inboxData.status = "messages_id";
@@ -421,8 +433,11 @@ export class EmailPage {
 
 
   doSend() {
+    this.isCompose = false;
     this.inboxact = false;
     this.sendact = false;
+    this.inboxsortaction = false;
+    this.sendsortaction = true;
     //this.conf.presentLoading(1);
     if (this.sendData.status == '') {
       this.sendData.status = "messages_id";
@@ -640,7 +655,7 @@ export class EmailPage {
               /* console.log(imageData);
                localStorage.setItem("userPhotoFile", imageData);
                //this.fileTrans(imageData);
- 
+   
                this.uploadResultBase64Data = imageData;
                this.addedImgLists = imageData;
                this.isUploadedProcessing = false;
@@ -1186,6 +1201,9 @@ export class EmailPage {
   }
 
   reply(messages_body) {
+     this.inboxsortaction = false;
+    this.sendsortaction = false;
+    this.isCompose = true;
     this.isSubmitted = false;
     this.replyforward = 1;
     this.isReply = 1;
@@ -1213,6 +1231,9 @@ export class EmailPage {
   }
 
   forward(messages_body) {
+     this.inboxsortaction = false;
+    this.sendsortaction = false;
+    this.isCompose = true;
     this.isSubmitted = false;
     this.replyforward = 1;
     this.to = '';
@@ -1263,6 +1284,9 @@ export class EmailPage {
 
   }
   com() {
+    this.isCompose = true;
+    this.inboxsortaction = false;
+    this.sendsortaction = false;
     this.isSubmitted = false;
     this.to = "";
     this.subject = "";

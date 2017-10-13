@@ -12,8 +12,8 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-  <ion-title  style="    text-align: center;
-    margin-top: 10px;"    class="page-title">{{pageTitle}}</ion-title>
+  <ion-title style="    text-align: center;
+    margin-top: 10px;" class="page-title">{{pageTitle}}</ion-title>
 
   <button style="float:left" ion-button (click)="notification()" style="position: absolute;
     right: 0%;
@@ -51,12 +51,19 @@
       Login As:{{loginas}}
     </ion-buttons>
   </ion-navbar>
-    <button class="add-new-btn" (click)="doAdd()" *ngIf="CREATEACCESS==1   && networkType==''">
+  <button class="add-new-btn" (click)="doAdd()" *ngIf="CREATEACCESS==1   && networkType==''">
   	<div class="algn-cent">
     	<ion-icon name="ios-add-circle-outline"></ion-icon>
         <span>Add New Role</span>
     </div>
   </button>
+  <ion-item style="width: 100%; margin: 0; padding-left: 10px;background-color:white" *ngIf="networkType==''">
+    <ion-label>Sort By</ion-label>
+    <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
+      <ion-option value="companygroup_name,asc" selected="true">Name Asc</ion-option>
+      <ion-option value="companygroup_name,desc">Name Desc</ion-option>
+    </ion-select>
+  </ion-item>
 </ion-header>
 <ion-content padding class="ion-content" *ngIf="VIEWACCESS==0">
   <p style="color: red;
@@ -66,23 +73,17 @@
     font-size: 12pt;">{{permissionMessage}}</p>
 </ion-content>
 <ion-content padding class="ion-content" *ngIf="VIEWACCESS==1">
-   <div class="error"  *ngIf="totalCount==0   && networkType==''">No role entries found</div>
-  <ion-item style="width: 100%; margin: 0; padding-left: 10px;"  *ngIf="networkType==''">
-    <ion-label>Sort By</ion-label>
-    <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
-      <ion-option value="companygroup_name,asc" selected="true">Name Asc</ion-option>
-      <ion-option value="companygroup_name,desc">Name Desc</ion-option>
-    </ion-select>
-  </ion-item>
-  <div class="separator-line"  *ngIf="totalCount!=0   && networkType==''">&nbsp;</div>
-  <ion-refresher (ionRefresh)="doRefresh($event)"  *ngIf="totalCount!=0">
+  <div class="error" *ngIf="totalCount==0   && networkType==''">No role entries found</div>
+
+  <div class="separator-line" *ngIf="totalCount!=0   && networkType==''">&nbsp;</div>
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="totalCount!=0">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-list  *ngIf="totalCount!=0   && networkType==''">    
-    <ion-item-sliding  *ngFor="let item of reportAllLists;">
+  <ion-list *ngIf="totalCount!=0   && networkType==''">
+    <ion-item-sliding *ngFor="let item of reportAllLists;">
       <ion-item>
-        <h2>{{item.role_name}}</h2>        
+        <h2>{{item.role_name}}</h2>
       </ion-item>
       <ion-item-options>
         <!--button class="viewcolor" (click)="doEdit(item,'view')">
@@ -94,43 +95,43 @@
         <button *ngIf="item.role_id!=1 && DELETEACCESS==1" class="trashcolor" (click)="doConfirm(item.role_id,item)">                        
                          <ion-icon name="trash" class="icon-size"></ion-icon>
                     </button>
-      </ion-item-options>     
+      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)"  *ngIf="totalCount!=0">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalCount!=0">
     <ion-infinite-scroll-content loadingText="Loading More Data"></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
 <ion-footer color="bluedark">
   <ion-toolbar color="bluedark">
-<ul class="quick-list">
-<li>
-    <button ion-button icon-only clear (click)="redirectToMaps()">
+    <ul class="quick-list">
+      <li>
+        <button ion-button icon-only clear (click)="redirectToMaps()">
     	<ion-icon name="home" class="footer-icon">MAPS</ion-icon>
     </button>
-</li>  
-<li>  
-    <button ion-button icon-only (click)="redirectToUser()" clear>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToUser()" clear>
     	<ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
     </button>
-</li>     
-<li>    
-    <button ion-button icon-only (click)="redirectToMessage()" clear>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectToMessage()" clear>
     	<ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
     </button>
-</li>     
-<li>    
-    <button ion-button icon-only (click)="redirectCalendar()" clear>
+      </li>
+      <li>
+        <button ion-button icon-only (click)="redirectCalendar()" clear>
     	<ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
     </button>
-</li>     
-<li>    
-    <button style="width: 34px;" ion-button icon-only (click)="redirectToSettings()" clear>
+      </li>
+      <li>
+        <button style="width: 34px;" ion-button icon-only (click)="redirectToSettings()" clear>
     	<ion-icon name="settings" class="footer-icon">ORG</ion-icon>
     </button>
-</li>    
-</ul>
+      </li>
+    </ul>
 
   </ion-toolbar>
-   <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
+  <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
 </ion-footer>

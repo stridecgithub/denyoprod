@@ -52,40 +52,8 @@
 
 
 
-
-</ion-header>
-<ion-content padding class="ion-content" *ngIf="VIEWACCESS==0">
- 
-  <p style="color: red;
-    position: relative;
-    margin-top: 50%;
-   text-align:center;
-    font-size: 12pt;">{{permissionMessage}}</p>
-</ion-content>
-<ion-content padding class="ion-content" *ngIf="VIEWACCESS==1">
-  <!--button ion-button (click)="startAnimate()">Start Animate Camera</button-->
-  <!--button ion-button (click)="startTheIterations()">Start</button>
-   <button ion-button (click)="stopTheIterations()">Stop</button>
-  {{timeri}}-->
-  <div #map id="map" style="position: relative;
-    overflow: hidden;
-    height: 55%;"  *ngIf="networkType==''"></div>
-
-  <!--div #map id="map" style="height:75%"></div-->
-
-
-
-  <div class="error" *ngIf="reportAllLists.length==0  && networkType==''">No unit entries found</div>
-  <div class="separator-line" *ngIf="totalCount!=0">&nbsp;</div>
-
   <div *ngIf="networkType==''">
-    <ion-item style="float:left;width: 50%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">
-
-
-      <!--<ion-content padding class="ion-content"  *ngIf="VIEWACCESS==1">
-<div style="width:40%">
-  <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="reportAllLists.length!=0">-->
-
+    <ion-item style="float:left;width: 50%; margin: 0; padding-left: 10px;background-color:white" *ngIf="totalCount!=0">
       <ion-label>Sort By</ion-label>
       <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
         <ion-option value="favorite,desc">Favorite</ion-option>
@@ -102,11 +70,7 @@
   </div>
 
   <div style="width:50%;float:right;" *ngIf="networkType==''">
-
-    <!--<ion-item style="float:left;width: 50%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">-->
-
-
-    <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">
+    <ion-item style="width: 100%; margin: 0; padding-left: 10px;background-color:white" *ngIf="totalCount!=0">
 
       <ion-label>Select Action</ion-label>
       <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="actpet" (ionChange)="onAction(actpet)">
@@ -115,12 +79,24 @@
       </ion-select>
     </ion-item>
   </div>
+ <!--div #map id="map" style="position: relative;
+    overflow: hidden;
+    height: 55%;" *ngIf="networkType==''"></div-->
+</ion-header>
+<ion-content padding class="ion-content" *ngIf="VIEWACCESS==0">
 
-
-  <!--ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="totalCount!=0">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher-->
+  <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+</ion-content>
+<ion-content padding class="ion-content" *ngIf="VIEWACCESS==1">
+  <div #map id="map" style="position: relative;
+    overflow: hidden;
+    height: 55%;" *ngIf="networkType==''"></div>
+  <div class="error" *ngIf="reportAllLists.length==0  && networkType==''">No unit entries found</div>
+  <div class="separator-line" *ngIf="totalCount!=0">&nbsp;</div>
   <ion-list *ngIf="totalCount!=0 && networkType==''">
     <ion-item-sliding *ngFor="let item of reportAllLists;">
       <ion-item>

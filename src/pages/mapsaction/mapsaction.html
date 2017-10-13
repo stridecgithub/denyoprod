@@ -22,24 +22,7 @@
    <ion-badge style="    margin-top: 5px;
     margin-right: 7px;" item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
 </button>
-
-  <!--ion-navbar color="bluedark" hideBackButton>
-    <ion-title class="page-title">{{pageTitle}}</ion-title>
-    <ion-buttons start>
-      <button ion-button menuToggle class="menu-toggle">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    </ion-buttons>
-
-
-
-    <ion-buttons end>
-      <button ion-button (click)="notification()">
-  <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
-   <ion-badge item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
-</button>
-    </ion-buttons>
-  </ion-navbar-->
+ 
   <ion-navbar class="backtoprevious-navbar" hideBackButton>
     <ion-buttons start class="backtoprevious-start">
       <button ion-button icon-left class="backtoprevious-button" (click)="previous()">
@@ -54,39 +37,8 @@
 
 
 
-
-</ion-header>
-<ion-content padding class="ion-content" *ngIf="VIEWACCESS==0">
-
-  <p style="color: red;
-    position: relative;
-    margin-top: 50%;
-   text-align:center;
-    font-size: 12pt;">{{permissionMessage}}</p>
-</ion-content>
-<ion-content padding class="ion-content" *ngIf="VIEWACCESS==1">
-  <!--button ion-button (click)="startTheIterations()">Start</button>
-   <button ion-button (click)="stopTheIterations()">Stop</button>
-  {{timeri}}-->
-  <div #mapaction id="mapaction" style="position: relative;
-    overflow: hidden;
-    height: 55%;"   *ngIf="networkType==''"></div>
-
-  <!--div #map id="map" style="height:75%"></div-->
-
-
-
-  <div class="error" *ngIf="reportAllLists.length==0  && networkType==''">No unit entries found</div>
-  <div class="separator-line" *ngIf="totalCount!=0">&nbsp;</div>
-
-  <div *ngIf="networkType==''">
-    <ion-item style="float:left;width: 50%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">
-
-
-      <!--<ion-content padding class="ion-content"  *ngIf="VIEWACCESS==1">
-<div style="width:40%">
-  <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="reportAllLists.length!=0">-->
-
+<div *ngIf="networkType==''">
+    <ion-item style="float:left;width: 50%; margin: 0; padding-left: 10px;background-color:white" *ngIf="totalCount!=0">
       <ion-label>Sort By</ion-label>
       <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
         <ion-option value="favorite,desc">Favorite</ion-option>
@@ -104,10 +56,7 @@
 
   <div style="width:50%;float:right;"  *ngIf="networkType==''">
 
-    <!--<ion-item style="float:left;width: 50%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">-->
-
-
-    <ion-item style="width: 100%; margin: 0; padding-left: 10px;" *ngIf="totalCount!=0">
+    <ion-item style="width: 100%; margin: 0; padding-left: 10px;background-color:white" *ngIf="totalCount!=0">
 
       <ion-label>Select Action</ion-label>
       <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="actpet" (ionChange)="onAction(actpet)">
@@ -116,12 +65,23 @@
       </ion-select>
     </ion-item>
   </div>
+</ion-header>
+<ion-content padding class="ion-content" *ngIf="VIEWACCESS==0">
 
+  <p style="color: red;
+    position: relative;
+    margin-top: 50%;
+   text-align:center;
+    font-size: 12pt;">{{permissionMessage}}</p>
+</ion-content>
+<ion-content padding class="ion-content" *ngIf="VIEWACCESS==1">
+  <div #mapaction id="mapaction" style="position: relative;
+    overflow: hidden;
+    height: 55%;"   *ngIf="networkType==''"></div>
+  <div class="error" *ngIf="reportAllLists.length==0  && networkType==''">No unit entries found</div>
+  <div class="separator-line" *ngIf="totalCount!=0">&nbsp;</div>
 
-  <!--ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="totalCount!=0">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher-->
+  
   <ion-list *ngIf="totalCount!=0 && networkType==''">
     <ion-item-sliding *ngFor="let item of reportAllLists;">
       <ion-item>

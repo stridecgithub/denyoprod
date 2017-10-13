@@ -15,6 +15,7 @@ import { EmailPage } from '../email/email';
 import { OrgchartPage} from '../orgchart/orgchart';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
+import { NotificationPage } from '../notification/notification';
 /**
  * Generated class for the UnitdetailsPage page.
  *
@@ -113,6 +114,9 @@ export class TrendlinePage {
 	}
 	redirectToSettings() {
 		this.nav.push(OrgchartPage);
+	}
+	notification() {
+		this.nav.push(NotificationPage);
 	}
 }
 

@@ -138,7 +138,7 @@ export class MyApp {
   // of remote operations
 
   openPage(page) {
-    localStorage.setItem("fromModule", page.component);
+
     if (page.component == 'UnitsPage') {
       this.nav.push(UnitsPage);
     } else if (page.component == 'UnitgroupPage') {
@@ -169,9 +169,10 @@ export class MyApp {
       this.menuCtrl.close();
       this.nav.push(CalendarPage);
     } else if (page.title == 'Maps') {
+       this.menuCtrl.close();     
       let fromModule = localStorage.getItem("fromModule");
-      if (fromModule != 'MapsPage') {
-        this.menuCtrl.close();
+      console.log("From Module is:" + fromModule);
+      if (fromModule != 'MapsPage') {       
         this.nav.setRoot(MapsPage);
       }
     } else if (page.title == 'Reports') {
@@ -191,6 +192,7 @@ export class MyApp {
     else if (page.component == 'EnginedetailPage') {
       this.nav.push(EnginedetailPage);
     }
+    
   }
 
   toggleLevel1(idx) {

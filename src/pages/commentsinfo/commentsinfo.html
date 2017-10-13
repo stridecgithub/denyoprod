@@ -86,7 +86,16 @@
  </button>
  </div>
 
-
+ <ion-item style="width: 100%; margin: 0; padding-left: 10px;background-color:white">
+    <ion-label>Sort By</ion-label>
+    <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
+      <ion-option value="alarm,asc" selected="true">Alarm</ion-option>
+      <ion-option value="comment,asc">Comment</ion-option>
+       <ion-option value="service,asc">Service</ion-option>
+        <ion-option value="name,asc">Sender Ascending</ion-option>
+        <ion-option value="name,desc">Sender Descending</ion-option>
+    </ion-select>
+  </ion-item>
 </ion-header>
 
 <ion-content padding class="ion-content" *ngIf="networkType!=''">
@@ -106,16 +115,7 @@
 
 
   <div class="error" *ngIf="totalCount==0">No entries found</div>
-   <ion-item style="width: 100%; margin: 0; padding-left: 10px;">
-    <ion-label>Sort By</ion-label>
-    <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">
-      <ion-option value="alarm,asc" selected="true">Alarm</ion-option>
-      <ion-option value="comment,asc">Comment</ion-option>
-       <ion-option value="service,asc">Service</ion-option>
-        <ion-option value="name,asc">Sender Ascending</ion-option>
-        <ion-option value="name,desc">Sender Descending</ion-option>
-    </ion-select>
-  </ion-item>
+  
   <!--ion-item style="width: 100%; margin: 0; padding-left: 10px;">
     <ion-label>Sort By</ion-label>
     <ion-select style="padding: 1px 1px 6px 1px;" [(ngModel)]="pet" (ionChange)="onSegmentChanged(pet)">

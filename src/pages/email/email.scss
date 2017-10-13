@@ -1,6 +1,19 @@
 //email
 
 page-email {
+.toolbar-md {
+background: linear-gradient(to right, #3a7cd0, #0a1844);
+}
+#email-content-scroll{
+    margin-top: 156px;
+     height:450px;
+   
+}
+#email-content-scroll-compose{
+ margin-top: 100px;
+  height:450px;
+}
+
      .ion-md-settings{background:url(../img/oc.png) no-repeat center top;}
 .border_low{
 border:2px solid #009ACD;
@@ -64,6 +77,8 @@ border:2px solid #009ACD;
     
 .ion-content{
     background-color:white;
+    margin-top: 99px;
+    padding-top: 55px;
 }
 
 
@@ -78,7 +93,8 @@ ion-navbar ion-buttons {
     margin-right: 15px;
 }
 .button-md-primary{width:100%;padding: 14px 1.1em;height:inherit;font-size: 16px;}
-.scroll-content{background:#fff;}
+
+
 .bar-buttons-md{order:inherit}
 ion-navbar.toolbar{background:#f0f0f0;}
    .label-md[stacked]{
@@ -101,7 +117,8 @@ ion-navbar.toolbar{background:#f0f0f0;}
 }
 
 .list-md .item-block .item-inner {
-    border-bottom: 1px solid #fff;
+    border-bottom: 0px solid #fff;
+
 }
 
 
@@ -133,9 +150,9 @@ ion-navbar.toolbar{ background:#f0f0f0}
 #sortbar ion-label button{width: 100%;background:none;padding: 0;}
 .company-name {float: left;}
 .ion-md-arrow-dropup{float: right;}
-.scroll-content{background-color:#fff;}	
+	
 ion-item-sliding{border-bottom: 1px solid #ccc;}
-.item-md{color:#333;padding:0;}
+.item-md{color:#333;padding:2px;}
 .item-md h2{margin:10px 0;}
 .label-md b{width:40%;display:inline-block;}
 ion-navbar ion-buttons{margin-right:15px;}

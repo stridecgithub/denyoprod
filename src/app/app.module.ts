@@ -82,9 +82,9 @@ import { Network } from '@ionic-native/network';
 @NgModule({
   declarations: [
     //ITimer,
-   // TabindexDirective,
-   CalendarComponent,
-    CalendarPage,
+    // TabindexDirective,
+    //CalendarComponent,
+    //CalendarPage,
     MyApp,
     HomePage,
     AddalarmlistPage,
@@ -160,8 +160,8 @@ import { Network } from '@ionic-native/network';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    CalendarPage,
-    CalendarComponent,
+    //CalendarPage,
+    //CalendarComponent,
     MyApp,
     HomePage,
     AddalarmlistPage,
@@ -234,7 +234,7 @@ import { Network } from '@ionic-native/network';
     SplashScreen,
     GoogleMaps,
     Geolocation,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },DataServiceProvider
+    { provide: ErrorHandler, useClass: IonicErrorHandler }, DataServiceProvider
   ]
 })
 export class AppModule { }
