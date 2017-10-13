@@ -19,6 +19,7 @@ import { EmailPage } from '../email/email';
 import { MapsPage } from '../maps/maps';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
+import { NotificationPage } from '../notification/notification';
 //import { Http, Headers, RequestOptions } from '@angular/http';
 
 /**
@@ -383,5 +384,8 @@ export class ServicedetailsPage {
 	}
 	redirectToSettings() {
 		this.nav.push(OrgchartPage);
+	}
+  notification() {
+		this.nav.push(NotificationPage);
 	}
 }

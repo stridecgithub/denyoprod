@@ -226,6 +226,7 @@ export class AlarmdetailsPage {
       localStorage.setItem("iframeunitId", item.alarm_unit_id);
       this.alarm_name = item.alarm_name;
       this.alarm_assginedby_name = item.alarm_assginedby_name;
+      this.alarm_assginedto_name = item.alarm_assginedto_name;      
       this.unitDetailData.unitname = item.unitname;
       this.unitDetailData.location = item.location;
       this.unitDetailData.projectname = item.projectname;

@@ -113,7 +113,7 @@
   </ion-refresher>
   <ion-list *ngIf="totalCount!=0">
     <ion-item-sliding *ngFor="let item of reportAllLists;">
-
+<ion-item class="msg-item">
       <ion-item style="float:left;">
         <ion-avatar item-start *ngIf="item.user_photo!=''">
           <img src="{{item.user_photo}}">
@@ -164,7 +164,7 @@
 
         </ion-item>
       </ion-item>
-
+ </ion-item>
       <ion-item-options>
         <!--button class="viewcolor" (click)="doEdit(item,'view')">
                        <ion-icon name="eye" class="icon-size"></ion-icon>

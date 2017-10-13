@@ -233,7 +233,7 @@ export class AddcommentsinfoPage {
       this.addedAttachList = imageData;
     }, (err) => {
       // Handle error
-      this.conf.sendNotification(err);
+      //this.conf.sendNotification(err);
     });
   }
 

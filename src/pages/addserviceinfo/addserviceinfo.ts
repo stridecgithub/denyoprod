@@ -161,9 +161,9 @@ export class AddserviceinfoPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-       this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -233,7 +233,7 @@ export class AddserviceinfoPage {
   }
   ionViewDidLoad() {
     this.addedServiceImgLists = [];
-    console.log('ionViewDidLoad AddserviceinfoPage');    
+    console.log('ionViewDidLoad AddserviceinfoPage');
     localStorage.setItem("fromModule", "AddserviceinfoPage");
   }
   favoriteaction(unit_id) {
@@ -332,6 +332,7 @@ export class AddserviceinfoPage {
         this.service_unitid = this.NP.get("record").service_unitid;
         this.unitDetailData.pageTitle = 'Servicing Info Edit';
         this.isEdited = true;
+         this.isSubmitted = false;
       }
 
 
@@ -739,7 +740,7 @@ export class AddserviceinfoPage {
 
 
 
-  selectEntry(item) {
+  selectEntry(item) {   
     this.serviced_by = item.serviced_by;
     this.serviced_datetime = item.serviced_datetime;
     console.log("Service Date Time:" + this.serviced_datetime);
