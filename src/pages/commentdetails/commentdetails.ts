@@ -36,6 +36,7 @@ export class CommentdetailsPage {
   public notcount: any;
   isReadyToSave: boolean;
   public photoInfo = [];
+  public colorListArr = [];
   public addedImgListsArray = [];
   public addedImgLists = [];
   progress: number;
@@ -71,7 +72,6 @@ export class CommentdetailsPage {
     pageTitle: '',
     getremark: '',
     serviced_by: '',
-    nextServiceDate: '',
     addedImgLists1: '',
     addedImgLists2: ''
   }
@@ -138,7 +138,20 @@ export class CommentdetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommentdetailsPage');
-
+    this.colorListArr = [
+      "FBE983",
+      "5584EE",
+      "A4BDFD",
+      "47D6DC",
+      "7AE7BE",
+      "51B749",
+      "FBD75C",
+      "FFB878",
+      "FF877C",
+      "DC2128",
+      "DAADFE",
+      "E1E1E1"
+    ];
     localStorage.setItem("fromModule", "CommentdetailsPage");
   }
   ionViewWillEnter() {
@@ -214,6 +227,9 @@ export class CommentdetailsPage {
 
     //localStorage.setItem("iframeunitId", this.comment_unitid);
     // localStorage.setItem("unitId", this.comment_unitid);
+
+
+   
   }
   getPrority(val) {
     this.comment_priority = val
@@ -255,7 +271,7 @@ export class CommentdetailsPage {
     }
 
     this.comment_resources = item.comment_resources;
-    this.unitDetailData.nextServiceDate = item.next_service_date;
+    this.unitDetailData.ns = item.next_service_date;
     this.comment_resources = item.comment_resources;
 
     if (this.comment_resources != undefined && this.comment_resources != 'undefined' && this.comment_resources != '') {
@@ -276,6 +292,13 @@ export class CommentdetailsPage {
         this.isUploaded = false;
       }
     }
+
+     let colorcode;
+    let index = this.colorListArr.indexOf(this.unitDetailData.colorcodeindications);
+    let colorvalincrmentone = index + 1;
+    colorcode = "button" + colorvalincrmentone;
+    this.unitDetailData.colorcodeindications = colorcode;
+    console.log("Finally color code indications is:"+this.unitDetailData.colorcodeindications);
   }
   previous() {
     this.nav.push(CommentsinfoPage, {

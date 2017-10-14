@@ -83,8 +83,8 @@ import { Network } from '@ionic-native/network';
   declarations: [
     //ITimer,
     // TabindexDirective,
-    CalendarComponent,
-    CalendarPage,
+    //CalendarComponent,
+    //CalendarPage,
     MyApp,
     HomePage,
     AddalarmlistPage,
@@ -160,8 +160,8 @@ import { Network } from '@ionic-native/network';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    CalendarPage,
-    CalendarComponent,
+   // CalendarPage,
+    //CalendarComponent,
     MyApp,
     HomePage,
     AddalarmlistPage,

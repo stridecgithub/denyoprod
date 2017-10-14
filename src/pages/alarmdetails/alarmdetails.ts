@@ -99,8 +99,8 @@ export class AlarmdetailsPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlarmdetailsPage');
-    
-     localStorage.setItem("fromModule", "AlarmdetailsPage");
+
+    localStorage.setItem("fromModule", "AlarmdetailsPage");
   }
   favoriteaction(unit_id) {
     let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
@@ -226,7 +226,7 @@ export class AlarmdetailsPage {
       localStorage.setItem("iframeunitId", item.alarm_unit_id);
       this.alarm_name = item.alarm_name;
       this.alarm_assginedby_name = item.alarm_assginedby_name;
-      this.alarm_assginedto_name = item.alarm_assginedto_name;      
+      this.alarm_assginedto_name = item.alarm_assginedto_name;
       this.unitDetailData.unitname = item.unitname;
       this.unitDetailData.location = item.location;
       this.unitDetailData.projectname = item.projectname;
@@ -237,6 +237,19 @@ export class AlarmdetailsPage {
       this.unitDetailData.rh = item.runninghr;
       this.unitDetailData.ns = item.nextservicedate;
       this.alarmid = item.alarm_id;
+
+
+
+      localStorage.setItem("unitunitname", item.unitname);
+      localStorage.setItem("unitlocation", item.location);
+      localStorage.setItem("unitprojectname", item.projectname);
+      localStorage.setItem("unitcolorcode", item.colorcode);
+      localStorage.setItem("unitlat", item.latitude);
+      localStorage.setItem("unitlng", item.longtitude);
+      localStorage.setItem("runninghr", item.runninghr);
+      localStorage.setItem("nsd", item.nextservicedate);
+      localStorage.setItem("iframeunitId", item.alarm_unit_id);
+
     }
 
   }

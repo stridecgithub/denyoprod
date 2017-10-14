@@ -56,7 +56,7 @@ export class NotificationPage {
   public networkType: string;
   public totalCount;
   constructor(private conf: Config, public platform: Platform, private network: Network, private sanitizer: DomSanitizer, public http: Http,
-     public alertCtrl: AlertController, public NP: NavParams, public navParams: NavParams, public nav: NavController) {
+    public alertCtrl: AlertController, public NP: NavParams, public navParams: NavParams, public nav: NavController) {
     this.pageTitle = 'Notifications';
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
@@ -64,9 +64,9 @@ export class NotificationPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-       this.platform.registerBackButtonAction(() => {
-          this.previous();
-        });
+      this.platform.registerBackButtonAction(() => {
+        this.previous();
+      });
       this.network.onConnect().subscribe(data => {
         console.log("maps.ts Platform ready-onConnent:" + data.type);
         localStorage.setItem("isNet", 'online');
@@ -149,12 +149,13 @@ export class NotificationPage {
         record: item.table_id,
         act: 'Push'
       });
-
+      return false;
     } else if (nottype == 'OA') {
       this.nav.push(AlarmdetailsPage, {
         record: item.table_id,
         act: 'Push'
       });
+      return false;
     } else if (nottype == 'A') {
       //this.nav.push(AlarmdetailsPage);
 
@@ -162,24 +163,27 @@ export class NotificationPage {
         record: item.table_id,
         act: 'Push'
       });
-
+      return false;
     } else if (nottype == 'C') {
       //this.nav.push(CommentdetailsPage);
       this.nav.push(CommentdetailsPage, {
         record: item.table_id,
         act: 'Push'
       });
+      return false;
     } else if (nottype == 'E') {
       this.nav.push(CalendardetailPage, {
         event_id: item.table_id,
         act: 'Push'
       });
+      return false;
     } else if (nottype == 'S') {
       // this.nav.push(ServicedetailsPage);
       this.nav.push(ServicedetailsPage, {
         record: item.table_id,
         act: 'Push'
       });
+      return false;
     }
 
   }

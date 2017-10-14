@@ -888,6 +888,20 @@ ion-navbar ion-buttons{margin-right:15px;}
 .algn-cent .ios-add-circle-outline{float:left;}
 .algn-cent span{float:right;font-size: 15px;margin: 6px 10px;}
 .toolbar-title-md{padding:0;}
+
+
+.btn-align{margin:0 auto;text-align:center;line-height:26px;font-size:11px;}
+.engine-detail{background:#21b09c;float:left;}
+.eng-icon{background:url(../img/event_detail_icon.png) no-repeat center center;width:19px;height:25px;margin-right:10px;float:left;}
+.service-info{background:#3b5588;float:right;}
+.ser-icon{background:url(../img/service_info_icon.png) no-repeat center center;width:25px;height:25px;margin-right:10px;float:left;}
+.alarm-log{background:#ff7965;float:left;}
+.ala-icon{background:url(../img/alarm_log_icon.png) no-repeat center center;width:20px;height:25px;margin-right:10px;float:left;}
+.event-comment{background:#ff9a3e;float:right;}
+.eve-icon{background:url(../img/event_comment_icon.png) no-repeat center center;width:25px;height:21px;margin-right:10px;float:left;}
+
+}
+// Button Color & Favorite Indication and 3 Dot for unit view details page
 .button1{
 background-color: #FBE983;
  width: 40px;
@@ -965,18 +979,7 @@ background-color: #FBE983;
  {
      background-image:url('../img/dot.png');background-size:cover;
  }
-
-.btn-align{margin:0 auto;text-align:center;line-height:26px;font-size:11px;}
-.engine-detail{background:#21b09c;float:left;}
-.eng-icon{background:url(../img/event_detail_icon.png) no-repeat center center;width:19px;height:25px;margin-right:10px;float:left;}
-.service-info{background:#3b5588;float:right;}
-.ser-icon{background:url(../img/service_info_icon.png) no-repeat center center;width:25px;height:25px;margin-right:10px;float:left;}
-.alarm-log{background:#ff7965;float:left;}
-.ala-icon{background:url(../img/alarm_log_icon.png) no-repeat center center;width:20px;height:25px;margin-right:10px;float:left;}
-.event-comment{background:#ff9a3e;float:right;}
-.eve-icon{background:url(../img/event_comment_icon.png) no-repeat center center;width:25px;height:21px;margin-right:10px;float:left;}
-
-}
+// Button Color & Favorite Indication and 3 Dot for unit view details page
 //unitgroup
 
 page-unitgroup {

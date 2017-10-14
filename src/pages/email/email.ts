@@ -902,11 +902,15 @@ export class EmailPage {
 
 
   inb() {
+    this.inboxLists = [];
+    this.sendLists = [];
     this.inboxData.startindex = 0;
     this.doInbox();
   }
 
   snd() {
+    this.inboxLists = [];
+    this.sendLists = [];
     this.sendData.startindex = 0;
     this.doSend();
   }
@@ -1168,6 +1172,9 @@ export class EmailPage {
       });
   }
   doDetails(item, act) {
+    this.inboxsortaction = false;
+    this.sendsortaction = false;
+    this.isCompose = true;
     this.inboxact = false;
     this.sendact = false;
     this.attachedFileLists = []
@@ -1201,7 +1208,7 @@ export class EmailPage {
   }
 
   reply(messages_body) {
-     this.inboxsortaction = false;
+    this.inboxsortaction = false;
     this.sendsortaction = false;
     this.isCompose = true;
     this.isSubmitted = false;
@@ -1231,7 +1238,7 @@ export class EmailPage {
   }
 
   forward(messages_body) {
-     this.inboxsortaction = false;
+    this.inboxsortaction = false;
     this.sendsortaction = false;
     this.isCompose = true;
     this.isSubmitted = false;

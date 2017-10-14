@@ -76,12 +76,12 @@
       <p><a (click)="getPrority(1)" href="#"><img src="img/low_priority.png" style="
        width: 29px;
     height: 29px;
-    position: absolute;    margin-top: -13px;
-    margin-left: 50%;" class="{{priority_lowclass}}"></a><a (click)="getPrority(2)" href="#"><img  src="img/high_priority.png"  style="
+    position: absolute;    margin-top: -28px;
+    margin-left: 70%;" class="{{priority_lowclass}}"></a><a (click)="getPrority(2)" href="#"><img  src="img/high_priority.png"  style="
         width: 29px;
     height: 29px;
     position: absolute;
-    margin-left: 70%;    margin-top: -13px;" class="{{priority_highclass}}"></a>
+    margin-left: 80%;    margin-top: -28px;" class="{{priority_highclass}}"></a>
       </p>
       <!-- min="{{servicemindate}}" max="{{servicemaxdate}}"-->
       <ion-item>
@@ -107,7 +107,7 @@
 
 
       <p><b>Upload Images</b></p>
-      <p>Maximum Number of upload photos:10</p>
+      <p>{{uploadcountstr}}{{uploadcount}}</p>
 
 
       <div class="profile-image-wrapper" (click)="takePictureURL(micro_timestamp)" *ngIf="isUploaded">

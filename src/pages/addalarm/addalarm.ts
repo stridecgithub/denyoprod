@@ -217,7 +217,7 @@ export class AddalarmPage {
   saveEntry() {
     let dateStr = new Date();
     let yearstr = dateStr.getFullYear();
-    let monthstr = dateStr.getMonth();
+    let monthstr = dateStr.getMonth()+1;
     let datestr = dateStr.getDate();
     let alarm_assigned_date = yearstr + "-" + monthstr + "-" + datestr;
     this.remark = localStorage.getItem("atMentionResult");

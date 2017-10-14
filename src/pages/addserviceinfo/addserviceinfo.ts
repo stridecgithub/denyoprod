@@ -41,6 +41,8 @@ export class AddserviceinfoPage {
   public addedImgListsArray = [];
   public addedServiceImgLists = [];
   progress: number;
+  public uploadcount: any;
+  private uploadcountstr: string = "Maximum Number of upload photos:";
   public priority_lowclass: any;
   public priority_highclass: any;
   public isSubmitted: boolean = false;
@@ -95,7 +97,7 @@ export class AddserviceinfoPage {
 
 
     this.isFuture = 0;
-
+    this.uploadcount = 10;
 
     if (this.unitDetailData.nextServiceDate == '') {
       this.isSubmitted = true;
@@ -332,7 +334,7 @@ export class AddserviceinfoPage {
         this.service_unitid = this.NP.get("record").service_unitid;
         this.unitDetailData.pageTitle = 'Servicing Info Edit';
         this.isEdited = true;
-         this.isSubmitted = false;
+        this.isSubmitted = false;
       }
 
 
@@ -740,7 +742,7 @@ export class AddserviceinfoPage {
 
 
 
-  selectEntry(item) {   
+  selectEntry(item) {
     this.serviced_by = item.serviced_by;
     this.serviced_datetime = item.serviced_datetime;
     console.log("Service Date Time:" + this.serviced_datetime);
@@ -786,6 +788,11 @@ export class AddserviceinfoPage {
 
       if (this.addedServiceImgLists.length > 9) {
         this.isUploaded = false;
+        this.uploadcountstr = '';
+        this.uploadcount = '';
+      } else {
+        let remcount = this.uploadcount - this.addedServiceImgLists.length;
+        this.uploadcountstr = "Remaining photo " + remcount + "upload only";
       }
     }
 

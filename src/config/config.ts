@@ -49,8 +49,8 @@ export class Config {
     sendNotification(message): void {
         let notification = this.toastCtrl.create({
             message: message,
-            duration: 3000,
-            dismissOnPageChange: true
+            duration: 3000/*,
+            dismissOnPageChange: true*/
         });
         notification.present();
 
