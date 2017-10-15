@@ -33,7 +33,7 @@ export class AlarmdetailsPage {
   public notcount: any;
   public totalCount;
   public alarm_unitid: any;
-  public trendstatus:any;
+  public trendstatus: any;
   pet: string = "ALL";
   public sortby = 2;
   public unitDetailData: any = {
@@ -41,7 +41,7 @@ export class AlarmdetailsPage {
   }
   public userId: any;
   public alarmid: any;
-  public unit_status:any;
+  public unit_status: any;
   public alarm_assginedby_name: any;
   public alarm_assginedto_name: any;
   public alarm_name: any;
@@ -65,7 +65,7 @@ export class AlarmdetailsPage {
   constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController,
     public alertCtrl: AlertController, public NP: NavParams) {
     this.pageTitle = 'Units';
-    this.trendstatus=0;
+    this.trendstatus = 0;
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
     this.companyId = localStorage.getItem("userInfoCompanyId");
@@ -282,7 +282,11 @@ export class AlarmdetailsPage {
       });
   }
   previous() {
-    this.nav.push(AlarmlogPage);
+    if (this.NP.get("from") == 'notify') {
+      this.notification();
+    } else {
+      this.nav.push(AlarmlogPage);
+    }
   }
   notification() {
     this.nav.push(NotificationPage);

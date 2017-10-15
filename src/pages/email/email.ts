@@ -972,7 +972,9 @@ export class EmailPage {
   previous() {
     console.log("A" + this.act); // inbox
     console.log("B" + this.choice); // details
-    if (this.act == 'send' && this.choice == 'details') {
+     if (this.NP.get("from") == 'notify') {
+      this.notification();
+    }else if (this.act == 'send' && this.choice == 'details') {
       this.choice = 'send';
       console.log("C" + this.choice);
     } else if (this.act == 'inbox' && this.choice == 'details') {
