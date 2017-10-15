@@ -1,4 +1,4 @@
-import {  Output, EventEmitter, ElementRef, Input, Component } from '@angular/core';
+import { Output, EventEmitter, ElementRef, Input, Component } from '@angular/core';
 import { NavController, Platform, MenuController, AlertController } from 'ionic-angular';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Device } from '@ionic-native/device';
@@ -18,15 +18,12 @@ import { Keyboard } from '@ionic-native/keyboard';
   providers: [Device, DatePicker, Config, Keyboard]
 })
 export class HomePage {
-
-  @Output() input: EventEmitter<string> = new EventEmitter<string>();
-  @Input('br-data-dependency') nextIonInputId: any = null;
-
-  mapElement: HTMLElement;
   public form: FormGroup;
-  public userId: any;
-  public passWrd: any;
+  public username: any;
+  public password: any;
   networkType: any;
+  keepmecheck: any;
+  keepme: boolean;
   public userInf: any;
   header_data: any;
   private apiServiceURL: string = '';
@@ -34,17 +31,20 @@ export class HomePage {
   constructor(public Keyboard: Keyboard, public alertCtrl: AlertController,
     public elementRef: ElementRef, private conf: Config, public platform: Platform, private network: Network, public menuCtrl: MenuController, public navCtrl: NavController, private datePicker: DatePicker, public fb: FormBuilder, public device: Device, private http: Http) {
     this.form = fb.group({
-      //"userid": ["", Validators.required],
+      "keepme": [""],
       //"password": ["", Validators.required]
-      "userid": ["", Validators.compose([Validators.maxLength(50), Validators.required])],
+      "username": ["", Validators.compose([Validators.maxLength(50), Validators.required])],
       "password": ["", Validators.compose([Validators.maxLength(50), Validators.required])]
     });
     this.apiServiceURL = conf.apiBaseURL();
     this.networkType = '';
+    this.keepme = false;
+    // this.username = '';
+    //this.password = '';
     this.menuCtrl.swipeEnable(false);
     this.header_data = { ismenu: true, ishome: false, title: "Home" };
     this.userInf = localStorage.getItem("userInfoId");
-    console.log("UserId Localtorage" + this.userInf);
+    console.log("username Localtorage" + this.userInf);
     console.log("A");
     if (this.userInf == 'null') {
       this.userInf = 0;
@@ -66,8 +66,8 @@ export class HomePage {
     this.platform.ready().then(() => {
 
       this.platform.registerBackButtonAction(() => {
-        let userId = localStorage.getItem("userInfoId");
-        if (userId == '') {
+        let username = localStorage.getItem("userInfoId");
+        if (username == '') {
           console.log("User id logged out");
           this.navCtrl.setRoot(HomePage);
         }
@@ -103,10 +103,12 @@ export class HomePage {
 
 
   login() {
-    let userid: string = this.form.controls["userid"].value,
+    let username: string = this.form.controls["username"].value,
       password: string = this.form.controls["password"].value;
+    let keepmecheck = this.form.controls["keepme"].value;
+    console.log("keepme check value selected is:" + keepmecheck);
     let isEmpty = 1;
-    if (this.form.controls["userid"].value == '') {
+    if (this.form.controls["username"].value == '') {
       isEmpty = 0;
     }
     if (this.form.controls["password"].value == '') {
@@ -119,14 +121,36 @@ export class HomePage {
     } else {
       this.networkType = '';
       if (isEmpty > 0) {
-        this.loginEntry(userid, password);
+        this.loginEntry(username, password, keepmecheck);
       }
     }
     //}
   }
   ionViewDidEnter() {
     // the root left menu should be disabled on this page
+    this.username = localStorage.getItem("keepmeusername");
+    this.password = localStorage.getItem("keepmepassword");
+    this.keepmecheck = localStorage.getItem("keepmecheck");
+    if (this.keepmecheck > 0) {
+      this.keepme = true;
+    } else {
+      this.keepme = false;
+    }
+    console.log("Keepme User Id Did enter:" + this.username + "Keepme password:" + this.password + "Keepme checkvalue:" + this.keepmecheck);
     this.menuCtrl.enable(false);
+
+  }
+  ionViewDidLoaded() {
+    this.username = localStorage.getItem("keepmeusername");
+    this.password = localStorage.getItem("keepmepassword");
+    this.keepmecheck = localStorage.getItem("keepmecheck");
+    if (this.keepmecheck > 0) {
+      this.keepme = true;
+    } else {
+      this.keepme = false;
+    }
+
+    console.log("Keepme User Id Did load:" + this.username + "Keepme password:" + this.password + "Keepme checkvalue:" + this.keepmecheck);
   }
   showDatePicker() {
     this.datePicker.show({
@@ -141,7 +165,7 @@ export class HomePage {
       );
   }
 
-  loginEntry(username, password) {
+  loginEntry(username, password, keepmecheck) {
     console.log("H");
     let device_token = localStorage.getItem("deviceTokenForPushNotification");
     let res;
@@ -162,6 +186,32 @@ export class HomePage {
           return false;
         } else {
           res = data.json();
+          console.log("Afer logged in keep me check is:" + keepmecheck)
+          /* if (this.keepmecheck != undefined) {
+             this.keepmecheck = 1;
+           }
+           if (this.keepmecheck != 'undefined') {
+             this.keepmecheck = 1;
+           }
+           if (this.keepmecheck != '') {
+             this.keepmecheck = 1;
+           }
+           if (this.keepmecheck > 0) {
+             this.keepmecheck = 1;
+           }*/
+          if (keepmecheck == true) {
+            console.log("Username True" + username);
+            localStorage.setItem("keepmeusername", username);
+            console.log("Password True" + password);
+            localStorage.setItem("keepmepassword", password);
+            localStorage.setItem("keepmecheck", '1');
+          } else {
+            console.log("Username True" + username);
+            localStorage.setItem("keepmeusername", '');
+            console.log("Password True" + password);
+            localStorage.setItem("keepmepassword", '');
+            localStorage.setItem("keepmecheck", '0');
+          }
           console.log("Logged in Response:" + JSON.stringify(res));
           localStorage.setItem("userInfo", res['staffdetails'][0]);
           localStorage.setItem("userInfoId", res['staffdetails'][0].staff_id);
@@ -510,6 +560,8 @@ export class HomePage {
     });
     this.alert.present();
   }
+
+
 }
 //const TAB_KEY_CODE = 9;
 //const ENTER_KEY_CODE = 13;

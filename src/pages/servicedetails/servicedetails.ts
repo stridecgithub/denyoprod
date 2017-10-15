@@ -355,7 +355,9 @@ export class ServicedetailsPage {
   }
   previous() {
 
-  
+   if (this.NP.get("from") == 'notify') {
+      this.notification();
+    } else 
     if(this.NP.get("from")=='service')
     {
 

@@ -60,7 +60,7 @@ export class CalendardetailPage {
   }
   public reportAllLists = [];
   constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController,
-     public alertCtrl: AlertController, public NP: NavParams) {
+    public alertCtrl: AlertController, public NP: NavParams) {
     this.pageTitle = 'Units';
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
@@ -69,7 +69,7 @@ export class CalendardetailPage {
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-        this.platform.registerBackButtonAction(() => {
+      this.platform.registerBackButtonAction(() => {
         this.previous();
       });
       this.network.onConnect().subscribe(data => {
@@ -148,7 +148,11 @@ export class CalendardetailPage {
       });
   }
   previous() {
-    this.nav.push(CalendarPage);
+    if (this.NP.get("from") == 'notify') {
+      this.notification();
+    } else {
+      this.nav.push(CalendarPage);
+    }
   }
   notification() {
     this.nav.push(NotificationPage);

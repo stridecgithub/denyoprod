@@ -147,13 +147,15 @@ export class NotificationPage {
 
       this.nav.push(EmailPage, {
         record: item.table_id,
-        act: 'Push'
+        act: 'Push',
+        from:'notify'
       });
       return false;
     } else if (nottype == 'OA') {
       this.nav.push(AlarmdetailsPage, {
         record: item.table_id,
-        act: 'Push'
+        act: 'Push',
+        from:'notify'
       });
       return false;
     } else if (nottype == 'A') {
@@ -161,27 +163,31 @@ export class NotificationPage {
 
       this.nav.push(AlarmdetailsPage, {
         record: item.table_id,
-        act: 'Push'
+        act: 'Push',
+        from:'notify'
       });
       return false;
     } else if (nottype == 'C') {
       //this.nav.push(CommentdetailsPage);
       this.nav.push(CommentdetailsPage, {
         record: item.table_id,
-        act: 'Push'
+        act: 'Push',
+        from:'notify'
       });
       return false;
     } else if (nottype == 'E') {
       this.nav.push(CalendardetailPage, {
         event_id: item.table_id,
-        act: 'Push'
+        act: 'Push',
+        from:'notify'
       });
       return false;
     } else if (nottype == 'S') {
       // this.nav.push(ServicedetailsPage);
       this.nav.push(ServicedetailsPage, {
         record: item.table_id,
-        act: 'Push'
+        act: 'Push',
+        from:'notify'
       });
       return false;
     }

@@ -169,10 +169,10 @@ export class MyApp {
       this.menuCtrl.close();
       this.nav.push(CalendarPage);
     } else if (page.title == 'Maps') {
-       this.menuCtrl.close();     
+      this.menuCtrl.close();
       let fromModule = localStorage.getItem("fromModule");
       console.log("From Module is:" + fromModule);
-      if (fromModule != 'MapsPage') {       
+      if (fromModule != 'MapsPage') {
         this.nav.setRoot(MapsPage);
       }
     } else if (page.title == 'Reports') {
@@ -192,7 +192,7 @@ export class MyApp {
     else if (page.component == 'EnginedetailPage') {
       this.nav.push(EnginedetailPage);
     }
-    
+
   }
 
   toggleLevel1(idx) {

@@ -56,7 +56,8 @@ export class CommentsinfoPage {
     serviced_by: '',
     nextServiceDate: '',
     addedImgLists1: '',
-    addedImgLists2: ''
+    addedImgLists2: '',
+    colorcodeindications:''
   }
   public userId: any;
   public reportAllLists = [];
@@ -171,7 +172,7 @@ export class CommentsinfoPage {
      this.unitDetailData.lat = localStorage.getItem("unitlat");
      this.unitDetailData.lng = localStorage.getItem("unitlng");
      this.unitDetailData.rh=localStorage.getItem("runninghr");
-     this.unitDetailData.ns=localStorage.getItem("nsd");
+     this.unitDetailData.nextServiceDate=localStorage.getItem("nsd");
     this.reportData.startindex = 0;
     this.reportData.sort = "comment_id";
     this.doService();

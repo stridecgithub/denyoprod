@@ -229,7 +229,7 @@ export class CommentdetailsPage {
     // localStorage.setItem("unitId", this.comment_unitid);
 
 
-   
+
   }
   getPrority(val) {
     this.comment_priority = val
@@ -293,17 +293,33 @@ export class CommentdetailsPage {
       }
     }
 
-     let colorcode;
+    let colorcode;
     let index = this.colorListArr.indexOf(this.unitDetailData.colorcodeindications);
     let colorvalincrmentone = index + 1;
     colorcode = "button" + colorvalincrmentone;
     this.unitDetailData.colorcodeindications = colorcode;
-    console.log("Finally color code indications is:"+this.unitDetailData.colorcodeindications);
+    console.log("Finally color code indications is:" + this.unitDetailData.colorcodeindications);
+
+
+    localStorage.setItem("unitunitname", item.unitname);
+    localStorage.setItem("unitlocation", item.location);
+    localStorage.setItem("unitprojectname", item.projectname);
+    localStorage.setItem("unitcolorcode", item.colorcode);
+    localStorage.setItem("unitlat", item.latitude);
+    localStorage.setItem("unitlng", item.longtitude);
+    localStorage.setItem("runninghr", item.runninghr);
+    localStorage.setItem("nsd", item.nextservicedate);
+    localStorage.setItem("iframeunitId", item.comment_unit_id);
+
   }
   previous() {
-    this.nav.push(CommentsinfoPage, {
-      record: this.udetails
-    });
+    if (this.NP.get("from") == 'notify') {
+      this.notification();
+    } else {
+      this.nav.push(CommentsinfoPage, {
+        record: this.udetails
+      });
+    }
   }
 
 

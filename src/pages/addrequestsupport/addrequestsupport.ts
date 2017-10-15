@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { AlertController, NavController, NavParams, ViewController,Platform } from 'ionic-angular';
+import { AlertController, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
@@ -17,7 +17,7 @@ import { MapsPage } from '../maps/maps';
 //import { ReportsPage } from '../reports/reports';
 import { CalendarPage } from '../calendar/calendar';
 import { EmailPage } from '../email/email';
-import { OrgchartPage} from '../orgchart/orgchart';
+import { OrgchartPage } from '../orgchart/orgchart';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
 /**
@@ -29,11 +29,11 @@ import { Config } from '../../config/config';
 @Component({
   selector: 'page-addrequestsupport',
   templateUrl: 'addrequestsupport.html',
-  providers: [Camera, Transfer, DatePicker,Config]
+  providers: [Camera, Transfer, DatePicker, Config]
 })
 export class AddrequestsupportPage {
   @ViewChild('fileInput') fileInput;
-
+  public uploadcount: any;
   isReadyToSave: boolean;
   public photoInfo = [];
   public addedImgListsArray = [];
@@ -68,8 +68,9 @@ export class AddrequestsupportPage {
     addedImgLists2: ''
   }
   public hideActionButton = true;
-  constructor(private conf: Config, public platform: Platform, private network: Network,public http: Http, public alertCtrl: AlertController, private datePicker: DatePicker, public NP: NavParams, public nav: NavController, public navParams: NavParams, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, private transfer: Transfer,
+  constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public alertCtrl: AlertController, private datePicker: DatePicker, public NP: NavParams, public nav: NavController, public navParams: NavParams, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera, private transfer: Transfer,
     private ngZone: NgZone) {
+    this.uploadcount = 10;
     this.unitDetailData.loginas = localStorage.getItem("userInfoName");
     this.unitDetailData.userId = localStorage.getItem("userInfoId");
     this.unitDetailData.serviced_by = localStorage.getItem("userInfoName");
@@ -101,11 +102,11 @@ export class AddrequestsupportPage {
 
     }
     localStorage.setItem("microtime", this.micro_timestamp);
-     this.networkType = '';
+    this.networkType = '';
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-        this.platform.registerBackButtonAction(() => {
+      this.platform.registerBackButtonAction(() => {
         this.previous();
       });
       this.network.onConnect().subscribe(data => {
@@ -119,7 +120,7 @@ export class AddrequestsupportPage {
         this.networkType = this.conf.networkErrMsg();
       }, error => console.error(error));
 
-       let isNet = localStorage.getItem("isNet");
+      let isNet = localStorage.getItem("isNet");
       if (isNet == 'offline') {
         this.networkType = this.conf.networkErrMsg();
       } else {
@@ -131,32 +132,32 @@ export class AddrequestsupportPage {
   ionViewDidLoad() {
     this.addedImgListsRequest = [];
     console.log('ionViewDidLoad AddrequestsupportPage');
-     localStorage.setItem("fromModule", "AddrequestsupportPage");
+    localStorage.setItem("fromModule", "AddrequestsupportPage");
   }
   favoriteaction(unit_id) {
-		let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
-			type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-			headers: any = new Headers({ 'Content-Type': type }),
-			options: any = new RequestOptions({ headers: headers }),
-			url: any = this.apiServiceURL + "/setunitfavorite";
-		console.log(url);
-		console.log(body);
-		this.http.post(url, body, options)
-			.subscribe(data => {
-				let favorite;
-				if (data.json().favorite == '1') {
-					favorite = "favorite";
-				}
-				else {
-					favorite = "unfavorite";
+    let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
+      type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+      headers: any = new Headers({ 'Content-Type': type }),
+      options: any = new RequestOptions({ headers: headers }),
+      url: any = this.apiServiceURL + "/setunitfavorite";
+    console.log(url);
+    console.log(body);
+    this.http.post(url, body, options)
+      .subscribe(data => {
+        let favorite;
+        if (data.json().favorite == '1') {
+          favorite = "favorite";
+        }
+        else {
+          favorite = "unfavorite";
 
-				}
-				this.unitDetailData.favoriteindication = favorite;
-			}, error => {
+        }
+        this.unitDetailData.favoriteindication = favorite;
+      }, error => {
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
 
-	}
+  }
   ionViewWillEnter() {
     this.addedImgListsRequest = [];
     let //body: string = "loginid=" + this.userId,
@@ -215,8 +216,8 @@ export class AddrequestsupportPage {
     console.log("Add Comment Color Code:" + this.unitDetailData.colorcodeindications);
     this.unitDetailData.lat = localStorage.getItem("unitlat");
     this.unitDetailData.lng = localStorage.getItem("unitlng");
-     this.unitDetailData.rh=localStorage.getItem("runninghr");
-     this.unitDetailData.ns=localStorage.getItem("nsd");
+    this.unitDetailData.rh = localStorage.getItem("runninghr");
+    this.unitDetailData.ns = localStorage.getItem("nsd");
 
 
   }
@@ -240,7 +241,7 @@ export class AddrequestsupportPage {
     });
   }
 
- 
+
 
   fileTrans(path, micro_timestamp) {
     const fileTransfer: TransferObject = this.transfer.create();
@@ -276,7 +277,7 @@ export class AddrequestsupportPage {
     fileTransfer.upload(path, this.apiServiceURL + '/fileupload.php?micro_timestamp=' + micro_timestamp, options)
       .then((data) => {
 
-         console.log("Upload Response is" + JSON.stringify(data))
+        console.log("Upload Response is" + JSON.stringify(data))
         let res = JSON.parse(data.response);
         console.log(res.id);
         console.log(JSON.stringify(res));
@@ -287,12 +288,16 @@ export class AddrequestsupportPage {
           imgSrc: imgSrc,
           imgDateTime: new Date(),
           fileName: newFileName,
-          resouce_id:res.id
+          resouce_id: res.id
         });
 
         //loading.dismiss();
+        this.uploadcount = 10;
         if (this.addedImgListsRequest.length > 9) {
           this.isUploaded = false;
+        } else {
+          let remcount = this.uploadcount - this.addedImgListsRequest.length;
+          this.uploadcount = remcount;
         }
         this.progress += 5;
         this.isProgress = false;
@@ -326,30 +331,30 @@ export class AddrequestsupportPage {
     if (isNet == 'offline') {
       this.networkType = this.conf.networkErrMsg();
     } else {
-    console.log(this.form.controls);
-    if (this.isUploadedProcessing == false) {
-      /* let name: string = this.form.controls["lat"].value,
-         description: string = this.form.controls["long"].value,
-         photos: object = this.addedImgLists;*/
+      console.log(this.form.controls);
+      if (this.isUploadedProcessing == false) {
+        /* let name: string = this.form.controls["lat"].value,
+           description: string = this.form.controls["long"].value,
+           photos: object = this.addedImgLists;*/
 
 
-      let service_remark: string = this.form.controls["service_remark"].value,
-        service_subject: string = this.form.controls["service_subject"].value;
+        let service_remark: string = this.form.controls["service_remark"].value,
+          service_subject: string = this.form.controls["service_subject"].value;
 
-      console.log("service_remark:" + service_remark);
+        console.log("service_remark:" + service_remark);
 
-      console.log("service_subject:" + service_subject);
-      console.log("nextServiceDate:" + this.unitDetailData.nextServiceDate);
-      console.log("Image Data" + JSON.stringify(this.addedImgListsRequest));
-      //let d = new Date();
-      //let micro_timestamp = d.getFullYear() + "" + d.getMonth() + "" + d.getDate() + "" + d.getHours() + "" + d.getMinutes() + "" + d.getSeconds();
-      if (this.isEdited) {
-        this.updateEntry(service_remark, service_subject, this.addedImgListsRequest, this.unitDetailData.hashtag, this.unitDetailData.nextServiceDate, this.micro_timestamp);
+        console.log("service_subject:" + service_subject);
+        console.log("nextServiceDate:" + this.unitDetailData.nextServiceDate);
+        console.log("Image Data" + JSON.stringify(this.addedImgListsRequest));
+        //let d = new Date();
+        //let micro_timestamp = d.getFullYear() + "" + d.getMonth() + "" + d.getDate() + "" + d.getHours() + "" + d.getMinutes() + "" + d.getSeconds();
+        if (this.isEdited) {
+          this.updateEntry(service_remark, service_subject, this.addedImgListsRequest, this.unitDetailData.hashtag, this.unitDetailData.nextServiceDate, this.micro_timestamp);
+        }
+        else {
+          this.createEntry(service_remark, service_subject, this.addedImgListsRequest, this.unitDetailData.hashtag, this.unitDetailData.nextServiceDate, this.micro_timestamp);
+        }
       }
-      else {
-        this.createEntry(service_remark, service_subject, this.addedImgListsRequest, this.unitDetailData.hashtag, this.unitDetailData.nextServiceDate, this.micro_timestamp);
-      }
-    }
     }
   }
 
@@ -516,8 +521,12 @@ export class AddrequestsupportPage {
         this.service_subject = '';
         this.service_remark = '';
       }
+      this.uploadcount = 10;
       if (this.addedImgListsRequest.length > 9) {
         this.isUploaded = false;
+      } else {
+        let remcount = this.uploadcount - this.addedImgListsRequest.length;
+        this.uploadcount = remcount;
       }
     }
   }
@@ -532,8 +541,12 @@ export class AddrequestsupportPage {
           for (let q: number = 0; q < this.addedImgListsRequest.length; q++) {
             if (this.addedImgListsRequest[q] == item) {
               this.addedImgListsRequest.splice(q, 1);
+
             }
           }
+          this.uploadcount = 10 - this.addedImgListsRequest.length;
+          console.log("After Deleted" + JSON.stringify(this.addedImgListsRequest));
+          console.log("After Deleted Upload count length:" + this.uploadcount);
         }
       },
       {

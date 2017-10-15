@@ -160,7 +160,7 @@ import { Network } from '@ionic-native/network';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-   // CalendarPage,
+    //CalendarPage,
     //CalendarComponent,
     MyApp,
     HomePage,

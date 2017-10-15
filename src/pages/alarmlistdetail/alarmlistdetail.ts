@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, NavParams,Platform } from 'ionic-angular';
+import { NavController, AlertController, NavParams, Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 //import { MyaccountPage } from '../myaccount/myaccount';
 import { UnitsPage } from '../units/units';
@@ -12,7 +12,7 @@ import { AddalarmlistPage } from '../addalarmlist/addalarmlist';
 import { TrendlinePage } from '../trendline/trendline';
 import { AlarmPage } from '../alarm/alarm';
 import { CommentsinfoPage } from '../commentsinfo/commentsinfo';
-import { OrgchartPage} from '../orgchart/orgchart';
+import { OrgchartPage } from '../orgchart/orgchart';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
@@ -26,12 +26,12 @@ import { Config } from '../../config/config';
 @Component({
   selector: 'page-alarmlistdetail',
   templateUrl: 'alarmlistdetail.html',
-  providers:[Config]
+  providers: [Config]
 })
 export class AlarmlistdetailPage {
- public loginas: any;
+  public loginas: any;
   public unitDetailData: any = {
-    hashtag:''
+    hashtag: ''
   }
   public pageTitle: string;
   public msgcount: any;
@@ -40,7 +40,7 @@ export class AlarmlistdetailPage {
   pet: string = "ALL";
   public sortby = 2;
   public userId: any;
-  public alarmid:any;
+  public alarmid: any;
   public alarm_assginedby_name: any;
   public alarm_assginedto_name: any;
   public alarm_name: any;
@@ -61,17 +61,17 @@ export class AlarmlistdetailPage {
     results: 8
   }
   public reportAllLists = [];
-  constructor(private conf: Config, public platform: Platform, private network: Network,public http: Http, public nav: NavController,
-     public alertCtrl: AlertController, public NP: NavParams) {
+  constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController,
+    public alertCtrl: AlertController, public NP: NavParams) {
     this.pageTitle = 'Units';
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
     this.companyId = localStorage.getItem("userInfoCompanyId");
-     this.networkType = '';
+    this.networkType = '';
     this.permissionMessage = conf.rolePermissionMsg();
     this.apiServiceURL = conf.apiBaseURL();
     this.platform.ready().then(() => {
-        this.platform.registerBackButtonAction(() => {
+      this.platform.registerBackButtonAction(() => {
         this.previous();
       });
       this.network.onConnect().subscribe(data => {
@@ -100,34 +100,34 @@ export class AlarmlistdetailPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlarmlistdetailPage');
-     localStorage.setItem("fromModule", "AlarmlistdetailPage");
+    localStorage.setItem("fromModule", "AlarmlistdetailPage");
   }
   favoriteaction(unit_id) {
-		let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
-			type: string = "application/x-www-form-urlencoded; charset=UTF-8",
-			headers: any = new Headers({ 'Content-Type': type }),
-			options: any = new RequestOptions({ headers: headers }),
-			url: any = this.apiServiceURL + "/setunitfavorite";
-		console.log(url);
-		console.log(body);
-		this.http.post(url, body, options)
-			.subscribe(data => {
-				let favorite;
-				if (data.json().favorite == '1') {
-					favorite = "favorite";
-				}
-				else {
-					favorite = "unfavorite";
+    let body: string = "unitid=" + unit_id + "&is_mobile=1" + "&loginid=" + this.unitDetailData.userId,
+      type: string = "application/x-www-form-urlencoded; charset=UTF-8",
+      headers: any = new Headers({ 'Content-Type': type }),
+      options: any = new RequestOptions({ headers: headers }),
+      url: any = this.apiServiceURL + "/setunitfavorite";
+    console.log(url);
+    console.log(body);
+    this.http.post(url, body, options)
+      .subscribe(data => {
+        let favorite;
+        if (data.json().favorite == '1') {
+          favorite = "favorite";
+        }
+        else {
+          favorite = "unfavorite";
 
-				}
-				this.unitDetailData.favoriteindication = favorite;
-			}, error => {
+        }
+        this.unitDetailData.favoriteindication = favorite;
+      }, error => {
         this.networkType = this.conf.serverErrMsg();// + "\n" + error;
       });
 
-	}
+  }
   ionViewWillEnter() {
-        this.unitDetailData.unitname = localStorage.getItem("unitunitname");
+    this.unitDetailData.unitname = localStorage.getItem("unitunitname");
     this.unitDetailData.location = localStorage.getItem("unitlocation");
     this.unitDetailData.projectname = localStorage.getItem("unitprojectname");
     this.unitDetailData.colorcodeindications = localStorage.getItem("unitcolorcode");
@@ -136,17 +136,17 @@ export class AlarmlistdetailPage {
     this.unitDetailData.lng = localStorage.getItem("unitlng");
     this.unitDetailData.rh = localStorage.getItem("runninghr");
     this.unitDetailData.ns = localStorage.getItem("nsd");
-     this.unitDetailData.favoriteindication = localStorage.getItem("unitfav");
+    this.unitDetailData.favoriteindication = localStorage.getItem("unitfav");
     if (this.NP.get("record")) {
       console.log("Alarm Details" + JSON.stringify(this.NP.get("record")));
       console.log(this.NP.get("record").alarm_name);
-      this.alarmid=this.NP.get("record").alarm_id;
+      this.alarmid = this.NP.get("record").alarm_id;
       this.alarm_name = this.NP.get("record").alarm_name;
       this.alarm_assginedby_name = this.NP.get("record").alarm_assginedby_name;
       this.alarm_assginedto_name = this.NP.get("record").alarm_assginedto_name;
       if (this.alarm_assginedby_name == "") {
         this.estatus = 1;
-        console.log("!!!"+this.estatus);
+        console.log("!!!" + this.estatus);
       }
       // this.selectEntry(this.NP.get("record"));
     }
@@ -173,23 +173,22 @@ export class AlarmlistdetailPage {
   }
   editalarm() {
     this.nav.setRoot(AddalarmlistPage,
-    {
-      record: this.NP.get("record")
-    });
+      {
+        record: this.NP.get("record")
+      });
   }
-  previous()
-  {
-      if(this.NP.get("record")=='alarm')
-    {
-    this.nav.push(AlarmPage,
-    {
-      record: this.NP.get("record")
-    });
-  }
-  else
-  {
- this.nav.push(CommentsinfoPage);
-  }
+  previous() {
+     if (this.NP.get("from") == 'notify') {
+      this.notification();
+    } else  if (this.NP.get("record") == 'alarm') {
+      this.nav.push(AlarmPage,
+        {
+          record: this.NP.get("record")
+        });
+    }
+    else {
+      this.nav.push(CommentsinfoPage);
+    }
   }
   notification() {
     this.nav.push(NotificationPage);

@@ -33,6 +33,7 @@ export class AlarmdetailsPage {
   public notcount: any;
   public totalCount;
   public alarm_unitid: any;
+  public trendstatus:any;
   pet: string = "ALL";
   public sortby = 2;
   public unitDetailData: any = {
@@ -40,6 +41,7 @@ export class AlarmdetailsPage {
   }
   public userId: any;
   public alarmid: any;
+  public unit_status:any;
   public alarm_assginedby_name: any;
   public alarm_assginedto_name: any;
   public alarm_name: any;
@@ -63,6 +65,7 @@ export class AlarmdetailsPage {
   constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public nav: NavController,
     public alertCtrl: AlertController, public NP: NavParams) {
     this.pageTitle = 'Units';
+    this.trendstatus=0;
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
     this.companyId = localStorage.getItem("userInfoCompanyId");
@@ -99,7 +102,20 @@ export class AlarmdetailsPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlarmdetailsPage');
-
+    this.colorListArr = [
+      "FBE983",
+      "5584EE",
+      "A4BDFD",
+      "47D6DC",
+      "7AE7BE",
+      "51B749",
+      "FBD75C",
+      "FFB878",
+      "FF877C",
+      "DC2128",
+      "DAADFE",
+      "E1E1E1"
+    ];
     localStorage.setItem("fromModule", "AlarmdetailsPage");
   }
   favoriteaction(unit_id) {
@@ -220,11 +236,12 @@ export class AlarmdetailsPage {
     }*/
 
     else {
-      console.log("selectEntry Array" + JSON.stringify(item.alarm_unit_id));
+      console.log("selectEntry Array" + JSON.stringify(item));
       console.log("item.alarm_unit_id" + item.alarm_unit_id);
       localStorage.setItem("unitId", item.alarm_unit_id);
       localStorage.setItem("iframeunitId", item.alarm_unit_id);
       this.alarm_name = item.alarm_name;
+      this.unit_status = item.unit_status;
       this.alarm_assginedby_name = item.alarm_assginedby_name;
       this.alarm_assginedto_name = item.alarm_assginedto_name;
       this.unitDetailData.unitname = item.unitname;
@@ -251,7 +268,12 @@ export class AlarmdetailsPage {
       localStorage.setItem("iframeunitId", item.alarm_unit_id);
 
     }
-
+    let colorcode;
+    let index = this.colorListArr.indexOf(this.unitDetailData.colorcodeindications);
+    let colorvalincrmentone = index + 1;
+    colorcode = "button" + colorvalincrmentone;
+    this.unitDetailData.colorcodeindications = colorcode;
+    console.log("Finally color code indications is:" + this.unitDetailData.colorcodeindications);
   }
   editalarm() {
     this.nav.setRoot(AddalarmPage,

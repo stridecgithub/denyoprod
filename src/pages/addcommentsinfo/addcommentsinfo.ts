@@ -36,7 +36,7 @@ import { Config } from '../../config/config';
 })
 export class AddcommentsinfoPage {
   @ViewChild('fileInput') fileInput;
-
+  public uploadcount: any;
   isReadyToSave: boolean;
   public photoInfo = [];
   public addedImgListsArray = [];
@@ -79,6 +79,7 @@ export class AddcommentsinfoPage {
   constructor(private conf: Config, public platform: Platform, private network: Network, public http: Http, public alertCtrl: AlertController, private datePicker: DatePicker, public NP: NavParams, public nav: NavController, public navParams: NavParams, public viewCtrl: ViewController, formBuilder: FormBuilder, public camera: Camera,
     private transfer: Transfer, private ngZone: NgZone) {
     this.priority_highclass = '';
+    this.uploadcount = 10;
     this.priority_lowclass = '';
     this.unitDetailData.loginas = localStorage.getItem("userInfoName");
     this.unitDetailData.userId = localStorage.getItem("userInfoId");
@@ -285,8 +286,12 @@ export class AddcommentsinfoPage {
         });
 
         //loading.dismiss();
+        this.uploadcount = 10;
         if (this.addedImgLists.length > 9) {
           this.isUploaded = false;
+        } else {
+          let remcount = this.uploadcount - this.addedImgLists.length;
+          this.uploadcount = remcount;
         }
         this.progress += 5;
         this.isProgress = false;
@@ -571,9 +576,12 @@ export class AddcommentsinfoPage {
           resouce_id: imgDataArr[0]
         });
       }
-
+      this.uploadcount = 10;
       if (this.addedImgLists.length > 9) {
         this.isUploaded = false;
+      } else {
+        let remcount = this.uploadcount - this.addedImgLists.length;
+        this.uploadcount = remcount;
       }
     }
     this.recordID = item.comment_id;
@@ -589,8 +597,12 @@ export class AddcommentsinfoPage {
           for (let q: number = 0; q < this.addedImgLists.length; q++) {
             if (this.addedImgLists[q] == item) {
               this.addedImgLists.splice(q, 1);
+
             }
           }
+          this.uploadcount = 10- this.addedImgLists.length;
+          console.log("After Deleted" + JSON.stringify(this.addedImgLists));
+          console.log("After Deleted Upload count length:" + this.uploadcount);
         }
       },
       {

@@ -42,7 +42,6 @@ export class AddserviceinfoPage {
   public addedServiceImgLists = [];
   progress: number;
   public uploadcount: any;
-  private uploadcountstr: string = "Maximum Number of upload photos:";
   public priority_lowclass: any;
   public priority_highclass: any;
   public isSubmitted: boolean = false;
@@ -418,8 +417,17 @@ export class AddserviceinfoPage {
         });
 
         //loading.dismiss();
+        /* if (this.addedServiceImgLists.length > 9) {
+           this.isUploaded = false;
+         }*/
+        this.uploadcount = 10;
         if (this.addedServiceImgLists.length > 9) {
           this.isUploaded = false;
+
+          this.uploadcount = '';
+        } else {
+          let remcount = this.uploadcount - this.addedServiceImgLists.length;
+          this.uploadcount = remcount;
         }
         this.progress += 5;
         this.isProgress = false;
@@ -785,14 +793,12 @@ export class AddserviceinfoPage {
 
 
 
-
+      this.uploadcount = 10;
       if (this.addedServiceImgLists.length > 9) {
         this.isUploaded = false;
-        this.uploadcountstr = '';
-        this.uploadcount = '';
       } else {
         let remcount = this.uploadcount - this.addedServiceImgLists.length;
-        this.uploadcountstr = "Remaining photo " + remcount + "upload only";
+        this.uploadcount = remcount;
       }
     }
 
@@ -820,10 +826,12 @@ export class AddserviceinfoPage {
           for (let q: number = 0; q < this.addedServiceImgLists.length; q++) {
             if (this.addedServiceImgLists[q] == item) {
               this.addedServiceImgLists.splice(q, 1);
+
             }
           }
-
+          this.uploadcount = 10 - this.addedServiceImgLists.length;
           console.log("After Deleted" + JSON.stringify(this.addedServiceImgLists));
+          console.log("After Deleted Upload count length:" + this.uploadcount);
         }
       },
       {

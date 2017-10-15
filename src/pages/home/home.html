@@ -1,32 +1,38 @@
-<form [formGroup]="form"  method="post">
+<form [formGroup]="form" method="post">
   <ion-header>
     <custom-header [header]="header_data"></custom-header>
   </ion-header>
-  <ion-content padding class="login-content">
-
-    <!--div #map id="map" style="height:75%"></div-->
+  <ion-content padding class="login-content">   
 
     <div class="t-center"><img src="img/denyo_logo.png" class="logo"></div>
     <ion-list>
       <ion-item>
         <ion-label stacked>User ID</ion-label>
-        <ion-input type="text" formControlName="userid"  br-data-dependency="password" [(ngModel)]="userId"></ion-input>
-        <!--  br-data-dependency="password"  -->
+        <ion-input type="text" formControlName="username"  [(ngModel)]="username"></ion-input>
+     
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Password</ion-label>
-        <ion-input  #password id="password" type="password" formControlName="password" [(ngModel)]="passWrd"></ion-input>
+        <ion-input type="password" formControlName="password" [(ngModel)]="password"></ion-input>
       </ion-item>
 
       <ion-item class="forgot" (click)="doMove()">
         <div>Forgot?</div>
       </ion-item>
-      <ion-item>
 
+
+      <ion-item>
+        <ion-label stacked>Keep me signed in</ion-label>
+        <ion-checkbox formControlName="keepme" [(ngModel)]="keepme"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
         <div style="color: yellow;  
     float: right;">Ver 1.45</div>
       </ion-item>
+
+
       <ion-item>
         <div padding>
           <button ion-button color="primary" (click)="login()" text-center block [disabled]="!form.valid">Login</button>

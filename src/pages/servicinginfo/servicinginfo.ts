@@ -61,7 +61,8 @@ export class ServicinginfoPage {
     serviced_by: '',
     nextServiceDate: '',
     addedImgLists1: '',
-    addedImgLists2: ''
+    addedImgLists2: '',
+    colorcodeindications:''
   }
   public userId: any;
   public reportAllLists = [];

@@ -104,7 +104,7 @@
 
 
       <p><b>Upload Images</b></p>
-      <p>Maximum Number of upload photos:10</p>
+       <p *ngIf="uploadcount>0">Maximum Number of upload photos:{{uploadcount}}</p>
 
 
       <div class="profile-image-wrapper" (click)="takePictureURL(micro_timestamp)" *ngIf="isUploaded">

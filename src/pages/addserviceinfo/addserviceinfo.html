@@ -107,7 +107,7 @@
 
 
       <p><b>Upload Images</b></p>
-      <p>{{uploadcountstr}}{{uploadcount}}</p>
+      <p *ngIf="uploadcount>0">Maximum Number of upload photos:{{uploadcount}}</p>
 
 
       <div class="profile-image-wrapper" (click)="takePictureURL(micro_timestamp)" *ngIf="isUploaded">
@@ -217,5 +217,5 @@
     </ul>
 
   </ion-toolbar>
-   <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
+  <div class="network-error" *ngIf="networkType!=''">{{networkType}}</div>
 </ion-footer>

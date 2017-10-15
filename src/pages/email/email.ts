@@ -390,7 +390,8 @@ export class EmailPage {
     this.isCompose = false;
     this.inboxact = false;
     this.sendact = false;
-
+ this.priority_highclass = '';
+    this.priority_lowclass = '';
     this.inboxsortaction = true;
     this.sendsortaction = false;
 
@@ -433,6 +434,8 @@ export class EmailPage {
 
 
   doSend() {
+     this.priority_highclass = '';
+    this.priority_lowclass = '';
     this.isCompose = false;
     this.inboxact = false;
     this.sendact = false;
@@ -885,6 +888,8 @@ export class EmailPage {
           this.addedImgLists = [];
           this.to = '';
           this.copytome = 0;
+           this.priority_highclass = '';
+    this.priority_lowclass = '';
           this.getPrority(0);
           this.subject = '';
           this.choice = 'send';
@@ -1172,6 +1177,8 @@ export class EmailPage {
       });
   }
   doDetails(item, act) {
+     this.priority_highclass = '';
+    this.priority_lowclass = '';
     this.inboxsortaction = false;
     this.sendsortaction = false;
     this.isCompose = true;
@@ -1208,6 +1215,8 @@ export class EmailPage {
   }
 
   reply(messages_body) {
+     this.priority_highclass = '';
+    this.priority_lowclass = '';
     this.inboxsortaction = false;
     this.sendsortaction = false;
     this.isCompose = true;
@@ -1238,6 +1247,8 @@ export class EmailPage {
   }
 
   forward(messages_body) {
+     this.priority_highclass = '';
+    this.priority_lowclass = '';
     this.inboxsortaction = false;
     this.sendsortaction = false;
     this.isCompose = true;
@@ -1291,6 +1302,8 @@ export class EmailPage {
 
   }
   com() {
+     this.priority_highclass = '';
+    this.priority_lowclass = '';
     this.isCompose = true;
     this.inboxsortaction = false;
     this.sendsortaction = false;
