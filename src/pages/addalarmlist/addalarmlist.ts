@@ -285,8 +285,13 @@ export class AddalarmlistPage {
           record: this.NP.get("record")
         });
     }
-    else {
+    else  if (this.NP.get("from") == 'comment') {
       this.nav.push(CommentsinfoPage);
+    }else{
+       this.nav.push(AlarmlistdetailPage,
+        {
+          record: this.NP.get("record")
+        });
     }
   }
   notification() {

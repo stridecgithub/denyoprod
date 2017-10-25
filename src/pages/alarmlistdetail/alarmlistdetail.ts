@@ -186,8 +186,15 @@ export class AlarmlistdetailPage {
           record: this.NP.get("record")
         });
     }
-    else {
+    else  if (this.NP.get("record") == 'comment') {
       this.nav.push(CommentsinfoPage);
+      
+    }
+    else {
+     this.nav.push(AlarmPage,
+        {
+          record: this.NP.get("record")
+        }); 
     }
   }
   notification() {

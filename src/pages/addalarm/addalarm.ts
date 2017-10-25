@@ -17,6 +17,7 @@ import { EmailPage } from '../email/email';
 import { OrgchartPage } from '../orgchart/orgchart';
 import { Network } from '@ionic-native/network';
 import { Config } from '../../config/config';
+import { CommentsinfoPage } from '../commentsinfo/commentsinfo';
 /**
  * Generated class for the AddalarmPage page.
  *
@@ -266,10 +267,32 @@ export class AddalarmPage {
     this.unitDetailData.hashtag = hashtag;
   }
   previous() {
-    this.nav.push(AlarmdetailsPage,
+   /* this.nav.push(AlarmdetailsPage,
       {
         record: this.NP.get("record")
       });
+*/
+
+
+
+if (this.NP.get("from") == 'alarm') {
+      this.nav.push(AlarmdetailsPage,
+        {
+          record: this.NP.get("record")
+        });
+    }
+    else  if (this.NP.get("from") == 'comment') {
+      this.nav.push(CommentsinfoPage);
+    }else{
+       this.nav.push(AlarmdetailsPage,
+        {
+          record: this.NP.get("record")
+        });
+    }
+
+
+
+
   }
   notification() {
     this.nav.push(NotificationPage);
