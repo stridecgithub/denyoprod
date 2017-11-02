@@ -282,7 +282,9 @@ export class AddunitsonePage {
           .then((coordinates: NativeGeocoderForwardResult) => {
             console.log('The coordinates are latitude=' + coordinates.latitude + ' and longitude=' + coordinates.longitude)
             this.lat = coordinates.latitude;
+             this.lat =this.lat.substring(0, 10);
             this.lang = coordinates.longitude;
+            this.lang =this.lang.substring(0, 10);
           }
           )
           .catch((error: any) => console.log(error));

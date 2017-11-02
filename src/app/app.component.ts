@@ -36,12 +36,13 @@ import { ForgotpasswordPage } from '../pages/forgotpassword/forgotpassword';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { Insomnia } from '@ionic-native/insomnia'; // App sleep
 /*@Directive({
   selector: '[br-data-dependency]' // Attribute selector
 })*/
 @Component({
   templateUrl: 'app.html',
-  providers: [Push, LocalNotifications, Keyboard]
+  providers: [Push, LocalNotifications, Keyboard,Insomnia]
 })
 export class MyApp {
   @Output() input: EventEmitter<string> = new EventEmitter<string>();
@@ -53,7 +54,7 @@ export class MyApp {
   alert: any;
   showLevel1 = null;
   showLevel2 = null;
-  constructor(public elementRef: ElementRef, private keyboard: Keyboard, private localNotifications: LocalNotifications, public alertCtrl: AlertController, private push: Push, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public dataService: DataServiceProvider, public menuCtrl: MenuController) {
+  constructor(private insomnia: Insomnia,public elementRef: ElementRef, private keyboard: Keyboard, private localNotifications: LocalNotifications, public alertCtrl: AlertController, private push: Push, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public dataService: DataServiceProvider, public menuCtrl: MenuController) {
 
     this.initializeApp();
     this.dataService.getMenus()
@@ -99,6 +100,19 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+
+      this.insomnia.keepAwake()
+        .then(
+        () => console.log('keepAwake success'),
+        () => console.log('keepAwake error')
+        );
+
+      this.insomnia.allowSleepAgain()
+        .then(
+        () => console.log('allowSleepAgain success'),
+        () => console.log('allowSleepAgain error')
+        );
+
       localStorage.setItem("fromModule", "root");
       console.log('1:Platform ready');
       /*this.platform.registerBackButtonAction(() => {

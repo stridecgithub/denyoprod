@@ -31,7 +31,7 @@ export class HomePage {
   constructor(public Keyboard: Keyboard, public alertCtrl: AlertController,
     public elementRef: ElementRef, private conf: Config, public platform: Platform, private network: Network, public menuCtrl: MenuController, public navCtrl: NavController, private datePicker: DatePicker, public fb: FormBuilder, public device: Device, private http: Http) {
     this.form = fb.group({
-      "keepme": [""],
+      //"keepme": [""],
       //"password": ["", Validators.required]
       "username": ["", Validators.compose([Validators.maxLength(50), Validators.required])],
       "password": ["", Validators.compose([Validators.maxLength(50), Validators.required])]
@@ -105,7 +105,7 @@ export class HomePage {
   login() {
     let username: string = this.form.controls["username"].value,
       password: string = this.form.controls["password"].value;
-    let keepmecheck = this.form.controls["keepme"].value;
+    let keepmecheck = ''//this.form.controls["keepme"].value;
     console.log("keepme check value selected is:" + keepmecheck);
     let isEmpty = 1;
     if (this.form.controls["username"].value == '') {
