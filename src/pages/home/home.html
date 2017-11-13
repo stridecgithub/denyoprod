@@ -2,41 +2,36 @@
   <ion-header>
     <custom-header [header]="header_data"></custom-header>
   </ion-header>
-  <ion-content padding class="login-content">   
+  <ion-content padding class="login-content">
 
-    <div class="t-center"><img src="img/denyo_logo.png" class="logo"></div>
+
+    <div id="logo"><img src="assets/img/logo@2x.png" alt=""></div>
+
     <ion-list>
-      <ion-item>
-        <ion-label stacked>User ID</ion-label>
-        <ion-input type="text" formControlName="username"  [(ngModel)]="username"></ion-input>
-     
+      <ion-item class="user-id">
+        <ion-label floating>User ID</ion-label>
+        <ion-input type="text" autocomplete="off" formControlName="username" [(ngModel)]="username"></ion-input>
+
       </ion-item>
 
-      <ion-item>
-        <ion-label stacked>Password</ion-label>
-        <ion-input type="password" formControlName="password" [(ngModel)]="password"></ion-input>
-      </ion-item>
-
-      <ion-item class="forgot" (click)="doMove()">
-        <div>Forgot?</div>
-      </ion-item>
-
-
-      <!--ion-item>
-        <ion-label stacked>Keep me signed in</ion-label>
-        <ion-checkbox formControlName="keepme" [(ngModel)]="keepme"></ion-checkbox>
-      </ion-item-->
-
-      <ion-item>
-        <div style="color: yellow;  
-    float: right;">Ver 1.46</div>
+      <ion-item class="user-password">
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" autocomplete="off" formControlName="password" [(ngModel)]="password"></ion-input>
       </ion-item>
 
 
       <ion-item>
-        <div padding>
-          <button ion-button color="primary" (click)="login()" text-center block [disabled]="!form.valid">Login</button>
+        <div id="login-btn">
+          <button (click)="login()" text-center [disabled]="!form.valid">Sign In</button>
         </div>
+      </ion-item>
+
+      <ion-item class="forgot-password" (click)="doMove()">
+        <div>Forgot your password?</div>
+      </ion-item>
+
+      <ion-item class="app-version">
+        Version 1.4.4
       </ion-item>
 
     </ion-list>

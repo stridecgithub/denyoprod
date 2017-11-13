@@ -18,6 +18,7 @@ import { HomePage } from '../home/home';
   providers: [Config]
 })
 export class DashboardPage {
+  public pageTitle: string;
   public loginas: any;
   public userInf: any;
   public userId: any;
@@ -27,6 +28,7 @@ export class DashboardPage {
   public networkType: string = '';
   private apiServiceURL: string = "";
   constructor(private conf: Config, public alertCtrl: AlertController, public platform: Platform, public http: Http, public menuCtrl: MenuController, private network: Network, public navCtrl: NavController, public nav: NavController) {
+    this.pageTitle = 'Dashboard';
     this.loginas = localStorage.getItem("userInfoName");
     this.userId = localStorage.getItem("userInfoId");
     this.menuCtrl.swipeEnable(true);
@@ -122,7 +124,7 @@ export class DashboardPage {
   redirectCalendar() {
     this.nav.push(CalendarPage);
   }
-  redirectToMaps() {   
+  redirectToMaps() {
       this.nav.setRoot(MapsPage);
     //this.nav.push(DashboardmapPage);
   }

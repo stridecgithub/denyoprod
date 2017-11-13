@@ -16,14 +16,17 @@
 //.md .menu-inner{background:url(../img/menu_bg.png) no-repeat scroll 0 0 / cover;}
 
 ion-header {
-  background: linear-gradient(to right, #3a7cd0, #0a1844);
+  background: color($colors, 'primary');
+  height: 65px;
   ion-title {
     color: #fff;
     margin: 0 !important;
-    line-height: 44px;
-    text-align: center;
+    line-height: 65px;
+    text-align: left;
   }
   button {
+    box-shadow: none !important;
+    height: 55px !important;
     &:nth-child(1) {
       float: left !important;
     }
@@ -40,6 +43,25 @@ ion-header {
     }
     &.login-as {
       color: #4c4c4c !important;
+    }
+  }
+}
+
+.menu-inner {
+  background: #424242 !important;
+  ion-header {
+    background: #006BF4;
+  }
+  .menu-item {
+    h4 {
+      line-height: 24px;
+    }
+    img {
+      float: left;
+      margin-right: 20px;
+    }
+    .list {
+      margin: 0;
     }
   }
 }
