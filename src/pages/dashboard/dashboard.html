@@ -1,17 +1,18 @@
 <ion-header>
   <button style="float:left;    background: none;" ion-button menuToggle class="menu-toggle">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title class="page-title">{{pageTitle}}</ion-title>
 
 
   <button style="float:left" ion-button (click)="notification()" style="position: absolute;
     right: 0%;
     top: 1%;background: transparent;">
-  <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
-   <ion-badge style="    margin-top: 5px;
-    margin-right: 7px;" item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}</ion-badge>
-</button>
+    <ion-icon ios="ios-notifications-outline" md="md-notifications-outline"></ion-icon>
+    <ion-badge style="    margin-top: 5px;
+    margin-right: 7px;" item-end class="notificationcount" *ngIf="notcount>0">{{this.notcount}}
+    </ion-badge>
+  </button>
 
 </ion-header>
 <ion-content padding class="home-content">
@@ -32,29 +33,25 @@
     <div class="title">
       Welcome to Denyo<br> E-Management System<br><strong>{{loginas}}</strong>
     </div>
-    <div class="four-icons">
-      <div class="icon-top">
-        <div class="icon-left" (click)="goPage('MapsPage')">
-          <div class="maps">
+    <div class="dash-icons">
+      <div class="row">
+        <div class="dash-icon" (click)="goPage('MapsPage')">
+          <img src="../assets/img/maps_72.png">
             <span>maps</span>
-          </div>
         </div>
-        <div class="icon-right" (click)="goPage('UnitsPage')">
-          <div class="units">
+        <div class="dash-icon" (click)="goPage('UnitsPage')">
+          <img src="../assets/img/units_72.png">
             <span>units</span>
-          </div>
         </div>
       </div>
-      <div class="icon-bottom">
-        <div class="icon-left" (click)="goPage('ReportsPage')">
-          <div class="reports">
+      <div class="row">
+        <div class="dash-icon" (click)="goPage('ReportsPage')">
+          <img src="../assets/img/reports_72.png">
             <span>reports</span>
-          </div>
         </div>
-        <div class="icon-right" (click)="goPage('CalendarPage')">
-          <div class="calendar">
+        <div class="dash-icon" (click)="goPage('CalendarPage')">
+          <img src="../assets/img/calendar_72.png">
             <span>calendar</span>
-          </div>
         </div>
       </div>
     </div>
@@ -65,30 +62,30 @@
     <ul class="quick-list">
       <li>
         <button ion-button icon-only clear (click)="redirectToMaps()">
-    	<ion-icon name="home" class="footer-icon">MAPS</ion-icon>
-    </button>
+          <ion-icon name="home" class="footer-icon">MAPS</ion-icon>
+        </button>
       </li>
       <li>
         <button ion-button icon-only (click)="redirectToUser()" clear>
-    	<ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
-    </button>
+          <ion-icon name="contacts" class="footer-icon">UNITS</ion-icon>
+        </button>
       </li>
       <li>
         <button ion-button icon-only (click)="redirectToMessage()" clear>
-    	<ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
-      <ion-badge item-end class="messagecount"  *ngIf="msgcount>0">{{this.msgcount}}</ion-badge>
-    </button>
+          <ion-icon name="chatboxes" class="footer-icon">MESSAGE</ion-icon>
+          <ion-badge item-end class="messagecount" *ngIf="msgcount>0">{{this.msgcount}}</ion-badge>
+        </button>
         <ion-badge color="danger"></ion-badge>
       </li>
       <li>
         <button ion-button icon-only (click)="redirectCalendar()" clear>
-    	<ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
-    </button>
+          <ion-icon name="bicycle" class="footer-icon">CALENDAR</ion-icon>
+        </button>
       </li>
       <li>
         <button style="width: 34px;" ion-button icon-only (click)="redirectToSettings()" clear>
-    	<ion-icon name="settings" class="footer-icon">ORG</ion-icon>
-    </button>
+          <ion-icon name="settings" class="footer-icon">ORG</ion-icon>
+        </button>
       </li>
     </ul>
 
