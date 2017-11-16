@@ -135,8 +135,9 @@ a[aria-selected="true"] .ion-ios-settings-outline {
 /*                 V2                 */
 /* ================================== */
 .login-content {
-  background: url(../assets/img/rainbow-bg@2x.png) no-repeat center bottom;
+  background: url(../assets/img/rainbow-bg@2x.png) no-repeat center top;
   background-size: cover;
+  background-color: #fff !important;
   ion-label,
   input[type=password],
   input[type=text] {
@@ -181,9 +182,7 @@ a[aria-selected="true"] .ion-ios-settings-outline {
 }
 
 .app-version {
-  position: absolute;
-  left: 10px;
-  bottom: 150px;
+  padding-top: 150px;
   ion-label {
     font-size: 12px;
   }
